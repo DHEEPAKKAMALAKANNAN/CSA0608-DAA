@@ -1,0 +1,6 @@
+rule,trials,n,optimal_days,pct_optimal,mean_ratio,worst_ratio
+earliest finish (EFT),2000,12,2000,100.0,1.0,1.0
+latest start,2000,12,2000,100.0,1.0,1.0
+earliest start,2000,12,1179,58.95,0.8904,0.4
+shortest duration,2000,12,1888,94.4,0.9869,0.6667
+fewest conflicts,2000,12,1999,99.95,0.9999,0.8

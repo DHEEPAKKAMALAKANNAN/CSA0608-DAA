@@ -1,0 +1,12 @@
+rid,agency,start,finish
+R1,Electricity board,10:30,12:30
+R2,Police control room,08:30,10:00
+R3,Municipal corporation,12:00,14:00
+R4,Civil defence volunteers,09:00,15:00
+R5,Traffic police,10:30,11:30
+R6,Health department,08:00,11:00
+R7,Meteorology office,14:00,16:00
+R8,Fire and Rescue,09:30,10:30
+R9,Water supply board,11:00,13:00
+R10,Coast guard,12:00,13:30
+R11,Disaster response force,09:30,12:30

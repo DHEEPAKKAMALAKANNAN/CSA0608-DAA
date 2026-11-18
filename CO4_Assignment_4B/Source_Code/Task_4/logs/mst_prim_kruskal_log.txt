@@ -1,0 +1,47 @@
+TASK 4 - MINIMUM SPANNING TREE: city fibre backbone (weights = trench length x 100 m)
+========================================================================================================
+Given test case G1: 9 sites, 14 candidate routes
+  EOC-FIRE:4  EOC-UNIV:8  FIRE-HOSP:8  FIRE-UNIV:11  HOSP-POLICE:7  HOSP-POWER:4  HOSP-TRAFFIC:2
+  POLICE-WATER:9  POLICE-POWER:14  WATER-POWER:10  POWER-METRO:2  METRO-UNIV:1  METRO-TRAFFIC:6  UNIV-TRAFFIC:7
+
+Prim (indexed binary heap, root EOC) - one row per site added to the tree
+  step add site  via edge        w total  keys lowered (decrease-key / insert)
+     1 EOC       (root)          0     0  FIRE=4, UNIV=8
+     2 FIRE      EOC-FIRE        4     4  HOSP=8
+     3 UNIV      EOC-UNIV        8    12  METRO=1, TRAFFIC=7
+     4 METRO     UNIV-METRO      1    13  POWER=2, TRAFFIC=6
+     5 POWER     METRO-POWER     2    15  HOSP=4, POLICE=14, WATER=10
+     6 HOSP      POWER-HOSP      4    19  POLICE=7, TRAFFIC=2
+     7 TRAFFIC   HOSP-TRAFFIC    2    21  -
+     8 POLICE    HOSP-POLICE     7    28  WATER=9
+     9 WATER     POLICE-WATER    9    37  -
+  Prim total = 37; 15 heap comparisons, 5 decrease-keys, 28 edge checks
+
+Kruskal (edges in weight order, union-find with union by rank + path compression)
+  step edge            w find(u)   find(v)   decision        components
+     1 METRO-UNIV      1 METRO     UNIV      ACCEPT                   8
+     2 HOSP-TRAFFIC    2 HOSP      TRAFFIC   ACCEPT                   7
+     3 POWER-METRO     2 POWER     METRO     ACCEPT                   6
+     4 EOC-FIRE        4 EOC       FIRE      ACCEPT                   5
+     5 HOSP-POWER      4 HOSP      METRO     ACCEPT                   4
+     6 METRO-TRAFFIC   6 HOSP      HOSP      REJECT (cycle)           4
+     7 HOSP-POLICE     7 HOSP      POLICE    ACCEPT                   3
+     8 UNIV-TRAFFIC    7 HOSP      HOSP      REJECT (cycle)           3
+     9 EOC-UNIV        8 EOC       HOSP      ACCEPT                   2
+    10 FIRE-HOSP       8 HOSP      HOSP      REJECT (cycle)           2
+    11 POLICE-WATER    9 HOSP      WATER     ACCEPT                   1
+  Kruskal total = 37; stopped after 11 of 14 edges (35 sort comparisons, 10 pointer hops)
+
+Verification: Prim 37 = Kruskal 37 = brute force 37 over 662 spanning trees (2 distinct MSTs);
+  edge sets equal: True; cut property holds for Prim tree: True, Kruskal tree: True
+
+Boundary and failure cases
+  F1 disconnected (7 sites): Prim from EOC reaches only 4 sites (weight 12) -> NOT spanning
+     Kruskal -> minimum spanning FOREST: 5 edges = n - c = 7 - 2, weight 18
+        forest edges: PORT-FERRY, FIRE-HOSP, EOC-FIRE, PORT-LIGHTHOUSE, HOSP-POLICE
+     spanning_tree() -> ValueError: network is disconnected (2 components): no spanning tree exists
+  B1 one site                                    Prim   0  Kruskal   0  brute force   0  (reached 1/1)
+  B2 two sites, one route                        Prim   7  Kruskal   7  brute force   7  (reached 2/2)
+  B3 parallel routes 0-1 (9 and 4) + self-loop   Prim   9  Kruskal   9  brute force   9  (reached 3/3)
+  B4 all weights equal (K4, w = 3)               Prim   9  Kruskal   9  brute force   9  (reached 4/4)
+  B5 negative weight (subsidised route)          Prim   6  Kruskal   6  brute force   6  (reached 4/4)

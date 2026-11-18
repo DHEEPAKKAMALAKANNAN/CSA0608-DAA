@@ -1,0 +1,26 @@
+TASK 4 - EXPERIMENTS (seed 42)
+======================================================================================================================
+E1  Prim (heap), Prim (array) and Kruskal on sparse (E = 4V) and dense (complete) networks
+    type        V       E | Prim-heap ops      ms | Prim-array ops      ms | Kruskal ops      ms | MST weight same
+    sparse  1,000   4,000 |        29,874    13.2 |      1,008,000   164.1 |      57,254    17.4 |    152,274 True
+    sparse  2,000   8,000 |        65,294    26.2 |      4,016,000   648.3 |     125,201    37.9 |    293,019 True
+    sparse  4,000  16,000 |       140,111    66.7 |     16,032,000  2635.7 |     261,940    98.6 |    610,797 True
+    sparse  8,000  32,000 |       303,155   181.0 |     64,064,000 12169.1 |     566,045   214.5 |  1,184,911 True
+    sparse 16,000  64,000 |       648,225   394.2 |                        |   1,211,236   519.6 |  2,401,792 True
+    dense     100   4,950 |        11,714     6.5 |         19,900     5.0 |      55,670    19.1 |      1,255 True
+    dense     200  19,900 |        44,325    16.4 |         79,800    22.2 |     262,007    96.6 |      1,293 True
+    dense     400  79,800 |       170,086    75.0 |        319,600    82.2 |   1,205,003   476.1 |      1,386 True
+    dense     800 319,600 |       662,050   275.2 |      1,279,200   321.1 |   5,457,220  2198.7 |      1,558 True
+
+E2  Union-find variants inside Kruskal on two adversarial networks (hops = parent links followed)
+    network        V   finds |  naive hops       ms |  rank hops      ms | rank+compress hops      ms | same
+    chain      1,025   6,144 |   1,570,813    296.5 |      2,046     7.4 |              2,046     7.7 | True
+    chain      2,049  12,288 |   6,264,574    943.6 |      4,094    20.8 |              4,094    19.1 | True
+    chain      4,097  24,576 |  25,108,394   4043.5 |      8,190    26.8 |              8,190    33.9 | True
+    chain      8,193  49,152 | 100,470,177  17674.1 |     16,382    87.3 |             16,382    64.6 | True
+    binomial   1,025   6,144 |      12,238      7.7 |     10,278     7.4 |              2,999     6.7 | True
+    binomial   2,049  12,288 |      26,523     16.1 |     22,616    27.9 |              5,987    23.9 | True
+    binomial   4,097  24,576 |      57,074     38.0 |     49,408    36.5 |             11,983    31.0 | True
+    binomial   8,193  49,152 |     122,666     74.3 |    106,695    71.5 |             23,973    71.2 | True
+
+Wrote results/task4_01_sparse_vs_dense.csv, results/task4_02_union_find_variants.csv, results/task4_experiments.png

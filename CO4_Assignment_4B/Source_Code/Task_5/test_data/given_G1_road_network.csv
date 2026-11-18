@@ -1,0 +1,14 @@
+u,v,w,two_way
+H,A,4,yes
+H,B,2,yes
+B,A,1,yes
+A,C,5,yes
+B,C,8,yes
+B,D,10,yes
+C,D,3,yes
+C,E,2,yes
+D,F,6,yes
+E,F,8,yes
+F,G,2,no
+G,E,3,no
+D,G,9,no

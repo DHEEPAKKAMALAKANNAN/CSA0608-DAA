@@ -1,0 +1,3 @@
+encoding,symbols,alphabet,huffman_bits,fixed_bits_per_symbol,fixed_bits,avg_bits,entropy,saving_pct,ms,round_trip_ok
+event symbols (one per record),100000,12,304075,4,400000,3.0408,2.9768,23.98,43.2,True
+characters of the text log,4857309,44,22444282,8,38858472,4.6207,4.5919,42.24,3349.9,True

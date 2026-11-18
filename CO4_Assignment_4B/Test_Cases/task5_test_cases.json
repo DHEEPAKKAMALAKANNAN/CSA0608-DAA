@@ -1,0 +1,32 @@
+{
+  "task": "Task 5 - Dijkstra's single-source shortest paths for ambulance routing",
+  "id_scheme": "G = given in the task statement, S = student-designed, B = boundary, F = failure / invalid input",
+  "cases": [
+    {"id": "T5-G1", "category": "given", "type": "network_file", "file": "given_G1_road_network.csv", "source": "H",
+     "description": "8 junctions: distances from H (array and heap)",
+     "expect": {"dist": {"H": 0, "A": 3, "B": 2, "C": 8, "D": 11, "E": 10, "F": 17, "G": 19}}},
+    {"id": "T5-G2", "category": "given", "type": "route_file", "file": "given_G1_road_network.csv", "source": "H", "target": "G",
+     "description": "route H -> G", "expect": {"time": 19, "path": ["H","B","A","C","D","F","G"]}},
+    {"id": "T5-S1", "category": "student", "type": "random_vs_bellman_ford", "trials": 300, "n": 30, "m": 120, "seed": 51,
+     "description": "array = heap = Bellman-Ford, routes consistent", "expect": {"all_ok": true}},
+    {"id": "T5-S2", "category": "student", "type": "early_exit", "trials": 100, "n": 200, "m": 800, "seed": 52,
+     "description": "early exit at target = full run for that target", "expect": {"all_ok": true}},
+    {"id": "T5-S3", "category": "student", "type": "heap_accounting", "file": "given_G1_road_network.csv", "source": "H",
+     "description": "pops = pushes = settled + stale on G1", "expect": {"all_ok": true}},
+    {"id": "T5-B1", "category": "boundary", "type": "dijkstra", "n": 1, "edges": [], "source": 0,
+     "description": "single junction", "expect": {"dist": [0]}},
+    {"id": "T5-B2", "category": "boundary", "type": "dijkstra", "n": 3, "edges": [[0,1,4]], "source": 0, "target": 2,
+     "description": "unreachable junction", "expect": {"dist": [0, 4, "inf"], "path": null}},
+    {"id": "T5-B3", "category": "boundary", "type": "dijkstra", "n": 3, "edges": [[0,1,0],[1,2,0],[0,2,1]], "source": 0, "target": 2,
+     "description": "zero-time roads", "expect": {"dist": [0, 0, 0], "path": [0, 1, 2]}},
+    {"id": "T5-B4", "category": "boundary", "type": "dijkstra", "n": 2, "edges": [[0,1,9],[0,1,4],[1,1,2]], "source": 0, "target": 0,
+     "description": "parallel roads, self-loop, source = target", "expect": {"dist": [0, 4], "path": [0]}},
+    {"id": "T5-F1", "category": "failure", "type": "negative_edge", "file": "failure_F1_negative_edge.csv",
+     "description": "negative edge: safe mode refuses, unsafe mode is wrong, Bellman-Ford right",
+     "expect": {"error": "ValueError", "unsafe": {"A": 2, "C": 5}, "bellman_ford": {"A": 1, "C": 4}}},
+    {"id": "T5-F2", "category": "failure", "type": "negative_cycle", "file": "failure_F2_negative_cycle.csv",
+     "description": "negative cycle detected by Bellman-Ford", "expect": {"negative_cycle": true}},
+    {"id": "T5-F3", "category": "failure", "type": "dijkstra", "n": 2, "edges": [[0,3,1]], "source": 0,
+     "description": "road to an unknown junction", "expect": {"error": "ValueError"}}
+  ]
+}
