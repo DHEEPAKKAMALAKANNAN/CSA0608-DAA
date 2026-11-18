@@ -1,0 +1,27 @@
+Task 1 - binomial coefficient: test run
+PASS  T1  (given   ) C(6,3) = 20                    manual-trace instance (3 of 6 flags)  [4 algorithms agree]
+PASS  T2  (given   ) C(10,5) = 252                  5-flag suites from 10 flags  [4 algorithms agree]
+PASS  T3  (own     ) C(52,5) = 2598960              poker hands (5 of 52 cards)  [3 algorithms agree]
+PASS  T4  (own     ) C(20,10) = 184756              middle of row 20  [4 algorithms agree]
+PASS  T5  (own     ) C(40,20) = 137846528820        middle of row 40  [3 algorithms agree]
+PASS  T6  (own     ) C(100,50) = 100891344545...    very large exact value (30 digits)  [3 algorithms agree]
+PASS  T7  (boundary) C(0,0) = 1                     empty set  [4 algorithms agree]
+PASS  T8  (boundary) C(5,0) = 1                     left edge k = 0  [4 algorithms agree]
+PASS  T9  (boundary) C(5,5) = 1                     right edge k = n  [4 algorithms agree]
+PASS  T10 (boundary) C(30,1) = 30                   k = 1 gives n  [4 algorithms agree]
+PASS  T11 (boundary) C(30,29) = 30                  k = n - 1 gives n  [4 algorithms agree]
+PASS  T12 (boundary) C(7,8) = 0                     k > n gives 0  [4 algorithms agree]
+PASS  T13 (boundary) C(7,-1) = 0                    negative k gives 0  [4 algorithms agree]
+PASS  300 random (n, k), n <= 60: table = single row = memo = math.comb
+PASS  symmetry C(n, k) = C(n, n-k) on the 300 random pairs
+PASS  Pascal's rule C(n,k) = C(n-1,k-1) + C(n-1,k) holds for the computed values
+PASS  naive recursion makes exactly 2C(n,k) - 1 calls for all 0 <= k <= n <= 18
+PASS  memoised version performs exactly k(n-k) additions for all 0 <= k <= n < 40
+PASS  table and single row both perform (k-1)k/2 + k(n-k) additions (0 <= k <= n < 40)
+PASS  single row mod p: C(1000, 500) mod 1e9+7 matches math.comb
+PASS  single row stores only k + 1 = 251 cells for C(500, 250)
+PASS  negative n raises ValueError (invalid input rejected)
+PASS  non-integer n raises TypeError
+PASS  Fibonacci: naive = memo = bottom-up for n = 0..21
+PASS  Fibonacci naive calls = 2F(n+1) - 1 for n = 0..21
+RESULT: 25/25 tests passed

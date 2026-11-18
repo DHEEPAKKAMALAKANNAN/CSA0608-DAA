@@ -1,0 +1,64 @@
+====================================================================================================
+ TASK 1 - BINOMIAL COEFFICIENT C(n, k) BY DYNAMIC PROGRAMMING   (manual-trace instance: C(6, 3))
+ Scenario: number of 3-flag test configurations that can be drawn from 6 feature flags
+====================================================================================================
+
+[1] Bottom-up Pascal table C[i][j] = C(i, j), i = 0..6, j = 0..min(i, 3)
+    i \ j |     0     1     2     3
+    ------+------------------------
+        0 |     1                  
+        1 |     1     1            
+        2 |     1     2     1      
+        3 |     1     3     3     1
+        4 |     1     4     6     4
+        5 |     1     5    10    10
+        6 |     1     6    15    20
+
+[2] Order of computation (row by row, left to right) - every addition performed
+    row 2: #1  C[2][1]=1+1=2
+    row 3: #2  C[3][1]=1+2=3   #3  C[3][2]=2+1=3
+    row 4: #4  C[4][1]=1+3=4   #5  C[4][2]=3+3=6   #6  C[4][3]=3+1=4
+    row 5: #7  C[5][1]=1+4=5   #8  C[5][2]=4+6=10   #9  C[5][3]=6+4=10
+    row 6: #10 C[6][1]=1+5=6   #11 C[6][2]=5+10=15   #12 C[6][3]=10+10=20
+    additions counted = 12   formula (k-1)k/2 + k(n-k) = 3 + 9 = 12   cells filled = 22   C(6,3) = 20
+
+[3] Top-down memo table for C(6, 3):  number = solved by an addition, 1 = base case, . = never needed
+    i \ j |     0     1     2     3
+    ------+------------------------
+        0 |     .                  
+        1 |     1     1            
+        2 |     1     2     1      
+        3 |     1     3     3     1
+        4 |     .     4     6     4
+        5 |     .     .    10    10
+        6 |     .     .     .    20
+    calls = 19  (base returns 6, memo hits 4, new sub-problems 9)   additions = 9 = k(n-k) = 9
+    -> C[5][1], C[6][1], C[6][2] are never needed for C(6,3): top-down saves 3 of the 12 additions.
+
+[4] Space-optimised single row (j runs downward): row contents after each i
+    after i = 0: [1, 0, 0, 0]
+    after i = 1: [1, 1, 0, 0]
+    after i = 2: [1, 2, 1, 0]
+    after i = 3: [1, 3, 3, 1]
+    after i = 4: [1, 4, 6, 4]
+    after i = 5: [1, 5, 10, 10]
+    after i = 6: [1, 6, 15, 20]
+    additions = 12, storage = 4 cells instead of the 22 table cells; result 20
+
+[5] Operation counts: counted vs closed form
+    (n, k)       C(n,k)  naive calls      2C-1  naive adds  memo adds  k(n-k)  table adds  formula  1-row adds  cells 2D/1D
+    -----------------------------------------------------------------------------------------------------------------------
+    (6, 3)           20           39        39          19          9       9          12       12          12         22/4
+    (10, 5)         252          503       503         251         25      25          35       35          35         51/6
+    (16, 8)       12870        25739     25739       12869         64      64          92       92          92        117/9
+    (20, 10)     184756       369511    369511      184755        100     100         145      145         145       176/11
+    (22, 3)        1540         3079      3079        1539         57      57          60       60          60         86/4
+
+[6] Fibonacci warm-up: the same overlap effect
+       n      F(n)  naive calls  2F(n+1)-1  memo calls  memo adds  bottom-up adds
+      10        55          177        177          19          9               9
+      15       610         1973       1973          29         14              14
+      20      6765        21891      21891          39         19              19
+      25     75025       242785     242785          49         24              24
+
+Conclusion: recursion repeats sub-problems (calls = 2C(n,k)-1); DP solves each (i, j) once -> Theta(nk).

@@ -1,0 +1,25 @@
+Task 2 - 0/1 knapsack: test run
+PASS  K1  (given   ) W=10  n=5  optimum 94  drone instance (cargo_parcels.csv)  [4 algorithms = 94, items [1, 3, 4]]
+PASS  K2  (given   ) W=5   n=4  optimum 37  Levitin textbook instance  [4 algorithms = 37, items [1, 2, 4]]
+PASS  K3  (own     ) W=6   n=3  optimum 20  tie between two optimal loads  [4 algorithms = 20, items [1, 2]]
+PASS  K4  (own     ) W=9   n=4  optimum 30  many small parcels beat one big  [4 algorithms = 30, items [1, 2, 3]]
+PASS  K5  (own     ) W=9   n=4  optimum 35  one big parcel beats small ones  [4 algorithms = 35, items [4]]
+PASS  K6  (own     ) W=7   n=4  optimum 15  duplicate parcels  [4 algorithms = 15, items [1, 2, 3]]
+PASS  K7  (boundary) W=10  n=0  optimum 0   no parcels  [4 algorithms = 0, items []]
+PASS  K8  (boundary) W=0   n=2  optimum 0   capacity W = 0  [4 algorithms = 0, items []]
+PASS  K9  (boundary) W=3   n=3  optimum 0   every parcel heavier than W  [4 algorithms = 0, items []]
+PASS  K10 (boundary) W=100 n=3  optimum 6   all parcels fit  [4 algorithms = 6, items [1, 2, 3]]
+PASS  K11 (boundary) W=4   n=1  optimum 9   single parcel exact fit  [4 algorithms = 9, items [1]]
+PASS  K12 (boundary) W=3   n=1  optimum 0   single parcel too heavy  [4 algorithms = 0, items []]
+PASS  K13 (boundary) W=5   n=2  optimum 8   zero-value parcel is not loaded  [4 algorithms = 8, items [2]]
+PASS  300 random instances (n <= 12, W <= 40): table = memory function = single row = brute force
+PASS  300 random instances: backtracked set is feasible and its value equals the optimum
+PASS  given instance: bottom-up evaluates exactly n*W = 50 cells
+PASS  given instance: memory function computes 23 < 50 cells and agrees with F where computed
+PASS  given instance: greedy by value/weight gives 88 < 94 (DP needed for optimality)
+PASS  20 random instances: both bottom-up versions evaluate exactly n*W cells
+PASS  invalid input rejected with ValueError: negative capacity
+PASS  invalid input rejected with ValueError: zero weight
+PASS  invalid input rejected with ValueError: length mismatch
+PASS  invalid input rejected with ValueError: negative value
+RESULT: 23/23 tests passed

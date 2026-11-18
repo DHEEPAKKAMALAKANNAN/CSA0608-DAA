@@ -1,0 +1,27 @@
+============================================================================================================
+ TASK 6 - DESIGN CHALLENGE: n = 200 consignments, W = 100,000 kg, solver memory budget 32 MB
+============================================================================================================
+[1] Instance test_data/large_instance_n200_W100000.csv (generated with seed 42)
+    weights 104..4985 kg (total 490,907 kg = 4.9 x W), values 202..6036
+
+[2] Predicted memory (before running anything)
+    original 2-D table: 20,100,201 cells -> 76.7 MB as int32, 153.4 MB as int64, ~427 MB in Python  -> VIOLATES
+    R1 bit-packed     : model 3.1 MB (one 8-byte row + n*W bits), Python ~6.0 MB  -> fits
+    R2 divide&conquer : model 1.5 MB (two 8-byte rows), Python ~6.9 MB  -> fits, independent of n
+
+[3] Each design solves the full instance in a fresh process (time, peak private memory above baseline)
+    original 2-D (Task 2) value 128,890  items 58  load  99,988 kg  cells  20,000,000   3.46 s  peak  396.7 MB  OVER BUDGET
+    R1 bit-packed         value 128,890  items 58  load  99,988 kg  cells  19,509,293   1.51 s  peak    6.1 MB  <= budget
+    R2 divide&conquer     value 128,890  items 58  load  99,988 kg  cells  36,750,299   2.49 s  peak    7.6 MB  <= budget
+    (child baseline before solving 9.8 MB is not counted; start-up slack 0.0 MB)
+
+[4] Validation against the original design
+    same optimum: R1 True, R2 True;  R1 recovers exactly the original item set: True
+    both recovered loads respect W = 100,000 kg: True;  item values add up to the optimum: True
+    R2 evaluated 1.88 x the cells of R1 (predicted bound: 2 x)
+
+[5] plan_load() decisions from the predicted Python memory (R1 if it fits, else R2, else refuse)
+    n =  200, W =   100,000, budget 32 MB: R1 ~  6.0 MB, R2 ~  6.9 MB -> R1 bit-packed
+    n = 3000, W =   100,000, budget 32 MB: R1 ~ 41.6 MB, R2 ~  6.9 MB -> R2 divide&conquer
+    n =  200, W = 1,000,000, budget 32 MB: R1 ~ 59.8 MB, R2 ~ 68.7 MB -> REFUSE (use a coarser weight unit, e.g. 10 kg)
+    given instance - chosen consignments (first 12 of 58): [2, 7, 13, 14, 15, 18, 27, 29, 33, 35, 36, 42] ...

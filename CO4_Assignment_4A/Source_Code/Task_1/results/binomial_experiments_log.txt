@@ -1,0 +1,33 @@
+================================================================================================================
+ TASK 1 - EXPERIMENTS: OVERLAPPING SUB-PROBLEMS AND THE GROWTH OF C(n, k) ALGORITHMS
+================================================================================================================
+E1  naive vs memo vs bottom-up, k = n // 2 (times: median of 3 runs)
+    n   k    C(n,k)  naive calls  =2C-1?  memo adds  =k(n-k)?  table adds  =formula?   naive ms   memo ms  table ms
+  -----------------------------------------------------------------------------------------------------------------
+    6   3        20           39     yes          9       yes          12        yes       0.01     0.007     0.006
+    8   4        70          139     yes         16       yes          22        yes       0.03     0.015     0.007
+   10   5       252          503     yes         25       yes          35        yes       0.09     0.017     0.009
+   12   6       924         1847     yes         36       yes          51        yes       0.35     0.025     0.012
+   14   7      3432         6863     yes         49       yes          70        yes       1.25     0.033     0.016
+   16   8     12870        25739     yes         64       yes          92        yes       4.83     0.094     0.037
+   18   9     48620        97239     yes         81       yes         117        yes      18.65     0.055     0.026
+   20  10    184756       369511     yes        100       yes         145        yes     105.40     0.251     0.035
+   22  11    705432      1410863     yes        121       yes         176        yes     334.76     0.079     0.032
+   24  12   2704156      5408311     yes        144       yes         210        yes    1048.53     0.103     0.039
+  naive calls grow by x3.83 per +2 in n (-> 4 = 2^2, since C(n, n/2) ~ 2^n / sqrt(n)),
+  while the DP additions grow only quadratically in n when k = n/2.
+
+E2  large n, k = n // 2: 2-D table vs single row (exact) vs single row mod p (median of 3 runs)
+      n    k      n*k  additions   formula digits  2D cells 1D cells  2D table s   1-row s  1-row mod p s
+  -------------------------------------------------------------------------------------------------------
+    100   50     5000       3725      3725     30      3876       51      0.0006    0.0003         0.0005
+    200  100    20000      14950     14950     59     15251      101      0.0026    0.0014         0.0020
+    400  200    80000      59900     59900    120     60501      201      0.0109    0.0058         0.0081
+    800  400   320000     239800    239800    240    241001      401      0.0514    0.0239         0.0312
+   1600  800  1280000     959600    959600    480    962001      801      0.2383    0.1112         0.1384
+   3200 1600  5120000    3839200   3839200    962   3844001     1601      1.1364    0.5151         0.5598
+  last doubling of n (n*k x4): exact big-int time x4.6, mod-p time x4.0
+  (unit-cost theory predicts x4; if every addition cost O(digits) the ratio would tend to x8)
+
+Saved: results\binomial_E1.csv , results\binomial_E2.csv
+Graph: ..\..\Report\Screenshots\task1_binomial_growth.png

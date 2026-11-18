@@ -1,0 +1,14 @@
+================================================================================================================
+ TASK 5 - EXPERIMENTS: OPTIMAL BST CONSTRUCTION, n = 25 ... 400 keys (Zipf-like access counts, seed 42)
+================================================================================================================
+     n  Levitin cand.  n(n-1)(n+4)/6  Knuth cand.  Knuth/n^2  Levitin s  Knuth s  same C?  opt cost  balanced  greedy
+  -------------------------------------------------------------------------------------------------------------------
+    25           2900           2900          619       0.99     0.0005   0.0002      yes     3.041     3.751   3.139
+    50          22050          22050         2619       1.05     0.0038   0.0007      yes     3.561     5.142   3.956
+   100         171600         171600         9392       0.94     0.0318   0.0027      yes     3.972     5.693   4.491
+   200        1353200        1353200        35368       0.88     0.2321   0.0124      yes     4.388     6.788   4.790
+   400       10746400       10746400       166046       1.04     1.9207   0.0466      yes     5.022     7.917   5.698
+
+  last doubling of n: Levitin time x8.3 (Theta(n^3) -> x8), Knuth time x3.8 (Theta(n^2) -> x4)
+  optimal tree saves 36.6% of the comparisons of the balanced BST at n = 400
+Saved: results\obst_growth.csv   Graph: ..\..\Report\Screenshots\task5_obst_growth.png

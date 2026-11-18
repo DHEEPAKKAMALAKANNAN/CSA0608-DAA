@@ -1,0 +1,12 @@
+case_id,category,description,n,edges,expected_closure
+W1,given,data-centre network (network_links.csv),5,0-2;1-0;2-1;2-3;3-4;4-3,11111/11111/11111/00011/00011
+W2,own,directed cycle of 4 -> everyone reaches everyone,4,0-1;1-2;2-3;3-0,1111/1111/1111/1111
+W3,own,chain (DAG) 0->1->2->3,4,0-1;1-2;2-3,0111/0011/0001/0000
+W4,own,two disconnected components,5,0-1;1-0;2-3;3-4,11000/11000/00011/00001/00000
+W5,own,self-loops only,3,0-0;2-2,100/000/001
+W6,own,hub (star) out of vertex 0,4,0-1;0-2;0-3,0111/0000/0000/0000
+W7,own,complete digraph without loops,3,0-1;0-2;1-0;1-2;2-0;2-1,111/111/111
+W8,boundary,no edges at all,3,,000/000/000
+W9,boundary,single vertex without loop,1,,0
+W10,boundary,single vertex with self-loop,1,0-0,1
+W11,boundary,empty graph (n = 0),0,,

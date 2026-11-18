@@ -1,0 +1,9 @@
+case_id,category,description,keys,frequencies,expected_cost,expected_root
+O1,given,chatbot intent keywords (intent_keywords.csv),billing;login;refund;shipping,35;10;25;30,185,3
+O2,given,Levitin textbook example,A;B;C;D,10;20;40;30,170,3
+O3,own,uniform probabilities give the perfect balanced tree,a;b;c;d;e;f;g,1;1;1;1;1;1;1,17,4
+O4,own,one dominant key becomes the root,k1;k2;k3;k4;k5,1;1;90;1;1,100,3
+O5,own,two keys - more probable one is the root,x;y,20;80,120,2
+O6,boundary,single key,only,7,7,1
+O7,boundary,zero-probability keys sink below,a;b;c,0;50;0,50,2
+O8,boundary,empty key set,,,0,0

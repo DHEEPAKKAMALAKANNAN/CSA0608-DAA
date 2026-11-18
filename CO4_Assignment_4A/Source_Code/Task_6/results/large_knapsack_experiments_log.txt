@@ -1,0 +1,43 @@
+================================================================================================================
+ TASK 6 - EXPERIMENTS: ORIGINAL TABLE vs R1 (bit-packed) vs R2 (divide & conquer) UNDER A 32 MB BUDGET
+================================================================================================================
+E1  n = 200, growing capacity W (one fresh process per run)
+  design       n        W   optimum  items        cells   time s   peak MB  <= 32 MB  same opt?
+  ---------------------------------------------------------------------------------------------
+  original   200   12,500    18,785     20    2,500,000     0.50      29.5       yes        yes
+  R1         200   12,500    18,785     20    2,009,293     0.13       0.2       yes        yes
+  R2         200   12,500    18,785     20    3,124,412     0.24       1.2       yes        yes
+  original   200   25,000    35,143     26    5,000,000     0.87      67.6        NO        yes
+  R1         200   25,000    35,143     26    4,509,293     0.30       1.5       yes        yes
+  R2         200   25,000    35,143     26    7,867,343     0.58       1.4       yes        yes
+  original   200   50,000    67,158     37   10,000,000     2.49     161.3        NO        yes
+  R1         200   50,000    67,158     37    9,509,293     0.76       2.4       yes        yes
+  R2         200   50,000    67,158     37   17,263,160     1.23       3.8       yes        yes
+  original   200  100,000   128,890     58   20,000,000     3.98     396.7        NO        yes
+  R1         200  100,000   128,890     58   19,509,293     1.61       6.0       yes        yes
+  R2         200  100,000   128,890     58   36,750,299     2.73       7.5       yes        yes
+
+E2  W = 100,000, growing number of items n (original only where it is affordable)
+  design       n        W   optimum  items        cells   time s   peak MB  <= 32 MB  same opt?
+  ---------------------------------------------------------------------------------------------
+  original    50  100,000   110,835     45    5,000,000     1.18     162.4        NO        yes
+  R1          50  100,000   110,835     45    4,884,093     0.42       4.9       yes        yes
+  R2          50  100,000   110,835     45    9,208,021     0.88       7.5       yes        yes
+  original   100  100,000   122,591     50   10,000,000     1.91     234.8        NO        yes
+  R1         100  100,000   122,591     50    9,762,530     0.74       5.5       yes        yes
+  R2         100  100,000   122,591     50   18,390,318     1.29       7.5       yes        yes
+  original   200  100,000   128,890     58   20,000,000     3.98     396.7        NO        yes
+  R1         200  100,000   128,890     58   19,509,293     1.61       6.0       yes        yes
+  R2         200  100,000   128,890     58   36,750,299     2.73       7.5       yes        yes
+  R1         400  100,000   133,545     75   39,012,477     3.16       6.8       yes        yes
+  R2         400  100,000   133,545     75   73,597,157     5.03       7.5       yes        yes
+  original   400  100,000    not run - predicted 853 MB from 22.3 bytes/cell
+  R1         800  100,000   140,879    114   77,951,035     5.65       7.9       yes        yes
+  R2         800  100,000   140,879    114  146,277,695    10.38       7.5       yes        yes
+  original   800  100,000    not run - predicted 1,703 MB from 22.3 bytes/cell
+
+  original table: 12.3, 14.1, 16.8, 20.7 bytes per cell -> memory grows as Theta(nW)
+  R1 memory n = 50 -> 800: 4.9 -> 7.9 MB (grows with the n*W bits);  R2: 7.5 -> 7.5 MB (Theta(W) only)
+  R2 / R1 cells: 1.89, 1.88, 1.88, 1.89, 1.88  (bound 2)
+Saved: results\large_knapsack_E1.csv , results\large_knapsack_E2.csv
+Graph: ..\..\Report\Screenshots\task6_large_knapsack.png
