@@ -1,0 +1,50 @@
+=================================================================================
+  ShopSphere audit - M4 / M5 recursive engines executed with operation counters
+=================================================================================
+
+--- 1. M4 current design, 4 replicated parts: T(n) = 4T(n/2) + n = 2n^2 - n -------------------------
+n      ops counted  closed form  match  ops ratio  time (s)  time ratio
+-----  -----------  -----------  -----  ---------  --------  ----------
+16             496          496   PASS          -    0.0001           -
+32           2,016        2,016   PASS      4.065    0.0005        4.15
+64           8,128        8,128   PASS      4.032    0.0019        3.90
+128         32,640       32,640   PASS      4.016    0.0081        4.25
+256        130,816      130,816   PASS      4.008    0.0327        4.02
+512        523,776      523,776   PASS      4.004    0.1280        3.91
+1,024    2,096,128    2,096,128   PASS      4.002    0.6075        4.75
+
+--- 2. M4 redesign, 2 parts: T(n) = 2T(n/2) + n = n log2 n + n --------------------------------------
+n       ops counted  closed form  match  ops ratio  time (s)  time ratio
+------  -----------  -----------  -----  ---------  --------  ----------
+16               80           80   PASS          -    0.0000           -
+32              192          192   PASS      2.400    0.0000        2.30
+64              448          448   PASS      2.333    0.0000        2.12
+128           1,024        1,024   PASS      2.286    0.0001        2.15
+256           2,304        2,304   PASS      2.250    0.0002        2.17
+512           5,120        5,120   PASS      2.222    0.0004        2.04
+1,024        11,264       11,264   PASS      2.200    0.0009        2.19
+2,048        24,576       24,576   PASS      2.182    0.0019        2.08
+4,096        53,248       53,248   PASS      2.167    0.0047        2.46
+8,192       114,688      114,688   PASS      2.154    0.0128        2.70
+16,384      245,760      245,760   PASS      2.143    0.0178        1.39
+32,768      524,288      524,288   PASS      2.133    0.0381        2.15
+65,536    1,114,112    1,114,112   PASS      2.125    0.0755        1.98
+Doubling n: current design ~4x the work, redesign ~2(lg n + 2)/(lg n + 1), just over 2x.
+
+--- 3. M5 analytics: real merge-sort comparisons at every level vs Theta(n log^2 n) -----------------
+n       comparisons  model T(n)  real/model  /(n lg^2 n)  /(n lg n)  T(2n)/T(n)  sorted ok
+------  -----------  ----------  ----------  -----------  ---------  ----------  ---------
+64            1,037       1,408       0.737       0.4501       2.70           -       PASS
+128           2,792       3,712       0.752       0.4452       3.12        2.69       PASS
+256           7,346       9,472       0.776       0.4484       3.59        2.63       PASS
+512          18,583      23,552       0.789       0.4481       4.03        2.53       PASS
+1,024        46,207      57,344       0.806       0.4512       4.51        2.49       PASS
+2,048       112,259     137,216       0.818       0.4530       4.98        2.43       PASS
+4,096       268,375     323,584       0.829       0.4550       5.46        2.39       PASS
+8,192       632,822     753,664       0.840       0.4571       5.94        2.36       PASS
+16,384    1,474,312   1,736,704       0.849       0.4591       6.43        2.33       PASS
+Real comparisons / (n log2^2 n) levels off near a constant while / (n log2 n) keeps rising:
+the engine is Theta(n log^2 n), not Theta(n log n). (Merge sort uses slightly fewer than
+n log2 n comparisons per level, so real/model stays a little below 1.)
+
+Self-check (counters equal closed forms, every level sorted correctly): PASS

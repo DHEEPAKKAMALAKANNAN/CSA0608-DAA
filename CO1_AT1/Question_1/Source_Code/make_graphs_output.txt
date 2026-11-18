@@ -1,0 +1,7 @@
+saved Report\graphs\fig1_growth_all_modules.png
+saved Report\graphs\fig2_m1_quadratic.png
+saved Report\graphs\fig3_m2_audits.png
+saved Report\graphs\fig4_m3_search.png
+saved Report\graphs\fig5_m4_m5_recurrences.png
+saved Report\graphs\fig6_f_bound.png
+saved Report\graphs\fig7_scalability_times.png

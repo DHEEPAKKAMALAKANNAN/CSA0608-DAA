@@ -1,0 +1,35 @@
+==========================================================================================
+  ShopSphere audit - part (g): scalability estimates at 10^8 basic operations per second
+==========================================================================================
+
+--- 1. Operations and time: n = 100,000 today vs n = 1,000,000 in a year (window = 600 s) -----------
+module                    growth            ops n=10^5       time  ops n=10^6       time  growth  10 min @10^6
+------------------------  ----------------  ----------  ---------  ----------  ---------  ------  ------------
+M1 duplicate detector     Theta(n^2)         5.000e+09    50.00 s   5.000e+11   83.3 min  x100.0  FAIL        
+M2 rate limiter           Theta(n)           1.311e+05    1.31 ms   1.049e+06   10.49 ms    x8.0  PASS        
+S1 sequential (1 search)  Theta(n)           7.500e+04  750.00 us   7.500e+05    7.50 ms   x10.0  per query   
+S2 binary (1 search)      Theta(log n)       1.700e+01    0.17 us   2.000e+01    0.20 us    x1.2  per query   
+M4 current (4 parts)      Theta(n^2)         2.000e+10    3.3 min   2.000e+12     5.56 h  x100.0  FAIL        
+M4 redesign (2 parts)     Theta(n log n)     1.761e+06   17.61 ms   2.093e+07  209.32 ms   x11.9  PASS        
+M5 sales analytics        Theta(n log^2 n)   1.472e+07  147.24 ms   2.096e+08     2.10 s   x14.2  PASS        
+Report generator f(n)     Theta(n^2)         3.002e+10    5.0 min   3.000e+12     8.33 h  x100.0  FAIL        
+M1 redesign: hash set     Theta(n) exp.      1.000e+05    1.00 ms   1.000e+06   10.00 ms   x10.0  PASS        
+M1 redesign: sort + scan  Theta(n log n)     1.761e+06   17.61 ms   2.093e+07  209.32 ms   x11.9  PASS        
+
+--- 2. Largest catalogue each batch module can process inside the 10-minute window ------------------
+module                    growth            max n in 600 s  OK at 10^6?  
+------------------------  ----------------  --------------  -------------
+M1 duplicate detector     Theta(n^2)               346,410  NO - redesign
+M2 rate limiter           Theta(n)          34,359,738,368  yes          
+M4 current (4 parts)      Theta(n^2)               173,205  NO - redesign
+M4 redesign (2 parts)     Theta(n log n)     1,886,038,512  yes          
+M5 sales analytics        Theta(n log^2 n)     155,862,394  yes          
+Report generator f(n)     Theta(n^2)               141,392  NO - redesign
+M1 redesign: hash set     Theta(n) exp.     60,000,000,000  yes          
+M1 redesign: sort + scan  Theta(n log n)     1,886,038,512  yes          
+
+--- 3. Search throughput at n = 10^6 (searches per second on one server) ----------------------------
+  S1: 750,000.25 comparisons per search -> 133 searches/s
+  S2: 20 comparisons per search (worst) -> 5,000,000 searches/s  (37,500 times more)
+
+Modules that miss the 10-minute window at n = 10^6: M1 duplicate detector, M4 current (4 parts), Report generator f(n)

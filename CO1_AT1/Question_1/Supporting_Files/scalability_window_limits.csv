@@ -1,0 +1,9 @@
+module,growth,max_n_in_600s
+M1 duplicate detector,Theta(n^2),346410
+M2 rate limiter,Theta(n),34359738368
+M4 current (4 parts),Theta(n^2),173205
+M4 redesign (2 parts),Theta(n log n),1886038512
+M5 sales analytics,Theta(n log^2 n),155862394
+Report generator f(n),Theta(n^2),141392
+M1 redesign: hash set,Theta(n) exp.,60000000000
+M1 redesign: sort + scan,Theta(n log n),1886038512
