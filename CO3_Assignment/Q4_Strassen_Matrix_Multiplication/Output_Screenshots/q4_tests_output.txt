@@ -1,0 +1,17 @@
+Q4 TESTS - conventional and Strassen matrix multiplication
+==========================================================================================
+PASS  2 x 2 worked example: Strassen = conventional = [[18, 14], [62, 66]]
+PASS  conventional equals numpy for n = 1..12 (random integer matrices)
+PASS  Strassen (cutoff 1, dynamic padding) equals numpy for EVERY n = 1..40
+PASS  Strassen with cutoffs 2, 4, 8, 16, 32 equals numpy at n = 64 and n = 100
+PASS  static padding (to the next power of 2) equals numpy for n = 5, 33, 100
+PASS  negative entries: Strassen equals numpy for 16 x 16 matrices with entries in [-9, 9]
+PASS  identity: I x M = M x I = M (n = 12, not a power of 2)
+PASS  zero matrix: 0 x M = 0 (n = 9)
+PASS  pure Strassen counts: mults = 7^k, adds = 6(7^k - 4^k), depth = k for n = 2^k, k = 0..6
+PASS  conventional counts: n^3 mults and n^2 (n - 1) adds (n = 1, 7, 16, 30)
+PASS  hybrid/dynamic-padding counts match the recurrences M(n) = 7M(ceil(n/2)), A(n) = 7A(h) + 18h^2 (5 cases)
+PASS  dynamic padding of n = 100 pads exactly the odd sizes 25, 13, 7 at every node (3 levels padded)
+PASS  cutoff >= n gives exactly the conventional counts (n = 50, cutoff 64)
+------------------------------------------------------------------------------------------
+RESULT: 13/13 tests passed

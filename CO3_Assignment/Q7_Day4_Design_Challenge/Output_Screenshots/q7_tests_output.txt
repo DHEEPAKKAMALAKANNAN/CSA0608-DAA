@@ -1,0 +1,25 @@
+Q7 TESTS - original quick sort, proposals A and B, joint designs, adversary
+----------------------------------------------------------------------------------------------------
+PASS  Baseline        sorts 907 lists (n = 0..150: random/sorted/reverse/slots/all-equal/3 values)
+PASS  A               sorts 907 lists (n = 0..150: random/sorted/reverse/slots/all-equal/3 values)
+PASS  B               sorts 907 lists (n = 0..150: random/sorted/reverse/slots/all-equal/3 values)
+PASS  Joint-v1        sorts 907 lists (n = 0..150: random/sorted/reverse/slots/all-equal/3 values)
+PASS  Joint           sorts 907 lists (n = 0..150: random/sorted/reverse/slots/all-equal/3 values)
+PASS  Joint-unguarded sorts 907 lists (n = 0..150: random/sorted/reverse/slots/all-equal/3 values)
+PASS  A: recursion depth <= log2 n on all five natural inputs (n = 100, 1,000, 3,000)
+PASS  B: an all-equal list costs exactly 2n comparisons (one 3-way partition)
+PASS  Joint: an all-equal list costs exactly 2n + 3 comparisons (median-of-3 + one fat partition)
+PASS  Joint: depth <= log2 n and no heapsort fallback on the natural inputs (n = 100, 1,000, 5,000)
+PASS  Joint: an already sorted list is left almost untouched (moves <= n/2)
+PASS  Joint-v1 (rejected): sorted input triggers heapsort fallbacks (8) - the reason for rejecting it
+----------------------------------------------------------------------------------------------------
+PASS  Adversary: every killer input is a permutation of 0..n-1 (A, B seed 42, Joint unguarded)
+PASS  Adversary: replaying the sort on its killer repeats exactly the comparisons made under attack
+PASS  Killer-J forces the unguarded joint design to >= n^2/8 comparisons (quadratic)
+PASS  With the depth budget the same killers cost <= 6 n log2 n comparisons (O(n log n) guarantee)
+PASS  The guard is what saves it: at least one heapsort fallback on every killer-J input
+PASS  Killer-A forces proposal A to >= n^2/8 comparisons (median-of-3 is deterministic)
+PASS  Killer-B hurts B only with the attacked seed: seed 42 quadratic, seed 7 below 2 n log2 n
+PASS  Joint is deterministic: the same batch always costs the same work
+----------------------------------------------------------------------------------------------------
+RESULT: 20/20 tests passed

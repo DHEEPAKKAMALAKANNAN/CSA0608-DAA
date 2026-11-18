@@ -1,0 +1,39 @@
+====================================================================================================
+Q1 DEMO - Max-Min of one flight's battery temperatures and Binary Search in a parcel manifest
+====================================================================================================
+
+Flight log (n = 8): [31.5, 28.0, 44.2, 39.9, 25.1, 47.3, 30.6, 41.8]
+Straightforward scan     : 14 comparisons (2n - 2 = 14)
+Divide-and-conquer trace (rule 'half'):
+   [0..7] divide into [0..3] and [4..7]
+       [0..3] divide into [0..1] and [2..3]
+           [0..1] leaf -> max=31.5, min=28.0  (1 comparison)
+           [2..3] leaf -> max=44.2, min=39.9  (1 comparison)
+       [0..3] combine -> max=44.2, min=28.0  (2 comparisons)
+       [4..7] divide into [4..5] and [6..7]
+           [4..5] leaf -> max=47.3, min=25.1  (1 comparison)
+           [6..7] leaf -> max=41.8, min=30.6  (1 comparison)
+       [4..7] combine -> max=47.3, min=25.1  (2 comparisons)
+   [0..7] combine -> max=47.3, min=25.1  (2 comparisons)
+Result: max = 47.3 C, min = 25.1 C; 10 comparisons (3n/2 - 2 = 10), 7 calls, depth 2
+
+When n is not a power of 2 the division rule matters (n = 6: [31.5, 28.0, 44.2, 39.9, 25.1, 47.3])
+   rule 'half': 8 comparisons, lone-reading leaves L1 = 2; [0..5] divide into [0..2] and [3..5]
+   rule 'even': 7 comparisons, lone-reading leaves L1 = 0; [0..5] divide into [0..3] and [4..5]
+   optimum ceil(3n/2) - 2 = 7; any rule costs (3n + L1)/2 - 2
+   pairwise loop ('2 | rest' division, no recursion): 7 comparisons
+
+Sorted parcel manifest (n = 16):
+   indices 0-7 : [10210, 10342, 10477, 10519, 10604, 10788, 10835, 10912]
+   indices 8-15: [11050, 11163, 11297, 11348, 11402, 11586, 11621, 11799]
+Look up parcel 11348:
+   probe a[7] = 10912 in range [0..15]
+   probe a[11] = 11348 in range [8..15]
+   -> found at index 11 after 2 probes (worst case floor(log2 n) + 1 = 5)
+Look up parcel 10600:
+   probe a[7] = 10912 in range [0..15]
+   probe a[3] = 10519 in range [0..6]
+   probe a[5] = 10788 in range [4..6]
+   probe a[4] = 10604 in range [4..4]
+   range [4..3] is empty -> not found
+   -> not in the manifest after 4 probes (worst case floor(log2 n) + 1 = 5)

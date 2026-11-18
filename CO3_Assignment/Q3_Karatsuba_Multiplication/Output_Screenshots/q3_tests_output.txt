@@ -1,0 +1,19 @@
+Q3 TESTS - schoolbook and Karatsuba multiplication on digit arrays
+==========================================================================================
+PASS  digit conversion round trip: 0, 7, 1234, 10^50 + 3 and zero padding
+PASS  schoolbook 1234 x 5678 = 7006652
+PASS  Karatsuba 1234 x 5678 = 7006652 (worked example of the report)
+PASS  schoolbook equals int * for every n = 1..40 (3 random pairs each)
+PASS  Karatsuba (threshold 1) equals int * for every n = 1..70 (3 random pairs each)
+PASS  hybrid Karatsuba equals int * for thresholds 2, 4, 8, 16, 32, 64 at n = 617
+PASS  Karatsuba single-digit mults = 3^ceil(log2 n) and depth = ceil(log2 n) for every n = 1..129
+PASS  schoolbook counts: exactly n^2 mults and 2n^2 additions (n = 1, 5, 64, 100)
+PASS  hybrid counts match M(n) = 3M(ceil(n/2)), M(n <= t) = n^2 (4 size/threshold pairs)
+PASS  all-nines operands (maximum carries): (10^64 - 1)^2 correct
+PASS  zero operand: 0 x (10^30 + 7) = 0 and 1-digit 9 x 9 = 81
+PASS  operands of different lengths (zero-padded): 123456789 x 987 correct
+PASS  equal halves (a0 = a1, middle product 0): 4545 x 1212 correct
+PASS  RSA-size operands: 617-digit and 1,234-digit products correct (threshold 1 and 16)
+PASS  additive Karatsuba variant (comparison only) correct for n = 4, 17, 64, 100
+------------------------------------------------------------------------------------------
+RESULT: 15/15 tests passed

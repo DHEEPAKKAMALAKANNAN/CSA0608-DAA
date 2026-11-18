@@ -1,0 +1,22 @@
+Q1 TESTS - Max-Min (naive, D&C 'half', D&C 'even', pairwise) and recursive Binary Search
+------------------------------------------------------------------------------------------------
+PASS  Max-Min: all four methods equal (max(), min()) for n = 1..300, random reals
+PASS  Max-Min: all four methods equal (max(), min()) for n = 1..300, many duplicates
+PASS  Max-Min: one reading and all-equal readings handled
+PASS  Max-Min: naive scan makes exactly 2n - 2 comparisons (n = 1..300)
+PASS  Max-Min: rule 'even' makes exactly ceil(3n/2) - 2 comparisons (n = 1..300)
+PASS  Max-Min: pairwise loop makes exactly ceil(3n/2) - 2 comparisons (n = 1..300)
+PASS  Max-Min: rule 'half' makes exactly (3n + L1)/2 - 2 >= ceil(3n/2) - 2 comparisons (n = 1..300)
+PASS  Max-Min: both rules make exactly 3n/2 - 2 comparisons for n = 2, 4, ..., 1024
+PASS  Max-Min: recursion depth of rule 'half' = ceil(log2 n) - 1 (n = 2..300)
+PASS  Max-Min: counts do not depend on the order of the readings (n = 257)
+------------------------------------------------------------------------------------------------
+PASS  Binary search: empty manifest returns (-1, 0)
+PASS  Binary search: every present ID found at its bisect_left index (n = 1..300)
+PASS  Binary search: every absent ID (one per gap) returns -1 after floor(lg n) or floor(lg n)+1 probes
+PASS  Binary search: no look-up needs more than floor(log2 n) + 1 probes (n = 1..300)
+PASS  Binary search: the worst case floor(log2 n) + 1 is reached for every n = 1..300
+PASS  Binary search: total probes over all keys = sum(floor(log2 i) + 1) exactly (n = 1..200)
+PASS  Binary search: manifests with duplicate IDs agree with the `in` operator (300 cases)
+------------------------------------------------------------------------------------------------
+RESULT: 17/17 tests passed

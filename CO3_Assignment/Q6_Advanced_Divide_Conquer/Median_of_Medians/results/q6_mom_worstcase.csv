@@ -1,0 +1,4 @@
+n,input,qs_first_comparisons,formula,mom_g5_comparisons,qs_first_time_s,mom_g5_time_s,correct
+1000,sorted,750500,750500,6887,0.03447,0.00112,True
+2000,sorted,3001000,3001000,14152,0.12497,0.00222,True
+4000,sorted,12002000,12002000,28903,0.58632,0.00253,True

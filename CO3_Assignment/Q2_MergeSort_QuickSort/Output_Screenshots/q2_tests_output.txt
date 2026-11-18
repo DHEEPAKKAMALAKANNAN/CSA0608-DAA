@@ -1,0 +1,18 @@
+Q2 TESTS - Merge Sort and Quick Sort (last / random / median-of-three pivot)
+--------------------------------------------------------------------------------------------
+PASS  Merge         sorts 756 lists (n = 0..150; random/sorted/reverse/4 values/all equal)
+PASS  Quick-last    sorts 756 lists (n = 0..150; random/sorted/reverse/4 values/all equal)
+PASS  Quick-random  sorts 756 lists (n = 0..150; random/sorted/reverse/4 values/all equal)
+PASS  Quick-median3 sorts 756 lists (n = 0..150; random/sorted/reverse/4 values/all equal)
+PASS  Merge Sort is stable: equal deadlines keep their arrival order (300 orders, 6 slots)
+PASS  Merge Sort on sorted and reversed n = 2^k: exactly (n/2) log2 n comparisons (k = 1..11)
+PASS  Merge Sort on n = 2^k: exactly 2 n log2 n moves and recursion depth log2 n (k = 1..11)
+PASS  Merge Sort on random data never exceeds n*ceil(lg n) - 2^ceil(lg n) + 1 comparisons (85 sizes)
+PASS  Quick-last on sorted data: exactly n(n-1)/2 comparisons and depth n - 1 (worst case)
+PASS  Quick-last on reversed data: exactly n(n-1)/2 comparisons
+PASS  All three pivot rules on all-equal data: at least n(n-1)/2 comparisons (Lomuto puts all on one side)
+PASS  Quick-median3 on sorted data: recursion depth <= ceil(log2(n + 1)) (median = middle element)
+PASS  Quick-random is reproducible with a fixed seed (same counts twice)
+PASS  Quick-random/median3 on random data stay below 2 n log2 n comparisons (n = 1,000 and 3,000)
+--------------------------------------------------------------------------------------------
+RESULT: 14/14 tests passed

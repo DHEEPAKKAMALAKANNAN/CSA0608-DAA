@@ -1,0 +1,12 @@
+Q7 - Joint final design vs the rejected first attempt v1 (n = 2,000 orders)
+       design      input | comparisons / n lg n |   moves | depth | heapsort | correct
+  final (fat)     random |      31,140     1.42 |  13,771 |     4 |        0 | True
+  final (fat)     sorted |      16,387     0.75 |     512 |     7 |        0 | True
+  final (fat)    reverse |      18,381     0.84 |   2,520 |     7 |        0 | True
+  final (fat)      slots |      17,402     0.79 |   8,426 |     4 |        0 | True
+  final (fat)  all-equal |       4,003     0.18 |       0 |     1 |        0 | True
+  v1 Dijkstra     random |      32,637     1.49 |  27,996 |     5 |        0 | True
+  v1 Dijkstra     sorted |      86,461     3.94 |  86,328 |     4 |        6 | True
+  v1 Dijkstra    reverse |      71,986     3.28 |  69,971 |     4 |        8 | True
+  v1 Dijkstra      slots |      18,617     0.85 |  19,754 |     4 |        0 | True
+  v1 Dijkstra  all-equal |       4,003     0.18 |       0 |     1 |        0 | True

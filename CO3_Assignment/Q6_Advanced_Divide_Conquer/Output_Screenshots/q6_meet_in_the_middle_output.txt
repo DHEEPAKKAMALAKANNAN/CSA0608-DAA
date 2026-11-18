@@ -1,0 +1,36 @@
+================================================================================================================
+Q6(b)  Payload packing by Meet-in-the-Middle - demo: 10 parcels, capacity W = 9,000 g
+================================================================================================================
+  weights (g): [2300, 1700, 4100, 900, 3600, 2800, 1250, 600, 3350, 1900]
+  half 1 = [2300, 1700, 4100, 900, 3600] -> 32 sums;  half 2 = [2800, 1250, 600, 3350, 1900] -> 32 sums
+  brute force best = 9000 g  |  MITM best = 9000 g  |  DP reference = 9000 g
+  MITM load: P2:1700, P4:900, P5:3600, P6:2800  (total 9000 g, exact fill = True)
+  MITM operations: 62 additions, 99 merge comparisons, 130 probes  vs brute force 2^10 = 1,024 subsets
+
+Brute force (Gray-code enumeration of all 2^n subsets)
+   n   subsets = 2^n     additions    time s  ns/subset   best g     W g  = DP
+------------------------------------------------------------------------------
+  12           4,096         4,095     0.001        170   11,438  11,443   yes
+  16          65,536        65,535     0.011        167   20,505  20,505   yes
+  20       1,048,576     1,048,575     0.214        204   21,250  21,250   yes
+  22       4,194,304     4,194,303     1.250        298   21,877  21,877   yes
+  24      16,777,216    16,777,215     3.714        221   26,691  26,691   yes
+
+Meet-in-the-Middle (sorted half-sum lists by merging; binary search or two-pointer combine)
+   n  stored sums   gen adds   merge cmp       probes  (n/2)2^(n/2)  binary s  2-ptr steps  2-ptr s   best g     W g  = DP
+--------------------------------------------------------------------------------------------------------------------------
+  12          128        126         229          378           384     0.000          127    0.000   11,438  11,443   yes
+  16          512        510         982        1,960         2,048     0.000          501    0.000   20,505  20,505   yes
+  20        2,048      2,046       4,013        9,930        10,240     0.002        2,017    0.001   21,250  21,250   yes
+  24        8,192      8,190      16,255       46,452        49,152     0.008        7,967    0.004   26,691  26,691   yes
+  28       32,768     32,766      65,296      221,242       229,376     0.037       32,187    0.017   25,784  25,784   yes
+  32      131,072    131,070     261,826    1,016,816     1,048,576     0.173      129,087    0.063   31,757  31,757   yes
+  36      524,288    524,286   1,047,081    4,421,898     4,718,592     0.763      507,805    0.259   29,857  29,857   yes
+  40    2,097,152  2,097,150   4,193,836   20,969,560    20,971,520     4.011    2,097,054    1.319   44,639  44,639   yes
+
+Largest number of parcels decided within 2 s (cost per operation from the largest run):
+  brute_force         221.3 ns/op   largest measured n within 2 s = 22   predicted limit n = 23 (1.86 s; n + 1: 3.71 s)
+  mitm_binary         141.7 ns/op   largest measured n within 2 s = 36   predicted limit n = 38 (1.93 s; n + 1: 2.23 s)
+  mitm_two_pointer    157.3 ns/op   largest measured n within 2 s = 40   predicted limit n = 41 (1.98 s; n + 1: 2.64 s)
+All 21 runs agree with the DP reference: True
+CSV written: Meet_in_the_Middle/results/q6_mitm_growth.csv, q6_mitm_limits.csv
