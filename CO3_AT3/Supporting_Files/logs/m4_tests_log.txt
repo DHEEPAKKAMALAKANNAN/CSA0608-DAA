@@ -1,0 +1,19 @@
+--- Module 4: Strassen (cutoff 1 / 2 with power-of-two padding, cutoff 4 / 8 with minimal padding), naive
+PASS  M4 case '1 x 1' - 5 variants == numpy
+PASS  M4 case '2 x 2' - 5 variants == numpy
+PASS  M4 case 'given sample 4 x 4 (D x C)' - 5 variants == numpy
+PASS  M4 case '3 x 3 (padding needed)' - 5 variants == numpy
+PASS  M4 case '5 x 5 (padding needed)' - 5 variants == numpy
+PASS  M4 case '6 x 6 (padding needed)' - 5 variants == numpy
+PASS  M4 case '7 x 7 (padding needed)' - 5 variants == numpy
+PASS  M4 case '12 x 12 (padding needed)' - 5 variants == numpy
+PASS  M4 case '8 x 8 identity x random' - 5 variants == numpy
+PASS  M4 case '8 x 8 zero x random' - 5 variants == numpy
+PASS  M4 case '16 x 16 random' - 5 variants == numpy
+PASS  M4 generated 64 x 64 demand x cost - 5 variants == numpy
+PASS  M4 counted (mults, adds) == closed form strassen_ops(n, n0), n = 1..64, n0 = 1, 4, 8
+PASS  M4 pure Strassen: M(n) = 7^k = n^lg7 and A(n) = 6(7^k - 4^k) for n = 2^k, k = 0..11
+PASS  M4 PadSize: 600->608 (n0 64), 100->100 (n0 32), 100->104 (n0 16), 129->136 (n0 32), 5->8 (n0 1)
+PASS  M4 30 random sizes 1..40 x random cutoff x padding policy == numpy  [0 failures]
+PASS  M4 odd size above the cutoff without padding is rejected (ValueError)
+RESULT: 17/17 tests passed

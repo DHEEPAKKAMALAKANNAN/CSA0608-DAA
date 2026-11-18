@@ -1,0 +1,7 @@
+distribution,n,algorithm,comparisons,moves_or_swaps,time_ms
+random,131072,merge sort (top-down),2062779,4456448,382.255
+random,131072,quick sort (hybrid),3444693,2326131,313.695
+random,131072,quick sort (3-way),3977076,2714755,438.303
+scores,131072,merge sort (top-down),2057255,4456448,361.302
+scores,131072,quick sort (hybrid),1308293,709993,100.027
+scores,131072,quick sort (3-way),1574631,893120,117.353

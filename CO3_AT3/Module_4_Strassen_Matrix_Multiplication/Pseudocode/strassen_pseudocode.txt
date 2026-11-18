@@ -1,0 +1,42 @@
+SwiftLogix - Module 4: Route-demand x cost matrix product for network forecasting
+Input : n x n matrices A (demand) and B (cost); n is padded to a power of two (or to s * 2^d, s <= n0)
+Basic operations: scalar multiplications and scalar additions/subtractions
+
+Algorithm Strassen(A, B, n)
+// Output: C = A x B
+1. if n = 1 then return [ A[1][1] * B[1][1] ]                 // base case (or n <= n0: NaiveMultiply)
+2. h = n / 2                                                  // DIVIDE each matrix into 4 h x h blocks
+3. split A into A11, A12, A21, A22 and B into B11, B12, B21, B22
+4. M1 = Strassen(A11 + A22, B11 + B22, h)                     // CONQUER: 7 recursive products
+5. M2 = Strassen(A21 + A22, B11, h)
+6. M3 = Strassen(A11, B12 - B22, h)
+7. M4 = Strassen(A22, B21 - B11, h)
+8. M5 = Strassen(A11 + A12, B22, h)
+9. M6 = Strassen(A21 - A11, B11 + B12, h)
+10. M7 = Strassen(A12 - A22, B21 + B22, h)                    // 10 block additions/subtractions so far
+11. C11 = M1 + M4 - M5 + M7                                   // COMBINE: 8 more block additions
+12. C12 = M3 + M5
+13. C21 = M2 + M4
+14. C22 = M1 - M2 + M3 + M6
+15. return the matrix assembled from C11, C12, C21, C22
+
+Algorithm NaiveMultiply(A, B, n)                             // baseline (definition-based)
+1. for i = 1 to n do
+2.     for j = 1 to n do
+3.         C[i][j] = 0
+4.         for k = 1 to n do C[i][j] = C[i][j] + A[i][k] * B[k][j]
+5. return C
+
+Recurrences: multiplications  M(n) = 7 M(n/2),               M(1) = 1
+             additions        A(n) = 7 A(n/2) + 18 (n/2)^2,   A(1) = 0
+             naive            N(n) = n^3 multiplications + n^2 (n - 1) additions
+
+---------------------------------------------------------------- improved variant (Part 5)
+Algorithm HybridStrassen(A, B, n, n0)                        // cutoff n0 (tuned), minimal padding
+1. if n <= n0 then return NaiveMultiply(A, B, n)              // below the crossover: naive is cheaper
+2. (lines 2-15 of Strassen, recursive calls go to HybridStrassen)
+
+Algorithm PadSize(n, n0)                                     // smallest m >= n with m = s * 2^d, s <= n0
+1. d = 0
+2. while ceil(n / 2^d) > n0 do d = d + 1
+3. return ceil(n / 2^d) * 2^d                                 // e.g. n = 600, n0 = 64 -> m = 608 (not 1024)

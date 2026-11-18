@@ -1,0 +1,4 @@
+n,naive_peak_kb,strassen32_peak_kb,naive_max_abs_err,strassen32_max_abs_err
+64,164.3,632.9,1.421e-14,1.421e-14
+128,648.1,2416.1,4.263e-14,5.684e-14
+256,2606.3,9436.3,5.684e-14,2.061e-13

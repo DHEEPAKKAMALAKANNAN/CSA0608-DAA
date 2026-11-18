@@ -1,0 +1,61 @@
+========================================================================================================
+SwiftLogix M3 - binary search in the sorted tracking index (given sample: n = 16 IDs, 8 queries)
+========================================================================================================
+  [ 0] SLX1046629381 -> rec 13   [ 1] SLX1198804562 -> rec  7   [ 2] SLX1873305540 -> rec 14   [ 3] SLX2290017745 -> rec  4
+  [ 4] SLX2675530981 -> rec 11   [ 5] SLX3105569820 -> rec  2   [ 6] SLX3359087714 -> rec 12   [ 7] SLX4410926638 -> rec  9
+  [ 8] SLX4827301956 -> rec  1   [ 9] SLX5561290347 -> rec  5   [10] SLX6043378120 -> rec  6   [11] SLX6918845023 -> rec 15
+  [12] SLX7720418833 -> rec  3   [13] SLX8837152209 -> rec  8   [14] SLX9064471315 -> rec 10   [15] SLX9580032217 -> rec 16
+
+Iterative binary search - interval [lo, hi], probe mid, decision (one 3-way comparison per step)
+  Q1 SLX4410926638 (present): FOUND at [7] -> record offset 9; comparisons = 1
+      step 1: lo= 0 hi=15 mid= 7  K[mid]=SLX4410926638  -> found
+  Q2 SLX1046629381 (present): FOUND at [0] -> record offset 13; comparisons = 4
+      step 1: lo= 0 hi=15 mid= 7  K[mid]=SLX4410926638  -> go left
+      step 2: lo= 0 hi= 6 mid= 3  K[mid]=SLX2290017745  -> go left
+      step 3: lo= 0 hi= 2 mid= 1  K[mid]=SLX1198804562  -> go left
+      step 4: lo= 0 hi= 0 mid= 0  K[mid]=SLX1046629381  -> found
+  Q3 SLX9580032217 (present): FOUND at [15] -> record offset 16; comparisons = 5
+      step 1: lo= 0 hi=15 mid= 7  K[mid]=SLX4410926638  -> go right
+      step 2: lo= 8 hi=15 mid=11  K[mid]=SLX6918845023  -> go right
+      step 3: lo=12 hi=15 mid=13  K[mid]=SLX8837152209  -> go right
+      step 4: lo=14 hi=15 mid=14  K[mid]=SLX9064471315  -> go right
+      step 5: lo=15 hi=15 mid=15  K[mid]=SLX9580032217  -> found
+  Q4 SLX6918845023 (present): FOUND at [11] -> record offset 15; comparisons = 2
+      step 1: lo= 0 hi=15 mid= 7  K[mid]=SLX4410926638  -> go right
+      step 2: lo= 8 hi=15 mid=11  K[mid]=SLX6918845023  -> found
+  Q5 SLX3000000000 (absent): NOT FOUND (insertion point 5); comparisons = 4
+      step 1: lo= 0 hi=15 mid= 7  K[mid]=SLX4410926638  -> go left
+      step 2: lo= 0 hi= 6 mid= 3  K[mid]=SLX2290017745  -> go right
+      step 3: lo= 4 hi= 6 mid= 5  K[mid]=SLX3105569820  -> go left
+      step 4: lo= 4 hi= 4 mid= 4  K[mid]=SLX2675530981  -> go right
+      end    : lo= 5 hi= 4  lo > hi -> interval empty, stop
+  Q6 SLX0999999999 (absent): NOT FOUND (insertion point 0); comparisons = 4
+      step 1: lo= 0 hi=15 mid= 7  K[mid]=SLX4410926638  -> go left
+      step 2: lo= 0 hi= 6 mid= 3  K[mid]=SLX2290017745  -> go left
+      step 3: lo= 0 hi= 2 mid= 1  K[mid]=SLX1198804562  -> go left
+      step 4: lo= 0 hi= 0 mid= 0  K[mid]=SLX1046629381  -> go left
+      end    : lo= 0 hi=-1  lo > hi -> interval empty, stop
+  Q7 SLX9999999999 (absent): NOT FOUND (insertion point 16); comparisons = 5
+      step 1: lo= 0 hi=15 mid= 7  K[mid]=SLX4410926638  -> go right
+      step 2: lo= 8 hi=15 mid=11  K[mid]=SLX6918845023  -> go right
+      step 3: lo=12 hi=15 mid=13  K[mid]=SLX8837152209  -> go right
+      step 4: lo=14 hi=15 mid=14  K[mid]=SLX9064471315  -> go right
+      step 5: lo=15 hi=15 mid=15  K[mid]=SLX9580032217  -> go right
+      end    : lo=16 hi=15  lo > hi -> interval empty, stop
+  Q8 SLX7720418833 (present): FOUND at [12] -> record offset 3; comparisons = 4
+      step 1: lo= 0 hi=15 mid= 7  K[mid]=SLX4410926638  -> go right
+      step 2: lo= 8 hi=15 mid=11  K[mid]=SLX6918845023  -> go right
+      step 3: lo=12 hi=15 mid=13  K[mid]=SLX8837152209  -> go left
+      step 4: lo=12 hi=12 mid=12  K[mid]=SLX7720418833  -> found
+
+Recursive version on Q5 - each call keeps ONE half (divide + conquer), the result is passed back unchanged (combine)
+    BinarySearchRec(lo= 0, hi=15): mid= 7 K[mid]=SLX4410926638 -> recurse on left half
+      BinarySearchRec(lo= 0, hi= 6): mid= 3 K[mid]=SLX2290017745 -> recurse on right half
+        BinarySearchRec(lo= 4, hi= 6): mid= 5 K[mid]=SLX3105569820 -> recurse on left half
+          BinarySearchRec(lo= 4, hi= 4): mid= 4 K[mid]=SLX2675530981 -> recurse on right half
+            BinarySearchRec(lo= 5, hi= 4): lo > hi -> empty -> return -1
+
+Verification against bisect.bisect_left (Python's C implementation) and the expected labels
+  all 8 queries agree: True
+  comparisons per query: [1, 4, 5, 2, 4, 4, 5, 4]  (max 5 <= floor(lg n) + 1 = 5)
+  linear search would need up to n = 16 comparisons per query

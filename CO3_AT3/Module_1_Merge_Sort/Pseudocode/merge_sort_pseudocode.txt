@@ -1,0 +1,45 @@
+SwiftLogix - Module 1: Nightly stable sort of shipment-event records
+Key of a record r: key(r) = (r.delivery_date, r.event_time)   (compared lexicographically)
+Basic operation   : one key comparison inside Merge (line 6)
+
+Algorithm MergeSort(A, lo, hi)
+// Sorts A[lo..hi-1] stably by key; the first call is MergeSort(A, 0, n)
+// Input : array A of n shipment-event records, 0 <= lo <= hi <= n
+// Output: A[lo..hi-1] in non-decreasing key order, equal keys in their input order
+1. if hi - lo <= 1 then return                    // CONQUER (base case): 0 or 1 record is sorted
+2. mid = floor((lo + hi) / 2)                       // DIVIDE into A[lo..mid-1] and A[mid..hi-1]
+3. MergeSort(A, lo, mid)                            // CONQUER the left half
+4. MergeSort(A, mid, hi)                            // CONQUER the right half
+5. Merge(A, lo, mid, hi)                            // COMBINE the two sorted halves
+
+Algorithm Merge(A, lo, mid, hi)
+// Merges the sorted runs A[lo..mid-1] and A[mid..hi-1]; Aux is an n-element work array
+1. for k = lo to hi - 1 do Aux[k] = A[k]           // copy the two runs (hi - lo moves)
+2. i = lo;  j = mid
+3. for k = lo to hi - 1 do
+4.     if i >= mid then A[k] = Aux[j];  j = j + 1                // left run exhausted
+5.     else if j >= hi then A[k] = Aux[i];  i = i + 1            // right run exhausted
+6.     else if key(Aux[j]) < key(Aux[i]) then                    // basic operation
+7.         A[k] = Aux[j];  j = j + 1
+8.     else A[k] = Aux[i];  i = i + 1                            // tie -> LEFT first = STABLE
+
+Recurrence (comparisons, worst case): C(1) = 0,  C(n) = C(ceil(n/2)) + C(floor(n/2)) + (n - 1)
+
+---------------------------------------------------------------- improved variants (Part 5)
+Algorithm HybridMergeSort(A, lo, hi, n0)            // n0 = insertion-sort cutoff (16)
+1. if hi - lo <= n0 then InsertionSort(A, lo, hi); return      // small runs: no recursion
+2. mid = floor((lo + hi) / 2)
+3. HybridMergeSort(A, lo, mid, n0);  HybridMergeSort(A, mid, hi, n0)
+4. if key(A[mid]) < key(A[mid-1]) then Merge(A, lo, mid, hi)  // skip merge if already ordered
+
+Algorithm NaturalMergeSort(A, n)                    // bottom-up, exploits pre-sorted hub feeds
+1. B = [0]                                          // run boundaries
+2. for i = 1 to n - 1 do
+3.     if key(A[i]) < key(A[i-1]) then append i to B           // a new ascending run starts at i
+4. append n to B                                    // runs are A[B[t]..B[t+1]-1]
+5. while B has more than 2 entries do               // more than one run left
+6.     B' = [0]
+7.     for each adjacent pair of runs (B[t], B[t+1], B[t+2]), t = 0, 2, 4, ... do
+8.         Merge(A, B[t], B[t+1], B[t+2]);  append B[t+2] to B'
+9.     if one run is left over then append its end B[last] to B'
+10.    B = B'

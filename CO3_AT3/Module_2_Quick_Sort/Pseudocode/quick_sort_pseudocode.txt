@@ -1,0 +1,55 @@
+SwiftLogix - Module 2: In-memory ranking of order-priority scores for the dispatch queue
+Pivot rule (baseline design) : the LAST element of the sub-array, A[hi]
+Partition scheme             : Lomuto (single left-to-right scan)
+Basic operation              : comparison of an element with the pivot (Partition line 4)
+
+Algorithm QuickSort(A, lo, hi)
+// Sorts A[lo..hi] in place in non-decreasing order; first call QuickSort(A, 0, n-1)
+1. if lo < hi then
+2.     p = Partition(A, lo, hi)                   // DIVIDE: pivot moves to its final position p
+3.     QuickSort(A, lo, p - 1)                    // CONQUER the part <= pivot
+4.     QuickSort(A, p + 1, hi)                    // CONQUER the part  > pivot
+5. // COMBINE: nothing to do - both parts are sorted in place around A[p]
+
+Algorithm Partition(A, lo, hi)                    // Lomuto, pivot = last element
+1. pivot = A[hi]
+2. i = lo - 1                                     // A[lo..i] <= pivot (invariant)
+3. for j = lo to hi - 1 do
+4.     if A[j] <= pivot then                      // basic operation
+5.         i = i + 1
+6.         swap A[i], A[j]
+7. swap A[i + 1], A[hi]                           // place the pivot
+8. return i + 1
+
+Recurrences (comparisons): best/average split  T(n) = 2T(n/2) + (n - 1)
+                           worst (sorted input) T(n) = T(n - 1) + (n - 1),  T(1) = 0
+                           expected (random)    T(n) = (n - 1) + (2/n) * sum_{k=0}^{n-1} T(k)
+
+---------------------------------------------------------------- improved variants (Part 5)
+Algorithm MedianOfThree(A, lo, hi)                // fixed sample (variant "median3")
+1. mid = floor((lo + hi) / 2)
+2. order A[lo], A[mid], A[hi] with at most 3 comparisons/swaps
+3. return mid                                     // A[mid] is the median of the three
+
+Algorithm MedianOfRandomThree(A, lo, hi)          // pivot rule of the final design
+1. pick positions i, j, k uniformly at random in lo..hi
+2. return the position holding the median of A[i], A[j], A[k]     // 2-3 comparisons, no swaps
+
+Algorithm Partition3Way(A, lo, hi)                // Dijkstra 3-way partition, pivot v = A[lo]
+1. v = A[lo];  lt = lo;  i = lo + 1;  gt = hi
+2. while i <= gt do
+3.     if A[i] < v then swap A[lt], A[i];  lt = lt + 1;  i = i + 1
+4.     else if A[i] > v then swap A[i], A[gt];  gt = gt - 1
+5.     else i = i + 1                             // equal to the pivot: stays in the middle
+6. return (lt, gt)                                // A[lo..lt-1] < v,  A[lt..gt] = v,  A[gt+1..hi] > v
+
+Algorithm IntroQuickSort(A, lo, hi, depthLeft)    // final design: introsort-style hybrid
+1. while hi - lo + 1 > 16 do                      // insertion-sort cutoff n0 = 16
+2.     if depthLeft = 0 then HeapSort(A, lo, hi); return      // guarantees O(n log n)
+3.     depthLeft = depthLeft - 1
+4.     m = MedianOfRandomThree(A, lo, hi);  swap A[lo], A[m]
+5.     (lt, gt) = Partition3Way(A, lo, hi)
+6.     if lt - lo < hi - gt then IntroQuickSort(A, lo, lt - 1, depthLeft);  lo = gt + 1
+7.     else IntroQuickSort(A, gt + 1, hi, depthLeft);  hi = lt - 1   // recurse on smaller side
+8. InsertionSort(A, lo, hi)
+// first call: IntroQuickSort(A, 0, n - 1, 2 * floor(log2 n))

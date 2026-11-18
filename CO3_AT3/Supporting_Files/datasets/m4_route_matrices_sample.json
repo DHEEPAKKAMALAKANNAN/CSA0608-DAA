@@ -1,0 +1,22 @@
+{
+  "description": "SwiftLogix Module 4 given sample: 4 origin zones x 4 hub corridors x 4 destination zones",
+  "demand_D": {
+    "meaning": "D[i][k] = forecast parcel volume (hundreds of parcels/day) from origin zone i routed via hub corridor k",
+    "rows": ["Z1-Chennai", "Z2-Bengaluru", "Z3-Hyderabad", "Z4-Mumbai"],
+    "cols": ["K1-South", "K2-West", "K3-Central", "K4-North"],
+    "matrix": [[4, 2, 0, 3],
+               [1, 5, 2, 0],
+               [3, 0, 6, 1],
+               [2, 4, 1, 5]]
+  },
+  "cost_C": {
+    "meaning": "C[k][j] = cost (Rs thousand per hundred parcels) to move parcels from hub corridor k to destination zone j",
+    "rows": ["K1-South", "K2-West", "K3-Central", "K4-North"],
+    "cols": ["Z1-Chennai", "Z2-Bengaluru", "Z3-Hyderabad", "Z4-Mumbai"],
+    "matrix": [[2, 1, 3, 0],
+               [1, 4, 0, 2],
+               [0, 3, 2, 1],
+               [5, 0, 1, 3]]
+  },
+  "product_meaning": "F = D x C, F[i][j] = forecast network cost (Rs thousand/day) attributable to origin i and destination j"
+}

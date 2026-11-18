@@ -1,0 +1,70 @@
+--- Module 1: merge sort (top-down, hybrid n0=16, hybrid n0=4, natural, insertion baseline)
+PASS  M1 case 'empty list' - 5 variants == expected
+PASS  M1 case 'single element' - 5 variants == expected
+PASS  M1 case 'two elements reversed' - 5 variants == expected
+PASS  M1 case 'duplicates' - 5 variants == expected
+PASS  M1 case 'already sorted' - 5 variants == expected
+PASS  M1 case 'reverse sorted' - 5 variants == expected
+PASS  M1 case 'all equal' - 5 variants == expected
+PASS  M1 case 'negative and zero' - 5 variants == expected
+PASS  M1 case 'sample priority scores' - 5 variants == expected
+PASS  M1 case 'random 200 (0..100)' - 5 variants == expected
+PASS  M1 case 'organ pipe' - 5 variants == expected
+PASS  M1 case 'stability: 30 records, 5 keys' - 5 variants == expected
+PASS  M1 given sample -> E02 E10 E06 E11 E05 E08 E04 E09 E01 E03 E12 E07 (stable)
+PASS  M1 generated 5,000 hub-feed events - stable order == sorted()
+PASS  M1 300 random lists (n <= 300, many duplicates) - all variants == sorted()  [0 failures]
+PASS  M1 comparisons <= n*ceil(lg n) - 2^ceil(lg n) + 1 and calls = 2n - 1, n = 1..300
+PASS  M1 n = 2^k: sorted input costs (n/2) lg n comparisons, moves = 2n lg n, depth = lg n
+PASS  M1 natural merge sort on 64 sorted hub feeds: comparisons <= (n - 1) + n lg 64
+--- Module 2: quick sort (last, median3, random, 3way, hybrid, hybrid n0=4, hybrid fixed-m3, heap-only)
+PASS  M2 case 'empty list' - 8 variants == expected
+PASS  M2 case 'single element' - 8 variants == expected
+PASS  M2 case 'two elements reversed' - 8 variants == expected
+PASS  M2 case 'duplicates' - 8 variants == expected
+PASS  M2 case 'already sorted' - 8 variants == expected
+PASS  M2 case 'reverse sorted' - 8 variants == expected
+PASS  M2 case 'all equal' - 8 variants == expected
+PASS  M2 case 'negative and zero' - 8 variants == expected
+PASS  M2 case 'sample priority scores' - 8 variants == expected
+PASS  M2 case 'random 200 (0..100)' - 8 variants == expected
+PASS  M2 case 'organ pipe' - 8 variants == expected
+PASS  M2 generated 5,000 priority scores (0..100) - 8 variants == sorted()
+PASS  M2 300 random lists (n <= 200) - all variants == sorted()  [0 failures]
+PASS  M2 baseline on sorted input: comparisons = n(n-1)/2 and depth = n - 1, n = 2..200
+PASS  M2 baseline on all-equal input: comparisons = n(n-1)/2 (Lomuto worst case)
+PASS  M2 depth budget 0 forces the heap-sort fallback and still sorts
+PASS  M2 hybrid on random/sorted/scores/reversed n = 20,000: depth <= lg n = 14.3, no fallback
+PASS  M2 3-way partition invariant  A[<lt] < v = A[lt..gt] < A[>gt]  (200 random arrays)
+PASS  M2 Lomuto partition invariant  A[<p] <= pivot < A[>p]  (200 random arrays)
+--- Module 3: binary search (iterative, recursive), interpolation, guarded interpolation, linear
+PASS  M3 case 'empty index', queries: 1 - 5 variants == bisect
+PASS  M3 case 'single ID - hit', queries: 1 - 5 variants == bisect
+PASS  M3 case 'single ID - below/above', queries: 2 - 5 variants == bisect
+PASS  M3 case 'two IDs', queries: 5 - 5 variants == bisect
+PASS  M3 case 'given sample: 8 queries', queries: 8 - 5 variants == bisect
+PASS  M3 case '1,000 IDs: first, last, middle, gaps', queries: 7 - 5 variants == bisect
+PASS  M3 generated index 20,000 IDs x 2,000 queries - all variants == bisect == labels  [0 bad]
+PASS  M3 every hit and every gap, n = 1..300: comparisons <= floor(lg n) + 1
+PASS  M3 total counted comparisons == S(n) (hits) and E(n) (misses) recurrences, n = 1..200
+PASS  M3 recursive and iterative versions: same answers and same comparison counts (500 queries)
+PASS  M3 guarded interpolation on clustered IDs: probes <= 2(floor(lg n) + 1) = 30  [worst 25]
+--- Module 4: Strassen (cutoff 1 / 2 with power-of-two padding, cutoff 4 / 8 with minimal padding), naive
+PASS  M4 case '1 x 1' - 5 variants == numpy
+PASS  M4 case '2 x 2' - 5 variants == numpy
+PASS  M4 case 'given sample 4 x 4 (D x C)' - 5 variants == numpy
+PASS  M4 case '3 x 3 (padding needed)' - 5 variants == numpy
+PASS  M4 case '5 x 5 (padding needed)' - 5 variants == numpy
+PASS  M4 case '6 x 6 (padding needed)' - 5 variants == numpy
+PASS  M4 case '7 x 7 (padding needed)' - 5 variants == numpy
+PASS  M4 case '12 x 12 (padding needed)' - 5 variants == numpy
+PASS  M4 case '8 x 8 identity x random' - 5 variants == numpy
+PASS  M4 case '8 x 8 zero x random' - 5 variants == numpy
+PASS  M4 case '16 x 16 random' - 5 variants == numpy
+PASS  M4 generated 64 x 64 demand x cost - 5 variants == numpy
+PASS  M4 counted (mults, adds) == closed form strassen_ops(n, n0), n = 1..64, n0 = 1, 4, 8
+PASS  M4 pure Strassen: M(n) = 7^k = n^lg7 and A(n) = 6(7^k - 4^k) for n = 2^k, k = 0..11
+PASS  M4 PadSize: 600->608 (n0 64), 100->100 (n0 32), 100->104 (n0 16), 129->136 (n0 32), 5->8 (n0 1)
+PASS  M4 30 random sizes 1..40 x random cutoff x padding policy == numpy  [0 failures]
+PASS  M4 odd size above the cutoff without padding is rejected (ValueError)
+RESULT: 65/65 tests passed

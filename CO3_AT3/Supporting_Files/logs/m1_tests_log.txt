@@ -1,0 +1,20 @@
+--- Module 1: merge sort (top-down, hybrid n0=16, hybrid n0=4, natural, insertion baseline)
+PASS  M1 case 'empty list' - 5 variants == expected
+PASS  M1 case 'single element' - 5 variants == expected
+PASS  M1 case 'two elements reversed' - 5 variants == expected
+PASS  M1 case 'duplicates' - 5 variants == expected
+PASS  M1 case 'already sorted' - 5 variants == expected
+PASS  M1 case 'reverse sorted' - 5 variants == expected
+PASS  M1 case 'all equal' - 5 variants == expected
+PASS  M1 case 'negative and zero' - 5 variants == expected
+PASS  M1 case 'sample priority scores' - 5 variants == expected
+PASS  M1 case 'random 200 (0..100)' - 5 variants == expected
+PASS  M1 case 'organ pipe' - 5 variants == expected
+PASS  M1 case 'stability: 30 records, 5 keys' - 5 variants == expected
+PASS  M1 given sample -> E02 E10 E06 E11 E05 E08 E04 E09 E01 E03 E12 E07 (stable)
+PASS  M1 generated 5,000 hub-feed events - stable order == sorted()
+PASS  M1 300 random lists (n <= 300, many duplicates) - all variants == sorted()  [0 failures]
+PASS  M1 comparisons <= n*ceil(lg n) - 2^ceil(lg n) + 1 and calls = 2n - 1, n = 1..300
+PASS  M1 n = 2^k: sorted input costs (n/2) lg n comparisons, moves = 2n lg n, depth = lg n
+PASS  M1 natural merge sort on 64 sorted hub feeds: comparisons <= (n - 1) + n lg 64
+RESULT: 18/18 tests passed

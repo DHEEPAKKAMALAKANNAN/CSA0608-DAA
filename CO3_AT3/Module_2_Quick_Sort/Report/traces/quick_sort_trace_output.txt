@@ -1,0 +1,39 @@
+========================================================================================================
+SwiftLogix M2 - quick sort of order-priority scores (given sample: 12 orders)
+========================================================================================================
+Orders  : O101:72  O102:35  O103:91  O104:50  O105:18  O106:64  O107:91  O108:27  O109:83  O110:50  O111:9  O112:50
+Pivot rule = last element of the sub-array, partition scheme = Lomuto
+
+Divide (partition) trace - array after each partition, active range in | |, pivot in [ ]
+  depth  range     pivot  cmp  swaps  pos   array
+                                             72  35  91  50  18  64  91  27  83  50   9  50   (input)
+      0  [ 0..11]     50   11      7    6   | 35  50  18  27  50   9 [50] 72  83  91  64  91 |
+      1  [ 0.. 5]      9    5      1    0   |[ 9] 50  18  27  50  35 | 50  72  83  91  64  91 
+      2  [ 1.. 5]     35    4      3    3     9 | 18  27 [35] 50  50 | 50  72  83  91  64  91 
+      3  [ 1.. 2]     27    1      2    2     9 | 18 [27]| 35  50  50  50  72  83  91  64  91 
+      3  [ 4.. 5]     50    1      2    5     9  18  27  35 | 50 [50]| 50  72  83  91  64  91 
+      1  [ 7..11]     91    4      5   11     9  18  27  35  50  50  50 | 72  83  91  64 [91]|
+      2  [ 7..10]     64    3      1    7     9  18  27  35  50  50  50 |[64] 83  91  72 | 91 
+      3  [ 8..10]     72    2      1    8     9  18  27  35  50  50  50  64 |[72] 91  83 | 91 
+      4  [ 9..10]     83    1      1    9     9  18  27  35  50  50  50  64  72 |[83] 91 | 91 
+  sub-arrays of size 0/1 are already sorted (CONQUER base case); COMBINE does nothing (in place)
+
+Sorted scores (ascending): [9, 18, 27, 35, 50, 50, 50, 64, 72, 83, 91, 91]
+Dispatch queue (highest priority first, ties by order id):
+  O103(91) O107(91) O109(83) O101(72) O106(64) O104(50) O110(50) O112(50) O102(35) O108(27) O105(18) O111(9)
+
+Verification
+  equals sorted(): True   comparisons = 32, swaps = 23, partitions = 9, max depth = 5
+  expected for a random order 2(n+1)H_n - 4n = 32.7;  observed 32;  worst case n(n-1)/2 = 66
+
+Same 12 scores in other arrangements - comparisons / max recursion depth
+  input                 last (baseline)  median-of-3     random      3-way     hybrid
+  given sample                     32/5         43/5       43/6       52/4       48/1
+  already sorted                  66/11         38/4       45/7       43/4       55/1
+  reverse sorted                  64/10         42/4       38/7       59/5       36/1
+  all equal (50)                  66/11        96/11      66/11       22/1       24/1
+  (hybrid run with cutoff 4 here so that it partitions at n = 12; production cutoff is 16)
+
+Stability check - sorting (score, order) records by score with the baseline quick sort
+  score-50 orders in input order : O104 O110 O112
+  score-50 orders after quick sort: O110 O104 O112  -> stable: False

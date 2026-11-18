@@ -1,0 +1,21 @@
+--- Module 2: quick sort (last, median3, random, 3way, hybrid, hybrid n0=4, hybrid fixed-m3, heap-only)
+PASS  M2 case 'empty list' - 8 variants == expected
+PASS  M2 case 'single element' - 8 variants == expected
+PASS  M2 case 'two elements reversed' - 8 variants == expected
+PASS  M2 case 'duplicates' - 8 variants == expected
+PASS  M2 case 'already sorted' - 8 variants == expected
+PASS  M2 case 'reverse sorted' - 8 variants == expected
+PASS  M2 case 'all equal' - 8 variants == expected
+PASS  M2 case 'negative and zero' - 8 variants == expected
+PASS  M2 case 'sample priority scores' - 8 variants == expected
+PASS  M2 case 'random 200 (0..100)' - 8 variants == expected
+PASS  M2 case 'organ pipe' - 8 variants == expected
+PASS  M2 generated 5,000 priority scores (0..100) - 8 variants == sorted()
+PASS  M2 300 random lists (n <= 200) - all variants == sorted()  [0 failures]
+PASS  M2 baseline on sorted input: comparisons = n(n-1)/2 and depth = n - 1, n = 2..200
+PASS  M2 baseline on all-equal input: comparisons = n(n-1)/2 (Lomuto worst case)
+PASS  M2 depth budget 0 forces the heap-sort fallback and still sorts
+PASS  M2 hybrid on random/sorted/scores/reversed n = 20,000: depth <= lg n = 14.3, no fallback
+PASS  M2 3-way partition invariant  A[<lt] < v = A[lt..gt] < A[>gt]  (200 random arrays)
+PASS  M2 Lomuto partition invariant  A[<p] <= pivot < A[>p]  (200 random arrays)
+RESULT: 19/19 tests passed

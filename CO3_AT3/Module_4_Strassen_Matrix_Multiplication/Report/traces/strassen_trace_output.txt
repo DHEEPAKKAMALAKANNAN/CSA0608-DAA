@@ -1,0 +1,47 @@
+========================================================================================================
+SwiftLogix M4 - Strassen multiplication F = D x C (given sample: 4 x 4 route matrices)
+========================================================================================================
+  D (demand, 100 parcels)   C (cost, Rs 1000 / 100 parcels)
+     4   2   0   3             2   1   3   0               
+     1   5   2   0             1   4   0   2               
+     3   0   6   1             0   3   2   1               
+     2   4   1   5             5   0   1   3               
+
+DIVIDE - 2 x 2 blocks of A (demand) and B (cost):
+  A11 = [[4, 2], [1, 5]]   A12 = [[0, 3], [2, 0]]   A21 = [[3, 0], [2, 4]]   A22 = [[6, 1], [1, 5]]
+  B11 = [[2, 1], [1, 4]]   B12 = [[3, 0], [0, 2]]   B21 = [[0, 3], [5, 0]]   B22 = [[2, 1], [1, 3]]
+CONQUER - 7 recursive 2 x 2 products (each one again uses 7 scalar products m1..m7):
+  M1 = (A11 + A22)(B11 + B22)  = [[10, 3], [2, 10]] x [[4, 2], [2, 7]]
+       = [[46, 41], [28, 74]]     level-2 scalar products m1..m7 = [220, 48, -50, -20, 91, -48, -63]
+  M2 = (A21 + A22) B11         = [[9, 1], [3, 9]] x [[2, 1], [1, 4]]
+       = [[19, 13], [15, 39]]     level-2 scalar products m1..m7 = [108, 24, -27, -9, 40, -18, -40]
+  M3 = A11 (B12 - B22)         = [[4, 2], [1, 5]] x [[1, -1], [-1, -1]]
+       = [[2, -6], [-4, -6]]      level-2 scalar products m1..m7 = [0, 6, 0, -10, -6, 0, 6]
+  M4 = A22 (B21 - B11)         = [[6, 1], [1, 5]] x [[-2, 2], [4, -4]]
+       = [[-8, 8], [18, -18]]     level-2 scalar products m1..m7 = [-66, -12, 36, 30, -28, 0, 0]
+  M5 = (A11 + A12) B22         = [[4, 5], [3, 5]] x [[2, 1], [1, 3]]
+       = [[13, 19], [11, 18]]     level-2 scalar products m1..m7 = [45, 16, -8, -5, 27, -3, 0]
+  M6 = (A21 - A11)(B11 + B12)  = [[-1, -2], [1, -1]] x [[5, 1], [1, 6]]
+       = [[-7, -13], [4, -5]]     level-2 scalar products m1..m7 = [-22, 0, 5, 4, -18, 12, -7]
+  M7 = (A12 - A22)(B21 + B22)  = [[-6, 2], [1, -5]] x [[2, 4], [6, 3]]
+       = [[0, -18], [-28, -11]]   level-2 scalar products m1..m7 = [-55, -8, -6, -20, -12, 42, 63]
+COMBINE - 8 block additions/subtractions:
+  C11 = M1 + M4 - M5 + M7 = [[25, 12], [7, 27]]  C12 = M3 + M5 = [[15, 13], [7, 12]]
+  C21 = M2 + M4           = [[11, 21], [33, 21]] C22 = M1 - M2 + M3 + M6 = [[22, 9], [13, 24]]
+
+  F = Strassen(D, C)   naive D x C         numpy D @ C      
+    25  12  15  13       25  12  15  13      25  12  15  13 
+     7  27   7  12        7  27   7  12       7  27   7  12 
+    11  21  22   9       11  21  22   9      11  21  22   9 
+    33  21  13  24       33  21  13  24      33  21  13  24 
+
+Verification and operation counts
+  Strassen == naive == numpy : True
+  Strassen : 49 multiplications + 198 additions = 247  (formula 7^2 = 49 mults, 6(7^2 - 4^2) = 198 adds)
+  naive    : 64 multiplications + 48 additions = 112  (n^3 = 64, n^2(n-1) = 48)
+  recursive calls = 57 (1 + 7 + 49), max depth = 2 (= lg 4)
+  hybrid, cutoff 2 (naive 2 x 2 blocks): 56 mults + 100 adds = 156
+
+Non-power-of-two sizes: zero padding to the next power of two (synthetic 3-zone and 5-zone matrices)
+  3 x 3 -> padded to 4 x 4: result == numpy: True; 49 mults (naive 27); first row [30, 48, 39]
+  5 x 5 -> padded to 8 x 8: result == numpy: True; 343 mults (naive 125); first row [99, 58, 71, 93, 79]

@@ -1,0 +1,21 @@
+module,design,basic_operations,seconds_at_1e8_ops,memory_MB,note
+M1,"insertion sort, average n(n-1)/4",6249998750000,62499.987500,320.0,comparisons; infeasible
+M1,"top-down merge sort, worst comparisons",106611393,1.066114,640.0,records + n-record buffer
+M1,  + record moves 2n*ceil(lg n),336611393,3.366114,640.0,comparisons + moves
+M1,natural merge sort on 64 feeds (cmp),34999999,0.350000,120.0,"(key, index) pairs"
+M1,  + moves 2n*lg 64,94999999,0.950000,120.0,final design
+M2,"baseline Lomuto, sorted/all-equal n(n-1)/2",1999999000000,19999.990000,216.0,depth n: 2M stack frames
+M2,"baseline Lomuto, duplicate scores n^2/(2k)",19801980198,198.019802,16.0,"measured model, Exp C"
+M2,"baseline, random distinct keys 2(n+1)H_n-4n",52343525,0.523435,16.0,expected ~1.386 n lg n
+M2,hybrid (3-way) on scores 1.499 n lg k,19962967,0.199630,16.0,"from n = 131,072; final design"
+M3,"linear search, (n+1)/2 per hit x Q/day",100000010000000,1000000.100000,160.0,per day; infeasible
+M3,"binary search, worst 24 per lookup x Q",480000000,4.800000,160.0,per day (CPU)
+M3,"binary search, average hit 22.322 x Q",446445618,4.464456,160.0,S(n)/n exact; miss 23.322
+M3,guarded interpolation ~19.5 cmp/lookup x Q,390128132,3.901281,160.0,~6.5 probes vs 24
+M3,"hash index (dict), ~1.5 probes x Q",30000000,0.300000,320.0,load 0.5; no range queries
+M3,"nightly index rebuild (merge sort, worst)",223222785,2.232228,320.0,runs in Module 1 window
+M4,naive product 2n^3 - n^2,2146435072,21.464351,25.2,"2,060.58 s/day"
+M4,pure Strassen 7n^2.807 - 6n^2,1971035287,19.710353,65.0,"282,475,249 mults"
+M4,"hybrid Strassen, cutoff 8",1100550336,11.005503,65.0,"op-optimal; 1,056.53 s/day"
+M4,"hybrid Strassen, cutoff 64",1301696512,13.016965,65.0,"time-tuned (Python); 1,249.63 s/day"
+M4,"Strassen-Winograd (15 adds), cutoff 8",1048892160,10.488922,65.0,formula only (next step)

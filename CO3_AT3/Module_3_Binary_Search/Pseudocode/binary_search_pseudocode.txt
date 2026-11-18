@@ -1,0 +1,46 @@
+SwiftLogix - Module 3: Tracking-ID lookup in the sorted shipment index
+Index K[0..n-1] : tracking IDs in strictly increasing order (built nightly by Module 1)
+Basic operation : one three-way comparison of the target with K[mid]
+
+Algorithm BinarySearch(K, n, t)                   // iterative version (used in production)
+// Output: position of t in K, or -1 if t is absent (lo is then the insertion point)
+1. lo = 0;  hi = n - 1
+2. while lo <= hi do
+3.     mid = floor((lo + hi) / 2)                 // DIVIDE: probe the middle of K[lo..hi]
+4.     if t = K[mid] then return mid              // basic operation (three-way comparison)
+5.     else if t < K[mid] then hi = mid - 1       // CONQUER the left half only
+6.     else lo = mid + 1                          // CONQUER the right half only
+7. return -1                                      // empty interval: t is not in the index
+
+Algorithm BinarySearchRec(K, lo, hi, t)           // recursive version (shows the D&C structure)
+1. if lo > hi then return -1                      // base case: empty sub-array
+2. mid = floor((lo + hi) / 2)                     // DIVIDE
+3. if t = K[mid] then return mid
+4. else if t < K[mid] then return BinarySearchRec(K, lo, mid - 1, t)   // CONQUER one half
+5. else return BinarySearchRec(K, mid + 1, hi, t)
+// COMBINE: trivial - the answer of the sub-problem is returned unchanged
+// first call: BinarySearchRec(K, 0, n - 1, t)
+
+Recurrence (worst case): C(n) = C(floor(n/2)) + 1,  C(1) = 1   ->  C(n) = floor(log2 n) + 1
+
+---------------------------------------------------------------- improved variants (Part 5)
+Algorithm InterpolationSearch(K, n, t)            // for (nearly) uniformly distributed numeric IDs
+1. lo = 0;  hi = n - 1
+2. while lo <= hi and K[lo] <= t <= K[hi] do
+3.     if K[hi] = K[lo] then pos = lo
+4.     else pos = lo + floor((t - K[lo]) * (hi - lo) / (K[hi] - K[lo]))   // estimate the position
+5.     if t = K[pos] then return pos
+6.     else if t < K[pos] then hi = pos - 1
+7.     else lo = pos + 1
+8. return -1
+
+Algorithm GuardedInterpolationSearch(K, n, t)     // interpolation step, binary step if it shrinks too little
+1. lo = 0;  hi = n - 1;  useBinary = false
+2. while lo <= hi and K[lo] <= t <= K[hi] do
+3.     width = hi - lo + 1
+4.     if useBinary or K[hi] = K[lo] then pos = floor((lo + hi) / 2)
+5.     else pos = lo + floor((t - K[lo]) * (hi - lo) / (K[hi] - K[lo]))
+6.     if t = K[pos] then return pos
+7.     else if t < K[pos] then hi = pos - 1 else lo = pos + 1
+8.     useBinary = (hi - lo + 1 > width / 2)      // poor progress -> force a halving step next
+9. return -1
