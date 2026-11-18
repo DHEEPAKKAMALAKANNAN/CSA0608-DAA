@@ -1,0 +1,52 @@
+================================================================================================================
+ CO1 Assignment - test cases for sequential search (A), recursive binary search (B) and hashing (C)
+================================================================================================================
+PART 1 - functional test cases (actual = result(comparisons) for A: sequential, B: binary, C: hash)
+      ID    test case                                 key  expected   A          B          C         
+PASS  TC01  empty dataset (n = 0)               192425324  not found  none(0)    none(0)    none(0)   
+PASS  TC02  single record, key present          192425324  found      found(1)   found(1)   found(1)  
+PASS  TC03  single record, absent smaller key   192425323  not found  none(1)    none(1)    none(0)   
+PASS  TC04  single record, absent larger key    192425325  not found  none(1)    none(1)    none(0)   
+PASS  TC05  first record in stored order        196394267  found      found(1)   found(4)   found(1)  
+PASS  TC06  last record in stored order         191711386  found      found(15)  found(4)   found(1)  
+PASS  TC07  middle record of sorted order       196356844  found      found(13)  found(1)   found(1)  
+PASS  TC08  smallest registration number        190265359  found      found(4)   found(4)   found(1)  
+PASS  TC09  largest registration number         199572130  found      found(7)   found(4)   found(1)  
+PASS  TC10  random present key (seed 1)         194219218  found      found(3)   found(3)   found(1)  
+PASS  TC11  absent, below minimum (189999999)   189999999  not found  none(15)   none(4)    none(0)   
+PASS  TC12  absent, above maximum (200000000)   200000000  not found  none(15)   none(4)    none(2)   
+PASS  TC13  absent, in a gap (A[6] + 1)         195362281  not found  none(15)   none(4)    none(0)   
+PASS  count TC05 sequential best case (key at position 0)      expected  = 1  actual   1
+PASS  count TC06 sequential worst successful (last position)   expected = 15  actual  15
+PASS  count TC07 binary best case (key at the middle)          expected  = 1  actual   1
+PASS  count TC11 sequential unsuccessful (all n compared)      expected = 15  actual  15
+PASS  count TC11 binary unsuccessful, floor(lg 15)+1 = 4       expected <= 4  actual   4
+
+PART 2 - property tests
+PASS  P1  duplicate key re-inserted into hash table: expected count 1000, replaced  actual count 1000, new=False
+PASS  P2  merge sort n =     15 equals sorted(), input untouched: expected True  actual True
+PASS  P2  merge sort n =  1,000 equals sorted(), input untouched: expected True  actual True
+PASS  P2  merge sort n = 10,000 equals sorted(), input untouched: expected True  actual True
+PASS  P3  binary search n = 1..200, all keys + gaps: max comparisons = floor(lg n)+1: expected True  actual True
+PASS  P3b binary search n = 1..200: total successful comparisons = S(n) recurrence: expected True  actual True
+PASS  P4  merge sort n = 1..200: comparisons <= n*ceil(lg n) - 2^ceil(lg n) + 1: expected True  actual True
+PASS  P5  hash worst case, 1,000 keys = 190000000 + i*m: expected chain 1000, 1000 cmp  actual 1000, 1000/1000
+PASS  P6  dynamic growth 10 -> 2,000 records: expected alpha <= 0.75, all found  actual 7 resizes, max alpha 0.749
+
+PART 3 - bulk validation: same dataset + same query batch for every approach, checked against a dict
+               n  approach          queries      correct  avg cmp hit  avg cmp miss  invariant
+PASS       1,000  Sequential (A)      1,000  1,000/1,000       496.25       1000.00  hit = pos+1, miss = n
+PASS       1,000  Binary (B)          1,000  1,000/1,000         8.98          9.98  every search <= 10 cmp
+PASS       1,000  Hash (C)            1,000  1,000/1,000         1.34          0.76  alpha = 0.735 <= 0.75
+PASS      10,000  Sequential (A)      1,000  1,000/1,000      4966.63      10000.00  hit = pos+1, miss = n
+PASS      10,000  Binary (B)          1,000  1,000/1,000        12.31         13.34  every search <= 14 cmp
+PASS      10,000  Hash (C)            1,000  1,000/1,000         1.39          0.70  alpha = 0.750 <= 0.75
+PASS     100,000  Sequential (A)      1,000  1,000/1,000     51226.36     100000.00  hit = pos+1, miss = n
+PASS     100,000  Binary (B)          1,000  1,000/1,000        15.64         16.75  every search <= 17 cmp
+PASS     100,000  Hash (C)            1,000  1,000/1,000         1.33          0.67  alpha = 0.750 <= 0.75
+PASS   1,000,000  Sequential (A)        200      200/200    480558.07    1000000.00  hit = pos+1, miss = n
+PASS   1,000,000  Binary (B)          1,000  1,000/1,000        18.87         19.95  every search <= 20 cmp
+PASS   1,000,000  Hash (C)            1,000  1,000/1,000         1.32          0.68  alpha = 0.750 <= 0.75
+----------------------------------------------------------------------------------------------------------------
+run time 14.9 s
+RESULT: 39/39 tests passed

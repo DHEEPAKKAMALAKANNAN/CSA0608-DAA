@@ -1,0 +1,13 @@
+n,approach,comparisons,other_ops,time_ms,theory_comparisons,note
+1000,A,0,0,0.0,0,no preprocessing
+1000,B,8744,19358,1.383,8977,merge sort; other_ops = moves; theory = worst-case bound
+1000,C,344,1000,0.354,367.0,hash build; other_ops = hash computations; theory = n(n-1)/2m comparisons
+10000,A,0,0,0.0,0,no preprocessing
+10000,B,120491,261799,35.345,123617,merge sort; other_ops = moves; theory = worst-case bound
+10000,C,3868,10000,3.34,3748.6,hash build; other_ops = hash computations; theory = n(n-1)/2m comparisons
+100000,A,0,0,0.0,0,no preprocessing
+100000,B,1536197,3282893,262.168,1568929,merge sort; other_ops = moves; theory = worst-case bound
+100000,C,37297,100000,63.431,37498.6,hash build; other_ops = hash computations; theory = n(n-1)/2m comparisons
+1000000,A,0,0,0.0,0,no preprocessing
+1000000,B,18674803,39298156,5846.824,18951425,merge sort; other_ops = moves; theory = worst-case bound
+1000000,C,326797,1000000,742.121,374993.0,hash build; other_ops = hash computations; theory = n(n-1)/2m comparisons

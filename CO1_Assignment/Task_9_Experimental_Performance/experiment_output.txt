@@ -1,0 +1,78 @@
+======================================================================================================================
+ CO1 experiments - sequential (A) vs recursive binary (B) vs hashing (C), 1,000 ... 1,000,000 records
+ Python 3.13.11 on Windows 11 | perf_counter, GC off while timing, minimum of R runs | 500+500 queries per n (A at 10^6: 100+100)
+======================================================================================================================
+ n =     1,000: done in   4.9 s  (m = 1,361, alpha = 0.735, longest chain = 5)
+ n =    10,000: done in   7.4 s  (m = 13,337, alpha = 0.750, longest chain = 7)
+ n =   100,000: done in  21.4 s  (m = 133,337, alpha = 0.750, longest chain = 8)
+ n = 1,000,000: done in  55.8 s  (m = 1,333,357, alpha = 0.750, longest chain = 6)
+
+TABLE 1 - preprocessing cost (once per dataset)
+         n | B: merge sort cmp       n lg n  worst bound       moves   time ms | C: hash h(k) chain cmp    theory  time ms
+     1,000 |             8,744        9,966        8,977      19,358       1.4 |        1,000       344       367      0.4
+    10,000 |           120,491      132,877      123,617     261,799      35.3 |       10,000     3,868     3,749      3.3
+   100,000 |         1,536,197    1,660,964    1,568,929   3,282,893     262.2 |      100,000    37,297    37,499     63.4
+ 1,000,000 |        18,674,803   19,931,569   18,951,425  39,298,156    5846.8 |    1,000,000   326,797   374,993    742.1
+
+TABLE 2 - search cost per query (average over the batch; time = minimum of R runs)
+         n approach  queries  avg cmp hit  avg cmp miss   max cmp extra ops/q     us/hit    us/miss   correct
+     1,000 A       1,000       496.25      1,000.00     1,000        0.00      15.05      31.91       all
+     1,000 B       1,000         8.98          9.98        10        9.98       1.52       1.71       all
+     1,000 C       1,000         1.34          0.76         5        1.00       0.26       0.25       all
+    10,000 A       1,000     4,966.63     10,000.00    10,000        0.00     170.74     355.57       all
+    10,000 B       1,000        12.31         13.34        14       13.32       2.38       2.73       all
+    10,000 C       1,000         1.39          0.70         6        1.00       0.50       0.37       all
+   100,000 A       1,000    51,226.36    100,000.00   100,000        0.00   2,081.58   4,420.73       all
+   100,000 B       1,000        15.64         16.75        17       16.69       4.12       4.58       all
+   100,000 C       1,000         1.33          0.67         5        1.00       0.66       0.47       all
+ 1,000,000 A         200   480,558.07  1,000,000.00 1,000,000        0.00  22,536.82  51,240.99       all
+ 1,000,000 B       1,000        18.87         19.95        20       19.91       6.24       7.06       all
+ 1,000,000 C       1,000         1.32          0.68         4        1.00       0.88       0.62       all
+
+TABLE 3 - theory vs measurement (average key comparisons per search)
+         n approach   theory hit     measured   ratio |  theory miss     measured   ratio
+     1,000 A          500.50       496.25   0.992 |     1,000.00     1,000.00   1.000
+     1,000 B            8.99         8.98   0.999 |         9.98         9.98   1.000
+     1,000 C            1.37         1.34   0.982 |         0.73         0.76   1.037
+    10,000 A        5,000.50     4,966.63   0.993 |    10,000.00    10,000.00   1.000
+    10,000 B           12.36        12.31   0.996 |        13.36        13.34   0.998
+    10,000 C            1.37         1.39   1.013 |         0.75         0.70   0.929
+   100,000 A       50,000.50    51,226.36   1.025 |   100,000.00   100,000.00   1.000
+   100,000 B           15.69        15.64   0.997 |        16.69        16.75   1.003
+   100,000 C            1.37         1.33   0.974 |         0.74         0.67   0.900
+ 1,000,000 A      500,000.50   480,558.07   0.961 | 1,000,000.00 1,000,000.00   1.000
+ 1,000,000 B           18.95        18.87   0.996 |        19.95        19.95   1.000
+ 1,000,000 C            1.33         1.32   0.996 |         0.65         0.68   1.044
+
+TABLE 4 - exhaustive check: every stored key searched once (exact averages)
+         n | B avg meas.    S(n)/n  B max lg bound | C avg meas. model U=1e7  1+(n-1)/2m  C max  alpha
+     1,000 |      8.9870    8.9870     10       10 |      1.3440      1.3670      1.3670      5  0.735
+    10,000 |     12.3631   12.3631     14       14 |      1.3868      1.3744      1.3749      7  0.750
+   100,000 |     15.6895   15.6895     17       17 |      1.3730      1.3700      1.3750      8  0.750
+ 1,000,000 |     18.9514   18.9514     20       20 |      1.3268      1.3267      1.3750      6  0.750
+
+TABLE 5 - growth when n grows 10x (measured ratios) and log-log slope of time per search vs n
+                n step |   A cmp  A time |   B cmp  B time |   C cmp  C time | theory A theory B theory C
+         1,000->10,000 |   10.00   11.21 |    1.35    1.58 |    0.99    1.69 |    10.00     1.33     1.00
+       10,000->100,000 |   10.10   12.35 |    1.26    1.70 |    0.96    1.29 |    10.00     1.25     1.00
+    100,000->1,000,000 |    9.79   11.35 |    1.20    1.53 |    1.00    1.33 |    10.00     1.20     1.00
+ log-log slope of time |           1.068 |           0.207 |           0.151 | (theory: A = 1, B -> 0 slowly (log n), C = 0)
+
+TABLE 6 - extra memory of the search structure (records shared, not counted) and break-even searches
+         n | records MB   A B sorted MB B peak MB C table MB | A->B q* ops A->B q* time A->C q* ops A->C q* time
+     1,000 |       0.10   0        0.01      0.02       0.07 |       11.84        63.23        1.80        15.24
+    10,000 |       1.00   0        0.08      0.16       0.68 |       16.13       135.63        1.85        12.71
+   100,000 |      10.00   0        0.80      1.60       6.87 |       20.32        80.75        1.82        19.51
+ 1,000,000 |     100.00   0        8.00     16.00      69.79 |       25.23       158.53        1.79        20.12
+
+TABLE 7 - reference: the same ideas as C code inside CPython (shows the interpreter constant factor)
+         n | merge sort ms sorted() ms  ratio | hash build ms  dict ms  ratio |   B us bisect us |   C us dict.get us
+     1,000 |           1.4         0.1    9.7 |           0.4      0.1    5.3 |   1.52     0.203 |   0.26       0.096
+    10,000 |          35.3         1.5   23.3 |           3.3      0.5    6.4 |   2.38     0.329 |   0.50       0.178
+   100,000 |         262.2        27.2    9.6 |          63.4     12.4    5.1 |   4.12     0.751 |   0.66       0.258
+ 1,000,000 |        5846.8       417.1   14.0 |         742.1    206.6    3.6 |   6.24     1.341 |   0.88       0.318
+
+Files written: 10 CSV tables (Task_9_Experimental_Performance + Report/Tables_and_Graphs) and graphs:
+  fig1_comparisons_vs_n.png, fig2_time_per_search_vs_n.png, fig3_preprocessing_cost.png
+  fig4_amortised_cost_vs_searches.png, fig5_memory_vs_n.png, fig6_chain_length_distribution.png
+Total experiment time: 95.4 s

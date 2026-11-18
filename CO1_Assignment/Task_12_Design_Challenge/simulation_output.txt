@@ -1,0 +1,72 @@
+================================================================================================================
+ Day-4 design challenge: 50,000 searches/hour on 1,000,000 records, 5,000 new records once per day
+================================================================================================================
+STEP 1 - initial preprocessing, paid once at deployment
+  B  merge sort of 1,000,000 records        :   18,674,803 comparisons     4.97 s
+  C  hash table sized for n (Task 11 design):    1,326,797 operations      0.69 s   m = 1,333,357, alpha = 0.750
+  C3 hash table, capacity for 2,000,000    :    1,139,716 operations      0.56 s   m = 2,666,683, alpha = 0.375
+
+STEP 2 - day 1: 24 hours x 50,000 searches (80% successful), every search executed for B, C and C3
+  hour | B comparisons    B s | C comparisons    C s | C3 comparisons   C3 s |       found (B/C/C3)
+     1 |       957,582  0.381 |        59,522  0.051 |         48,293  0.046 | 40,000/40,000/40,000 ok
+     2 |       957,592  0.380 |        59,309  0.055 |         48,454  0.053 | 40,000/40,000/40,000 ok
+     3 |       957,269  0.412 |        59,587  0.052 |         48,363  0.050 | 40,000/40,000/40,000 ok
+     4 |       957,352  0.518 |        59,639  0.052 |         48,431  0.057 | 40,000/40,000/40,000 ok
+     5 |       957,264  0.526 |        59,823  0.053 |         48,458  0.042 | 40,000/40,000/40,000 ok
+     6 |       957,634  0.472 |        59,518  0.047 |         48,370  0.051 | 40,000/40,000/40,000 ok
+     7 |       957,797  0.455 |        59,676  0.059 |         48,193  0.043 | 40,000/40,000/40,000 ok
+     8 |       957,533  0.439 |        59,717  0.060 |         48,377  0.051 | 40,000/40,000/40,000 ok
+     9 |       957,778  0.434 |        59,480  0.050 |         48,532  0.047 | 40,000/40,000/40,000 ok
+    10 |       957,445  0.488 |        59,557  0.065 |         48,607  0.074 | 40,000/40,000/40,000 ok
+    11 |       957,791  0.528 |        59,479  0.067 |         48,560  0.056 | 40,000/40,000/40,000 ok
+    12 |       957,943  0.513 |        59,622  0.054 |         48,331  0.057 | 40,000/40,000/40,000 ok
+    13 |       958,002  0.580 |        59,762  0.054 |         48,409  0.056 | 40,000/40,000/40,000 ok
+    14 |       957,455  0.419 |        59,474  0.061 |         48,228  0.044 | 40,000/40,000/40,000 ok
+    15 |       957,505  0.385 |        59,896  0.064 |         48,508  0.041 | 40,000/40,000/40,000 ok
+    16 |       957,473  0.387 |        59,600  0.054 |         48,422  0.056 | 40,000/40,000/40,000 ok
+    17 |       957,357  0.412 |        59,635  0.075 |         48,518  0.047 | 40,000/40,000/40,000 ok
+    18 |       957,128  0.498 |        59,717  0.055 |         48,394  0.053 | 40,000/40,000/40,000 ok
+    19 |       956,905  0.427 |        59,562  0.058 |         48,353  0.041 | 40,000/40,000/40,000 ok
+    20 |       957,594  0.357 |        59,559  0.047 |         48,441  0.047 | 40,000/40,000/40,000 ok
+    21 |       957,052  0.379 |        59,636  0.058 |         48,377  0.047 | 40,000/40,000/40,000 ok
+    22 |       957,208  0.428 |        59,611  0.047 |         48,440  0.050 | 40,000/40,000/40,000 ok
+    23 |       957,312  0.347 |        59,742  0.051 |         48,327  0.049 | 40,000/40,000/40,000 ok
+    24 |       957,641  0.337 |        59,528  0.051 |         48,317  0.049 | 40,000/40,000/40,000 ok
+  A sequential: 200 searches of hour 1 (154 successful, found 154) -> 595,781 comparisons and 25.3 ms per search
+  A extrapolated to one hour: 29,789,029,750 comparisons, 1,264 s of CPU (35.1% of one core)
+  B   whole day:    22,979,612 comparisons,   10.50 s (8.75 us per search)
+  C   whole day:     1,430,651 comparisons,    1.34 s (1.12 us per search)
+  C3  whole day:     1,161,703 comparisons,    1.21 s (1.01 us per search)
+
+STEP 3 - nightly update: b = 5,000 new records (seed 2026) added to n = 1,000,000
+  strategy                                              comparisons   other ops   seconds rehash  verified
+  A  append batch to the unsorted list                            0       5,000    0.0022      0  PASS
+  B1 re-sort all n + b records (merge sort)              18,774,634  39,502,821    4.1782      0  PASS
+  B2 sort batch, merge into sorted array                  1,060,084   1,125,810    0.3475      0  PASS
+  C1 rebuild the whole hash table                           327,916   1,005,000    0.7143      0  PASS
+  C2 insert batch, Task-11 table sized for n                  1,397   1,005,018    0.7920      1  PASS
+  C3 insert batch, table with reserved capacity               1,454       5,000    0.0036      0  PASS
+  after the update: C2 m = 2,666,717 (alpha 0.377), C3 m = 2,666,683 (alpha 0.377); B1 array == B2 array: True
+
+STEP 4 - day 2, hour 1: 50,000 searches over 1,005,000 records (180 of them for new records)
+  B2:    957,985 comparisons,  0.291 s, found 40,000 of 40,000 PASS
+  C3:     48,382 comparisons,  0.042 s, found 40,000 of 40,000 PASS
+
+STEP 5 - cost per day = nightly update + 24 h x 50,000 searches (one CPU core, Python)
+  design                                                   ops per day  CPU s/day search % core  headroom
+  A  append batch to the unsorted list                 714,936,719,000   30335.40      35.1104%        3x
+  B1 re-sort all n + b records (merge sort)                104,476,679      14.68       0.0122%    8,228x
+  B2 sort batch, merge into sorted array                    48,385,118      10.85       0.0122%    8,228x
+  C1 rebuild the whole hash table                            3,963,567       2.06       0.0016%   64,310x
+  C2 insert batch, Task-11 table sized for n                 3,637,066       2.14       0.0016%   64,310x
+  C3 insert batch, table with reserved capacity              2,368,157       1.21       0.0014%   71,441x
+
+STEP 6 - search rate at which each design's daily cost equals sequential search (A)
+  B1 re-sort all n + b records (merge sort)            pays off above      6.885 searches per hour
+  B2 sort batch, merge into sorted array               pays off above      0.569 searches per hour
+  C1 rebuild the whole hash table                      pays off above      1.174 searches per hour
+  C2 insert batch, Task-11 table sized for n           pays off above      1.302 searches per hour
+  C3 insert batch, table with reserved capacity        pays off above      0.002 searches per hour
+
+Lowest total daily cost: C3 (insert batch, table with reserved capacity) = 1.21 CPU s/day vs 30,335 s/day for sequential search
+Total run time 90.9 s; CSV + graphs written to Task_12 and Report/Tables_and_Graphs

@@ -1,0 +1,7 @@
+design,description,operations_per_day,update_seconds,search_seconds_per_day,total_cpu_seconds_per_day,search_cpu_utilisation_percent,load_headroom_factor,us_per_search
+A,append batch to the unsorted list,714936719000,0.00218,30335.4006,30335.4028,35.110417,2.8,25279.5005
+B1,re-sort all n + b records (merge sort),104476679,4.17819,10.5008,14.6789,0.012154,8228.0,8.7506
+B2,"sort batch, merge into sorted array",48385118,0.34755,10.5008,10.8483,0.012154,8228.0,8.7506
+C1,rebuild the whole hash table,3963567,0.71426,1.3435,2.0577,0.001555,64310.1,1.1196
+C2,"insert batch, Task-11 table sized for n",3637066,0.79205,1.3435,2.1355,0.001555,64310.1,1.1196
+C3,"insert batch, table with reserved capacity",2368157,0.00357,1.2094,1.213,0.0014,71440.8,1.0078
