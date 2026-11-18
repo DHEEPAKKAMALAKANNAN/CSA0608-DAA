@@ -1,0 +1,48 @@
+SentinelOps SOC Alert-Triage Module - Pseudocode 4 (OPTIMISED): closest_alert_pair (+ x-sweep)
+=================================================================================================
+Problem : same as the corrected version.
+Method  : divide and conquer on points sorted by x (Shamos and Hoey), with
+          - squared distances inside the algorithm (one square root at the very end),
+          - the y-sorted order produced by merging the halves (no re-sorting per level),
+          - a strip check in which every strip point meets at most 7 successors.
+          Alternative: x-sorted sweep that stops as soon as the x-gap alone reaches the best distance.
+Basic op: one (squared) distance computation.
+
+Algorithm ClosestAlertPair_DC(A, n)
+1. if n < 2 then return (∞, −1, −1)
+2. Px ← [ (A[k].x, A[k].y, k) for k ← 0 to n − 1 ] sorted by x     // once: Θ(n log n)
+3. ((d², i, j), Y) ← ClosestRec(Px, 0, n)
+4. return (√d², i, j)
+
+Algorithm ClosestRec(Px, lo, hi)
+// returns the best (d², i, j) with i < j in Px[lo..hi−1] and those points sorted by y
+1. if hi − lo ≤ 3 then
+2.     best ← smallest (squared distance, i, j) over all pairs of Px[lo..hi−1]   // ≤ 3 distances
+3.     return (best, Px[lo..hi−1] sorted by y)
+4. mid ← ⌊(lo + hi) / 2⌋;  xm ← Px[mid].x
+5. (bl, L) ← ClosestRec(Px, lo, mid)
+6. (br, R) ← ClosestRec(Px, mid, hi)
+7. best ← min(bl, br)                                   // δ² = best.d²
+8. Y ← merge of L and R by y                            // Θ(hi − lo)
+9. S ← [ p in Y with (p.x − xm)² < best.d² ]            // the strip of width 2δ around x = xm
+10. for s ← 0 to |S| − 1 do
+11.     t ← s + 1
+12.     while t < |S| and (S[t].y − S[s].y)² < best.d² do   // at most 7 iterations per s
+13.         best ← min(best, (squared distance of S[s], S[t], their indices))
+14.         t ← t + 1
+15. return (best, Y)
+
+Algorithm ClosestAlertPair_Sweep(A, n)
+1. if n < 2 then return (∞, −1, −1)
+2. Px ← points (x, y, k) sorted by x;  best ← (∞, −1, −1)
+3. for a ← 0 to n − 2 do
+4.     for b ← a + 1 to n − 1 do
+5.         dx ← Px[b].x − Px[a].x
+6.         if dx² ≥ best.d² then break                  // every later point is even further in x
+7.         best ← min(best, (dx² + dy², indices))
+8. return (√best.d², best.i, best.j)
+
+Complexity: D&C  T(n) = 2T(n/2) + Θ(n)  =>  Θ(n log n) time; distance computations O(n log n) worst case
+                 (≤ 7 per strip point per level), about 1.1·n on the alert data;
+            sweep: Θ(n log n) sort + very few distances on spread-out data, but Θ(n²) worst case
+                 (all alerts with the same x, e.g. a constant risk score).

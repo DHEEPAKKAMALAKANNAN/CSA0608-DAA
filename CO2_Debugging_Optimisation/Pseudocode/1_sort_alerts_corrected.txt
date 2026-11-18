@@ -1,0 +1,31 @@
+SentinelOps SOC Alert-Triage Module - Pseudocode 1 (CORRECTED): sort_alerts
+=============================================================================
+Problem : order a shift's alerts for the analyst - severity 5 (critical) first; for equal severity the
+          OLDER alert (smaller timestamp) first.  The caller's list (arrival order) must not change.
+Method  : bubble sort with an early-exit flag (the original algorithm, debugged - not rewritten).
+Fixes   : D1 copy the input, D2 inner bound n-i-2 -> n-i-1, D3 tie-break '>' -> '<', D4 flag reset per pass.
+Basic op: one call of ComesBefore (key comparison).
+
+Algorithm ComesBefore(a, b)
+// true if alert a must be triaged before alert b
+1. if a.severity ≠ b.severity then
+2.     return a.severity > b.severity            // higher severity first
+3. return a.timestamp < b.timestamp              // D3: equal severity -> older alert first
+
+Algorithm SortAlerts_Corrected(A, n)
+// Input : A[0..n-1] alerts in arrival order
+// Output: a NEW list B in triage order; A is unchanged
+1. B ← copy of A[0..n-1]                          // D1: never reorder the caller's list
+2. for i ← 0 to n − 2 do                          // pass i puts the i-th lowest priority in place
+3.     swapped ← false                            // D4: reset at the start of EVERY pass
+4.     for j ← 0 to n − i − 2 do                  // D2: includes the last pair (n−i−2, n−i−1)
+5.         if ComesBefore(B[j+1], B[j]) then
+6.             exchange B[j] and B[j+1]
+7.             swapped ← true
+8.     if swapped = false then                    // a pass without exchanges -> B is sorted
+9.         break
+10. return B
+
+Complexity: best Θ(n) (already in triage order: one pass, n−1 comparisons);
+            worst/average Θ(n²) comparisons, ≤ n(n−1)/2; exchanges = number of inversions I(A).
+Stable    : yes (only strictly out-of-order neighbours are exchanged).

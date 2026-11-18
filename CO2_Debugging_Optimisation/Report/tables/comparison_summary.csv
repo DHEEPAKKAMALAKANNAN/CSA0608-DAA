@@ -1,0 +1,21 @@
+n,function,operation,corrected,optimised,op_reduction_x,time_speedup_x
+100,sort_alerts (random),key comparisons,4895,543,9.01,7.67
+100,"find_alert x 1,000 (AlertIndex)",comparisons / probes,60375,1100,54.89,19.98
+100,match_signature x 5 (Horspool),char comparisons,30197,3461,8.72,11.15
+100,closest_alert_pair (D&C),distance computations,4950,110,45.0,6.92
+500,sort_alerts (random),key comparisons,121900,3765,32.38,31.47
+500,"find_alert x 1,000 (AlertIndex)",comparisons / probes,304908,1500,203.27,71.63
+500,match_signature x 5 (Horspool),char comparisons,151518,17332,8.74,8.3
+500,closest_alert_pair (D&C),distance computations,124750,497,251.01,24.01
+1000,sort_alerts (random),key comparisons,495845,8275,59.92,62.15
+1000,"find_alert x 1,000 (AlertIndex)",comparisons / probes,609427,2000,304.71,208.0
+1000,match_signature x 5 (Horspool),char comparisons,300980,34376,8.76,10.12
+1000,closest_alert_pair (D&C),distance computations,499500,1051,475.26,48.82
+2000,sort_alerts (random),key comparisons,1992330,18337,108.65,91.51
+2000,"find_alert x 1,000 (AlertIndex)",comparisons / probes,1218446,3000,406.15,382.69
+2000,match_signature x 5 (Horspool),char comparisons,602276,68407,8.8,18.49
+2000,closest_alert_pair (D&C),distance computations,1999000,2224,898.83,92.34
+5000,sort_alerts (random),key comparisons,12461989,51674,241.17,264.79
+5000,"find_alert x 1,000 (AlertIndex)",comparisons / probes,2989277,6000,498.21,519.2
+5000,match_signature x 5 (Horspool),char comparisons,1506694,171309,8.8,18.49
+5000,closest_alert_pair (D&C),distance computations,12497500,6393,1954.87,288.28

@@ -1,0 +1,24 @@
+SentinelOps SOC Alert-Triage Module - Pseudocode 4 (CORRECTED): closest_alert_pair
+====================================================================================
+Problem : the two alerts whose feature points (x = normalised risk score, y = time of day) are nearest
+          (Euclidean distance) - they are correlated as near-duplicates.  Return (distance, i, j) with
+          i < j, or (∞, −1, −1) when the batch has fewer than two alerts.
+Method  : brute-force closest pair - the original algorithm, debugged.
+Fixes   : D11 start from best = ∞, D12 only pairs i < j, D13 dy uses A[j].y, D14 update i and j together.
+Basic op: one distance computation.
+
+Algorithm ClosestAlertPair_Corrected(A, n)
+1. best ← ∞;  bi ← −1;  bj ← −1                    // D11: "no pair found yet"
+2. for i ← 0 to n − 1 do
+3.     for j ← i + 1 to n − 1 do                    // D12: every unordered pair once, no self-pair
+4.         dx ← A[i].x − A[j].x
+5.         dy ← A[i].y − A[j].y                     // D13: was A[i].y − A[i].y (always 0)
+6.         d ← √(dx² + dy²)
+7.         if d < best then                         // strict '<': first pair in (i, j) order wins ties
+8.             best ← d
+9.             bi ← i
+10.            bj ← j                               // D14: both indices updated together
+11. return (best, bi, bj)
+
+Complexity: exactly Σ_{i=0}^{n−1} (n − 1 − i) = n(n − 1)/2 distance computations in EVERY case
+            -> Θ(n²) best, average and worst case.

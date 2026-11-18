@@ -1,0 +1,31 @@
+SentinelOps SOC Alert-Triage Module - Pseudocode 2 (OPTIMISED): find_alert + AlertIndex
+=========================================================================================
+Problem : same as the corrected version.
+Method  : (a) sentinel sequential search for a single look-up - the query itself is placed after the
+              last alert, so the loop needs no bounds test (one test per element instead of two);
+          (b) hash index alert_id -> first position for the many look-ups an analyst makes on one
+              shift: built once in Θ(n), then Θ(1) expected per look-up.
+
+Algorithm FindAlert_Sentinel(A, n, id)
+1. A[n] ← sentinel record whose alert_id = id      // the loop below is now guaranteed to stop
+2. i ← 0
+3. while A[i].alert_id ≠ id do                     // ONE comparison per element, no "i < n" test
+4.     i ← i + 1
+5. remove A[n]                                     // restore the caller's list (also on an error)
+6. if i < n then return i
+7. else return −1                                  // only the sentinel matched
+
+Algorithm BuildIndex(A, n)
+1. H ← empty hash table
+2. for i ← 0 to n − 1 do
+3.     if A[i].alert_id is not a key of H then     // keep the FIRST occurrence (same answer as 2.a)
+4.         H[A[i].alert_id] ← i
+5. return H
+
+Algorithm IndexFind(H, id)
+1. if id is a key of H then return H[id]           // one hash probe
+2. else return −1
+
+Complexity: sentinel search Θ(n) worst case like the corrected version, but n + 1 tests instead of 2n + 1;
+            q look-ups: sequential Θ(qn)  vs  index Θ(n + q) expected (build once, probe q times).
+            The index pays off as soon as q is larger than a small constant.

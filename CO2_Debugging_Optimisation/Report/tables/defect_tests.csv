@@ -1,0 +1,38 @@
+test,defect,description,input,expected,actual_original,original,corrected,optimised
+T01,D1,sort leaves the caller's list in arrival order,"sev [2,5,3], t [10,20,30]",input 001 002 003,input 002 001 003,FAIL,PASS,PASS
+T02,D2,sort: critical alert arriving last goes first,"sev [3,2,5], t [10,20,30]","sev [5, 3, 2]","sev [3, 2, 5]",FAIL,PASS,PASS
+T03,D3,sort: equal severity -> oldest first,"sev [4,4,4], t [20,10,30]","t [10, 20, 30]","t [20, 10, 30]",FAIL,PASS,PASS
+T04,D4,sort: early exit on a nearly sorted queue,"10 sorted alerts, items 2-3 swapped",<= 2n-3 = 17 comparisons,36 comparisons,FAIL,PASS,PASS
+T05,D5,search finds the alert at index 0,"3 alerts, query = id of alert 0",index 0,index -1,FAIL,PASS,PASS
+T06,D6,search with an equal but new id string,"3 alerts, query built at run time",index 0,index -1,FAIL,PASS,PASS
+T07,D7,search continues past the first mismatch,"3 alerts, query = id of alert 2",index 2,index -1,FAIL,PASS,PASS
+T07b,D7,search in an empty batch returns -1,"[] , 'ALR-000001'",-1,None,FAIL,PASS,PASS
+T08,D8,signature at the very end of the message,'User svc_backup read /etc/shadow',[21],[],FAIL,PASS,PASS
+T08b,D8,message equal to the signature,text = pattern = 'mimikatz',[0],[],FAIL,PASS,PASS
+T09,D9,early exit on mismatch (char comparisons),"text 'x'*20, pattern 'abc'",[] in <= n-m+1 = 18 char cmp,[] in 51 char cmp,FAIL,PASS,PASS
+T10,D10,empty signature matches nothing,"'Failed password for admin', ''",[],"[0, 1, ..., 24] (25 hits)",FAIL,PASS,PASS
+T11,D11,closest pair of an empty batch,[],"(inf, -1, -1)","(0.0000, 0, 0)",FAIL,PASS,PASS
+T12,D12,"two alerts -> the pair (0, 1)","(0.20,0.50), (0.23,0.50)","(0.0300, 0, 1)","(0.0000, 0, 1)",FAIL,PASS,PASS
+T12b,D12,single alert -> no pair,"(0.20,0.50)","(inf, -1, -1)","(0.0000, 0, 0)",FAIL,PASS,PASS
+T12c,D12,n = 10 needs at most n(n-1)/2 distances,10 random points (seed 7),<= n(n-1)/2 = 45 distances,100 distances,FAIL,PASS,PASS
+T13,D13,y difference is part of the distance,"(.10,.10), (.12,.90), (.30,.12)","(0.2010, 0, 2)","(0.0000, 0, 2)",FAIL,PASS,PASS
+T14,D14,both pair indices updated together,"(.10,.10), (.11,.10), (.80,.80)","(0.0100, 0, 1)","(0.0000, 0, 2)",FAIL,PASS,PASS
+G01,-,sort 300 random alerts == reference,"make_alert_rows(300, seed=1)",== sorted(key),296/300 positions differ,FAIL,PASS,PASS
+G02,-,sort an empty and a one-alert batch,"[], [ALR-000001]",[] and [001],ok,PASS,PASS,PASS
+G03,-,sort an already triaged queue: unchanged,200 alerts in priority order,order unchanged,changed,FAIL,PASS,PASS
+G04,-,search returns the FIRST duplicate,"ids 001 002 003 002, query 002",index 1 (first),index -1,FAIL,PASS,PASS
+G05,-,search for an absent id returns -1,"3 alerts, 'ALR-000999'",-1,-1,PASS,PASS,PASS
+G06,-,200 random look-ups == reference,"300 alerts, 200 queries (seed 3)",200/200 agree,43/200 agree,FAIL,PASS,PASS
+G07,-,overlapping matches are all reported,"'aaaa', 'aa'","[0, 1, 2]","[0, 1]",FAIL,PASS,PASS
+G08,-,signature longer than the message,"'mimi', 'mimikatz'",[],[],PASS,PASS,PASS
+G09,-,5 signatures on a 300-alert log == ref,log of 300 alerts (seed 4),5/5 signatures agree,5/5 agree,PASS,PASS,PASS
+G10,-,matching is case-sensitive,"'... MIMIKATZ.EXE ...', 'mimikatz'",[] (case-sensitive),[],PASS,PASS,PASS
+G11,-,closest pair of 300 alerts == reference,"make_alert_rows(300, seed=5)","(0.0005, 0, 2)","(0.0000, 0, 299)",FAIL,PASS,PASS
+G12,-,exact duplicate alerts -> distance 0,"4 points, #0 and #2 identical","(0.0000, 0, 2)","(0.0000, 0, 3)",FAIL,PASS,PASS
+G13,-,sort is stable for identical keys,"keys (3,5) (3,5) (5,9) (3,5)",003 001 002 004 (stable),003 001 002 004,PASS,PASS,PASS
+O01,-,AlertIndex look-ups == reference,300 alerts + duplicate id,201/201 agree,n/a,n/a,n/a,PASS
+O02,-,sentinel search restores the caller's list,"50 alerts, hit + miss",list restored (50 items),n/a,n/a,n/a,PASS
+O03,-,KMP matcher == reference (10 cases),"logs, overlaps, adversarial",10/10 agree,n/a,n/a,n/a,PASS
+O04,-,x-sweep closest pair == reference,"random + same-x, 300 alerts",random + same-x agree,n/a,n/a,n/a,PASS
+O05,-,Horspool on adversarial texts,'a'*200 with 'a'*9+'b' etc.,3/3 agree,n/a,n/a,n/a,PASS
+O06,-,divide & conquer on a same-x batch,"300 alerts, all x = 0.5",same-x batch agrees,n/a,n/a,n/a,PASS

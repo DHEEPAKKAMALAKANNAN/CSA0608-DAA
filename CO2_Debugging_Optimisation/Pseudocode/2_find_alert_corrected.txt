@@ -1,0 +1,20 @@
+SentinelOps SOC Alert-Triage Module - Pseudocode 2 (CORRECTED): find_alert
+============================================================================
+Problem : position of the FIRST alert whose alert_id equals the analyst's query, or −1 if absent.
+Method  : sequential (linear) search - the original algorithm, debugged.
+Fixes   : D5 start at index 0, D6 value equality instead of identity, D7 return −1 only after the scan.
+Basic op: one id comparison A[i].alert_id = id.
+
+Algorithm FindAlert_Corrected(A, n, id)
+// Input : A[0..n-1] alerts, id a string such as "ALR-000123"
+// Output: smallest i with A[i].alert_id = id, or −1
+1. for i ← 0 to n − 1 do                          // D5: index 0 is examined too
+2.     if A[i].alert_id = id then                 // D6: compare VALUES (==), not object identity
+3.         return i                               // first occurrence
+4. return −1                                      // D7: "absent" only after all n alerts were checked
+                                                  //     (also covers n = 0)
+
+Complexity: best Θ(1) (match at index 0, 1 comparison);
+            worst Θ(n) (absent or last, n comparisons);
+            average for a present id at a uniformly random position: (n + 1) / 2 comparisons.
+            Each iteration also performs the hidden loop test i < n -> about 2n tests in the worst case.

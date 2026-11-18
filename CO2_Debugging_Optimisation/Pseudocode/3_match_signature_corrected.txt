@@ -1,0 +1,26 @@
+SentinelOps SOC Alert-Triage Module - Pseudocode 3 (CORRECTED): match_signature
+=================================================================================
+Problem : every start position (overlapping ones included) at which a threat signature P[0..m-1]
+          occurs in an alert message / log text T[0..n-1]; case-sensitive; an empty signature is
+          invalid and matches nothing.
+Method  : brute-force string matching - the original algorithm, debugged.
+Fixes   : D8 try the last alignment i = n − m, D9 stop comparing at the first mismatch,
+          D10 reject an empty signature.
+Basic op: one character comparison T[i+j] ≠ P[j].
+
+Algorithm MatchSignature_Corrected(T, n, P, m)
+1. if m = 0 or m > n then                         // D10: empty (or over-long) signature
+2.     return [ ]
+3. positions ← [ ]
+4. for i ← 0 to n − m do                          // D8: n − m + 1 alignments, the last one included
+5.     matched ← true
+6.     for j ← 0 to m − 1 do
+7.         if T[i + j] ≠ P[j] then
+8.             matched ← false
+9.             break                              // D9: early exit at the first mismatch
+10.    if matched then append i to positions
+11. return positions
+
+Complexity: worst Θ((n − m + 1)·m) = Θ(nm) character comparisons (e.g. T = aaaa…a, P = aa…ab);
+            best Θ(n − m + 1) = Θ(n) (first character never matches);
+            on natural log text the first comparison usually fails -> ≈ 1.03 comparisons per character.

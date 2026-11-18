@@ -1,0 +1,1001 @@
+alert_id,severity,timestamp,source_ip,message,x_risk,y_time
+ALR-000001,1,20,10.4.125.58,Outbound DNS query volume above baseline for host WS-0521,0.5,0.33356526101665895
+ALR-000002,3,36,10.8.214.57,Port scan detected from 10.0.81.179: 286 ports in 60 s,0.5,0.33375805815188236
+ALR-000003,2,46,10.5.176.155,powershell -enc JABzAD0ATgBlAHcALQBPAGIAagBlAGMAdAAgAEkATwAuAE0AZQB spawned by winword.exe on WS-6202,0.5,0.33386740663450687
+ALR-000004,4,66,10.9.98.181,Accepted publickey for admin from 10.3.148.253 port 6253 ssh2,0.5,0.3341025756048012
+ALR-000005,2,80,10.5.181.54,Multiple 404 responses for /wp-login.php from 10.1.87.137,0.5,0.3342670329486587
+ALR-000006,1,100,10.5.28.59,Impossible travel: admin signed in from two countries within 937 min,0.5,0.334499918417496
+ALR-000007,2,110,10.7.73.68,Outbound DNS query volume above baseline for host WS-7020,0.5,0.3346117267271813
+ALR-000008,1,117,10.7.46.194,Failed password for root from 10.2.81.203 port 45620 ssh2,0.5,0.3346932670396967
+ALR-000009,2,136,10.8.5.175,New local administrator root created on WS-5574,0.5,0.3349076291331947
+ALR-000010,2,150,10.5.181.54,Multiple 404 responses for /wp-login.php from 10.1.87.137,0.5,0.33507444894489524
+ALR-000011,1,155,10.4.101.40,User svc_backup read /etc/shadow on WS-8006,0.5,0.3351316247069539
+ALR-000012,1,164,10.9.40.22,New local administrator oracle created on WS-7788,0.5,0.3352413459332545
+ALR-000013,2,180,10.3.102.183,powershell -enc JABzAD0ATgBlAHcALQBPAGIAagBlAGM spawned by winword.exe on WS-7398,0.5,0.33542299749889226
+ALR-000014,2,190,10.8.5.175,New local administrator root created on WS-5574,0.5,0.3355411495004427
+ALR-000015,1,197,10.9.40.22,New local administrator oracle created on WS-7788,0.5,0.33561844986271816
+ALR-000016,1,204,10.5.36.132,Process mimikatz.exe accessed lsass memory on WS-9356,0.5,0.3356964836586144
+ALR-000017,1,219,10.1.220.91,TLS certificate for WS-1613 expires in 64 days,0.5,0.3358779036487476
+ALR-000018,1,222,10.7.71.109,Outbound DNS query volume above baseline for host WS-1236,0.5,0.33591227106466515
+ALR-000019,3,239,10.8.7.249,Accepted publickey for j.smith from 10.2.208.125 port 32570 ssh2,0.5,0.3361038872486768
+ALR-000020,5,244,10.4.232.74,TLS certificate for WS-0959 expires in 595 days,0.5,0.3361585155452947
+ALR-000021,3,254,10.8.80.15,Firewall denied 10.2.35.153 -> 10.0.0.5:5477 (policy DMZ-IN),0.5,0.33627907905493365
+ALR-000022,3,272,10.9.41.108,Multiple 404 responses for /wp-login.php from 10.4.104.172,0.5,0.33648722195878217
+ALR-000023,2,292,10.1.4.118,Antivirus quarantined Trojan.GenericKD.957 on WS-2171,0.5,0.33672190163184396
+ALR-000024,1,299,10.8.154.157,cmd.exe /c whoami executed by admin on WS-1698,0.5,0.33680089371433913
+ALR-000025,3,302,10.2.139.73,Antivirus quarantined Trojan.GenericKD.519 on WS-4326,0.5,0.33683456800940753
+ALR-000026,2,303,10.4.22.1,User svc_backup read /etc/shadow on WS-9039,0.5,0.3368469347097826
+ALR-000027,4,306,10.2.18.214,User svc_backup read /etc/shadow on WS-5975,0.5,0.33687936256002077
+ALR-000028,1,307,10.3.52.91,cmd.exe /c whoami executed by deploy on WS-3879,0.5,0.33688714027478767
+ALR-000029,1,312,10.5.210.206,Multiple 404 responses for /wp-login.php from 10.4.81.202,0.5,0.33694515290137056
+ALR-000030,4,327,10.7.179.79,Impossible travel: j.smith signed in from two countries within 338 min,0.5,0.3371289572177542
+ALR-000031,2,335,10.8.169.241,Failed password for root from 10.4.91.149 port 64104 ssh2,0.5,0.33722035993288696
+ALR-000032,2,346,10.9.59.99,Antivirus quarantined Trojan.GenericKD.534 on WS-0028,0.5,0.3373413907382357
+ALR-000033,1,352,10.5.160.170,Impossible travel: root signed in from two countries within 414 min,0.5,0.3374176938920693
+ALR-000034,3,356,10.6.89.158,Antivirus quarantined Trojan.GenericKD.442 on WS-3444,0.5,0.3374597482954655
+ALR-000035,2,376,10.3.242.204,cmd.exe /c whoami executed by svc_backup on WS-5492,0.5,0.3376863777859954
+ALR-000036,1,383,10.3.75.7,Failed password for j.smith from 10.7.37.117 port 28184 ssh2,0.5,0.3377761075000497
+ALR-000037,1,398,10.0.54.200,TLS certificate for WS-4083 expires in 941 days,0.5,0.33794657843822595
+ALR-000038,3,402,10.8.162.244,cmd.exe /c whoami executed by oracle on WS-8977,0.5,0.3379969072599455
+ALR-000039,3,417,10.4.248.161,Process mimikatz.exe accessed lsass memory on WS-3842,0.5,0.3381675839314669
+ALR-000040,1,434,10.6.78.181,Process mimikatz.exe accessed lsass memory on WS-7634,0.5,0.33835757058690236
+ALR-000041,3,447,10.0.194.123,Failed password for guest from 10.4.199.219 port 59458 ssh2,0.5,0.3385141521720265
+ALR-000042,2,466,10.4.223.125,Failed password for deploy from 10.5.207.186 port 11840 ssh2,0.5,0.33873595933021555
+ALR-000043,2,483,10.4.22.1,User svc_backup read /etc/shadow on WS-9039,0.5,0.33893401519962163
+ALR-000044,2,483,10.7.93.13,powershell -enc JABzAD0ATgBlAHcALQBPAGIAagBlAGMAdAAgAEkATwAuAE0AZQBtAG8AcgB5AFMAdAByAGUA spawned by winword.exe on WS-5530,0.5,0.3389274453123695
+ALR-000045,1,496,10.0.26.244,User j.smith read /etc/shadow on WS-4052,0.5,0.33908019550253876
+ALR-000046,2,500,10.1.111.120,New local administrator a.kumar created on WS-1877,0.5,0.33912848559194747
+ALR-000047,1,509,10.4.192.102,New local administrator j.smith created on WS-4942,0.5,0.33922646780456295
+ALR-000048,3,512,10.0.177.137,TLS certificate for WS-6883 expires in 844 days,0.5,0.33926907823740815
+ALR-000049,4,523,10.2.222.46,New local administrator a.kumar created on WS-9708,0.5,0.33939561186662903
+ALR-000050,2,525,10.7.194.87,Failed password for oracle from 10.5.93.125 port 14925 ssh2,0.5,0.3394103020514876
+ALR-000051,1,544,10.0.97.22,Process mimikatz.exe accessed lsass memory on WS-8042,0.5,0.33963647463352625
+ALR-000052,3,553,10.4.188.122,Firewall denied 10.6.169.91 -> 10.0.0.5:47086 (policy DMZ-IN),0.5,0.33973805615883046
+ALR-000053,2,556,10.8.94.50,Process mimikatz.exe accessed lsass memory on WS-3181,0.5,0.33977067138876144
+ALR-000054,3,565,10.8.162.244,cmd.exe /c whoami executed by oracle on WS-8977,0.5,0.33987968148569386
+ALR-000055,3,566,10.2.251.27,Impossible travel: admin signed in from two countries within 350 min,0.5,0.33989547655607205
+ALR-000056,2,574,10.1.205.126,Accepted publickey for admin from 10.2.76.208 port 37910 ssh2,0.5,0.3399832403914781
+ALR-000057,3,587,10.3.194.116,Port scan detected from 10.9.219.79: 626 ports in 60 s,0.5,0.3401286261790274
+ALR-000058,1,593,10.1.80.62,Outbound DNS query volume above baseline for host WS-9730,0.5,0.3402024875939047
+ALR-000059,3,602,10.7.36.176,Process mimikatz.exe accessed lsass memory on WS-8923,0.5,0.34030994366205336
+ALR-000060,1,610,10.2.157.153,New local administrator a.kumar created on WS-4983,0.5,0.34040457440784766
+ALR-000061,2,626,10.9.20.228,TLS certificate for WS-3751 expires in 986 days,0.5,0.340586981228159
+ALR-000062,1,644,10.4.20.196,cmd.exe /c whoami executed by svc_backup on WS-2974,0.5,0.34078751554414916
+ALR-000063,2,659,10.6.170.83,Multiple 404 responses for /wp-login.php from 10.2.168.106,0.5,0.3409718351266532
+ALR-000064,3,676,10.8.7.249,Accepted publickey for j.smith from 10.2.208.125 port 32570 ssh2,0.5,0.34116437339463423
+ALR-000065,3,686,10.8.0.169,Impossible travel: oracle signed in from two countries within 639 min,0.5,0.3412741162974903
+ALR-000066,1,700,10.8.67.238,powershell -enc JABzAD0ATgBlAHcALQBPAGIAagBlAGM spawned by winword.exe on WS-9976,0.5,0.3414366569066183
+ALR-000067,3,709,10.1.115.216,Accepted publickey for oracle from 10.1.78.128 port 62146 ssh2,0.5,0.3415403498587503
+ALR-000068,1,724,10.8.74.99,Process mimikatz.exe accessed lsass memory on WS-6799,0.5,0.34172065744872676
+ALR-000069,1,732,10.4.250.222,Outbound DNS query volume above baseline for host WS-9043,0.5,0.34180733917268735
+ALR-000070,5,742,10.3.196.60,Impossible travel: deploy signed in from two countries within 397 min,0.5,0.34193064200375467
+ALR-000071,2,762,10.0.64.129,Antivirus quarantined Trojan.GenericKD.17 on WS-7487,0.5,0.3421540386663241
+ALR-000072,1,782,10.4.173.160,New local administrator deploy created on WS-8743,0.5,0.3423904535739566
+ALR-000073,1,797,10.1.120.162,Multiple 404 responses for /wp-login.php from 10.3.46.112,0.5,0.34256299857236333
+ALR-000074,3,800,10.0.23.84,cmd.exe /c whoami executed by admin on WS-2386,0.5,0.3425930321066663
+ALR-000075,1,805,10.6.123.128,Antivirus quarantined Trojan.GenericKD.263 on WS-7530,0.5,0.342650492123458
+ALR-000076,3,819,10.2.37.114,User a.kumar read /etc/shadow on WS-4950,0.5,0.34282295752599484
+ALR-000077,3,822,10.9.151.180,powershell -enc JABzAD0ATgBlAHcALQBPAGIAagBlAGMAdAAgAEkATwAuAE0AZQBtAG spawned by winword.exe on WS-0804,0.5,0.342858525551582
+ALR-000078,1,831,10.5.112.163,Process mimikatz.exe accessed lsass memory on WS-0646,0.5,0.3429528277757238
+ALR-000079,1,849,10.4.167.192,TLS certificate for WS-5995 expires in 545 days,0.5,0.34316822442959244
+ALR-000080,4,854,10.7.151.192,Impossible travel: guest signed in from two countries within 774 min,0.5,0.3432290414691258
+ALR-000081,4,866,10.5.46.203,TLS certificate for WS-4296 expires in 600 days,0.5,0.34336694233859555
+ALR-000082,1,877,10.0.167.235,Antivirus quarantined Trojan.GenericKD.666 on WS-4952,0.5,0.3434940398031553
+ALR-000083,2,878,10.7.59.25,Process mimikatz.exe accessed lsass memory on WS-8851,0.5,0.34349927825259235
+ALR-000084,3,882,10.7.208.241,powershell -enc JABzAD0ATgBlAHcALQBPAGIAagBlAGMAdAAgAEk spawned by winword.exe on WS-3869,0.5,0.3435499685071005
+ALR-000085,5,893,10.5.31.102,powershell -enc JABzAD0ATgBlAHcALQBPAGIAagBlAGMAdAAgAEkATwAuAE0AZQBtAG8A spawned by winword.exe on WS-3476,0.5,0.34367474665919273
+ALR-000086,2,893,10.2.105.18,Impossible travel: j.smith signed in from two countries within 338 min,0.5,0.34367983037276073
+ALR-000087,2,912,10.1.111.120,New local administrator a.kumar created on WS-1877,0.5,0.3438970256880043
+ALR-000088,1,929,10.0.67.4,User j.smith read /etc/shadow on WS-4348,0.5,0.3440954130190649
+ALR-000089,1,945,10.7.185.132,Antivirus quarantined Trojan.GenericKD.746 on WS-0711,0.5,0.344280754762042
+ALR-000090,3,961,10.0.31.123,Impossible travel: deploy signed in from two countries within 77 min,0.5,0.34446048142268487
+ALR-000091,1,980,10.9.166.98,Antivirus quarantined Trojan.GenericKD.875 on WS-1875,0.5,0.3446841708826861
+ALR-000092,1,997,10.7.116.106,User oracle read /etc/shadow on WS-5121,0.5,0.3448737610297689
+ALR-000093,3,1008,10.7.34.24,Impossible travel: root signed in from two countries within 833 min,0.5,0.3450023853448433
+ALR-000094,3,1026,10.1.210.91,Impossible travel: deploy signed in from two countries within 108 min,0.5,0.34521917328252905
+ALR-000095,1,1030,10.1.179.217,Firewall denied 10.1.142.147 -> 10.0.0.5:15845 (policy DMZ-IN),0.5,0.34525931319758174
+ALR-000096,3,1049,10.0.136.8,Outbound DNS query volume above baseline for host WS-2973,0.5,0.34548246582279596
+ALR-000097,3,1061,10.0.46.192,Firewall denied 10.6.214.117 -> 10.0.0.5:23364 (policy DMZ-IN),0.5,0.34562008832032926
+ALR-000098,4,1079,10.2.80.194,Antivirus quarantined Trojan.GenericKD.499 on WS-6948,0.5,0.34582477223090086
+ALR-000099,2,1087,10.5.220.29,powershell -enc JABzAD0ATgBlAHcALQB spawned by winword.exe on WS-6476,0.5,0.34592113800712554
+ALR-000100,3,1096,10.4.148.84,Accepted publickey for admin from 10.7.220.45 port 9490 ssh2,0.5,0.34602907932594557
+ALR-000101,4,1113,10.1.203.221,New local administrator admin created on WS-1276,0.5,0.3462190665492993
+ALR-000102,3,1131,10.4.58.104,Failed password for guest from 10.2.235.213 port 46218 ssh2,0.5,0.3464276272794104
+ALR-000103,2,1138,10.1.202.223,powershell -enc JABzAD0ATgBlAHcALQBPAGIAagBlAGMAdAAgAEkATwAuAE0AZQBtAG8A spawned by winword.exe on WS-1252,0.5,0.3465067801443047
+ALR-000104,3,1154,10.5.75.61,Accepted publickey for svc_backup from 10.4.101.45 port 40502 ssh2,0.5,0.3466918730379447
+ALR-000105,3,1159,10.7.229.175,Antivirus quarantined Trojan.GenericKD.454 on WS-7683,0.5,0.346757261195081
+ALR-000106,2,1167,10.1.158.119,Port scan detected from 10.0.188.213: 662 ports in 60 s,0.5,0.3468484515129983
+ALR-000107,2,1169,10.7.21.116,cmd.exe /c whoami executed by j.smith on WS-1014,0.5,0.34687459488486
+ALR-000108,1,1179,10.2.20.64,New local administrator oracle created on WS-4635,0.5,0.34698691727190256
+ALR-000109,3,1198,10.5.33.85,Accepted publickey for deploy from 10.4.129.186 port 56832 ssh2,0.5,0.3472101715265135
+ALR-000110,4,1216,10.4.200.34,Antivirus quarantined Trojan.GenericKD.834 on WS-5382,0.5,0.3474099761020276
+ALR-000111,3,1232,10.8.185.5,User a.kumar read /etc/shadow on WS-7968,0.5,0.34759476602541217
+ALR-000112,4,1236,10.1.19.170,User svc_backup read /etc/shadow on WS-2963,0.5,0.3476413949408241
+ALR-000113,1,1241,10.5.121.249,Port scan detected from 10.7.119.137: 990 ports in 60 s,0.5,0.3477012011281889
+ALR-000114,4,1247,10.7.236.197,powershell -enc JABzAD0ATgBlAHcALQBPAGIAagBlAGMAdAAgAEkATwAuAE0AZQBtAG spawned by winword.exe on WS-3272,0.5,0.34777765729795634
+ALR-000115,2,1255,10.5.52.183,Impossible travel: root signed in from two countries within 462 min,0.5,0.34786139888836043
+ALR-000116,4,1268,10.7.178.239,Failed password for deploy from 10.0.202.129 port 25531 ssh2,0.5,0.3480145638621051
+ALR-000117,1,1268,10.5.74.36,Failed password for a.kumar from 10.7.71.195 port 47262 ssh2,0.5,0.3480099678337139
+ALR-000118,4,1270,10.5.46.203,TLS certificate for WS-4296 expires in 600 days,0.5,0.3480327222878306
+ALR-000119,3,1287,10.6.56.199,powershell -enc JABzAD0ATgBlAHcALQBPAGIAagBlAGMAdAAgAEkATwAuAE0AZQBtAG8AcgB5AFMAdA spawned by winword.exe on WS-6879,0.5,0.3482354839402993
+ALR-000120,4,1289,10.9.8.162,Firewall denied 10.2.149.110 -> 10.0.0.5:1126 (policy DMZ-IN),0.5,0.34825941260575066
+ALR-000121,2,1291,10.8.10.100,Impossible travel: oracle signed in from two countries within 767 min,0.5,0.3482813754267204
+ALR-000122,3,1293,10.1.170.35,Failed password for guest from 10.8.173.209 port 43150 ssh2,0.5,0.34830919763793405
+ALR-000123,4,1308,10.1.234.10,powershell -enc JABzAD0ATgBlAHcALQBPAGIAagBlAGMAdAA spawned by winword.exe on WS-5171,0.5,0.348482187411412
+ALR-000124,1,1325,10.3.146.92,Impossible travel: admin signed in from two countries within 449 min,0.5,0.3486799898159062
+ALR-000125,2,1339,10.2.254.178,Port scan detected from 10.8.136.206: 82 ports in 60 s,0.5,0.34883771919898426
+ALR-000126,2,1344,10.1.167.170,powershell -enc JABzAD0ATgBlAHcALQBPAGIAagBlAGMAdAAgAEkATwAu spawned by winword.exe on WS-7273,0.5,0.34889193856987094
+ALR-000127,2,1355,10.0.38.172,Multiple 404 responses for /wp-login.php from 10.5.81.244,0.5,0.3490177076794939
+ALR-000128,1,1369,10.0.167.235,Antivirus quarantined Trojan.GenericKD.666 on WS-4952,0.5,0.34918708585516506
+ALR-000129,2,1389,10.9.16.155,Outbound DNS query volume above baseline for host WS-1260,0.5,0.34941151168751433
+ALR-000130,1,1401,10.1.13.189,Outbound DNS query volume above baseline for host WS-1930,0.5,0.3495486818943094
+ALR-000131,3,1415,10.7.102.32,Outbound DNS query volume above baseline for host WS-7293,0.5,0.34971874131641895
+ALR-000132,3,1425,10.8.148.229,powershell -enc JABzAD0ATgBlAHcALQBPAGIAagBlAGMAdAAgAEkATwAuAE0AZQBtAG8AcgB5AFMAdA spawned by winword.exe on WS-1989,0.5,0.3498278300591405
+ALR-000133,4,1440,10.5.46.203,TLS certificate for WS-4296 expires in 600 days,0.5,0.3500072042309796
+ALR-000134,3,1454,10.9.44.17,powershell -enc JABzAD0ATgBlAHcALQBPAGIA spawned by winword.exe on WS-9420,0.5,0.3501643635959827
+ALR-000135,2,1474,10.8.176.33,Impossible travel: svc_backup signed in from two countries within 853 min,0.5,0.35039843862747855
+ALR-000136,2,1483,10.3.177.243,Firewall denied 10.1.128.51 -> 10.0.0.5:42643 (policy DMZ-IN),0.5,0.35049785575503367
+ALR-000137,2,1502,10.2.78.44,Multiple 404 responses for /wp-login.php from 10.9.21.212,0.5,0.35072194601608475
+ALR-000138,1,1520,10.9.213.159,Multiple 404 responses for /wp-login.php from 10.7.148.165,0.5,0.35092972663768535
+ALR-000139,1,1532,10.0.80.113,TLS certificate for WS-2354 expires in 322 days,0.5,0.3510678372513622
+ALR-000140,1,1543,10.5.54.82,Process mimikatz.exe accessed lsass memory on WS-2309,0.5,0.35119367896549375
+ALR-000141,2,1555,10.2.167.240,Antivirus quarantined Trojan.GenericKD.512 on WS-7649,0.5,0.3513376810910587
+ALR-000142,2,1555,10.7.123.56,Antivirus quarantined Trojan.GenericKD.905 on WS-9790,0.5,0.3513390343482125
+ALR-000143,1,1570,10.1.220.35,powershell -enc JABzAD0ATgBlAHcALQBPAGIAagBlAGMAdAAgAEkATwAuAE0AZQB spawned by winword.exe on WS-0839,0.5,0.3515069408838289
+ALR-000144,2,1587,10.7.143.212,Antivirus quarantined Trojan.GenericKD.573 on WS-5556,0.5,0.3517018964069249
+ALR-000145,2,1591,10.8.20.12,Failed password for svc_backup from 10.5.242.133 port 30973 ssh2,0.5,0.35175078974549334
+ALR-000146,2,1601,10.6.153.152,User oracle read /etc/shadow on WS-0273,0.5,0.35187152021296664
+ALR-000147,3,1614,10.0.242.68,Multiple 404 responses for /wp-login.php from 10.0.245.44,0.5,0.3520170518701445
+ALR-000148,3,1615,10.3.9.113,User deploy read /etc/shadow on WS-6724,0.5,0.3520329573510589
+ALR-000149,3,1630,10.0.70.133,Process mimikatz.exe accessed lsass memory on WS-2838,0.5,0.3521999254133278
+ALR-000150,3,1647,10.4.247.50,Process mimikatz.exe accessed lsass memory on WS-4877,0.5,0.35240397382245947
+ALR-000151,2,1662,10.4.147.32,Antivirus quarantined Trojan.GenericKD.299 on WS-2400,0.5,0.35257109047796026
+ALR-000152,2,1664,10.4.245.55,Process mimikatz.exe accessed lsass memory on WS-9615,0.5,0.3525951769518571
+ALR-000153,1,1680,10.1.211.85,New local administrator oracle created on WS-9017,0.5,0.3527862223301744
+ALR-000154,1,1695,10.4.164.74,Multiple 404 responses for /wp-login.php from 10.1.118.137,0.5,0.35295688716332274
+ALR-000155,1,1700,10.6.253.48,New local administrator a.kumar created on WS-9876,0.5,0.3530166709952669
+ALR-000156,3,1709,10.8.252.228,Outbound DNS query volume above baseline for host WS-5418,0.5,0.3531167369026802
+ALR-000157,1,1717,10.5.151.146,Multiple 404 responses for /wp-login.php from 10.2.207.212,0.5,0.35321375524991194
+ALR-000158,1,1720,10.5.127.2,powershell -enc JABzAD0ATgBlAHcALQBPAGIAagBlAGMAdAAgAEkATwAuAE0AZQBtA spawned by winword.exe on WS-5401,0.5,0.35324420170243853
+ALR-000159,2,1720,10.3.31.171,Accepted publickey for oracle from 10.4.81.104 port 45986 ssh2,0.5,0.3532463071927305
+ALR-000160,3,1729,10.4.188.158,Process mimikatz.exe accessed lsass memory on WS-9925,0.5,0.3533500469485736
+ALR-000161,4,1744,10.3.126.175,cmd.exe /c whoami executed by root on WS-5928,0.5,0.35352907672834577
+ALR-000162,4,1745,10.3.76.43,User oracle read /etc/shadow on WS-8009,0.5,0.3535387988632361
+ALR-000163,2,1746,10.7.29.144,Port scan detected from 10.0.202.66: 765 ports in 60 s,0.5,0.3535480151667369
+ALR-000164,3,1747,10.8.30.240,Accepted publickey for oracle from 10.0.146.105 port 12819 ssh2,0.5,0.3535630251383193
+ALR-000165,2,1767,10.6.229.223,TLS certificate for WS-5698 expires in 123 days,0.5,0.35379178307479897
+ALR-000166,3,1779,10.3.1.194,Failed password for a.kumar from 10.7.217.137 port 25880 ssh2,0.5,0.353931988449201
+ALR-000167,4,1787,10.1.16.208,Multiple 404 responses for /wp-login.php from 10.9.8.62,0.5,0.3540221995177209
+ALR-000168,4,1806,10.3.22.103,Port scan detected from 10.8.111.194: 145 ports in 60 s,0.5,0.3542427673555661
+ALR-000169,3,1813,10.5.164.61,powershell -enc JABzAD0ATgBlAHcALQBPAGIAagBlAGMAdAAgAEkATwAuAE0AZQB spawned by winword.exe on WS-4509,0.5,0.3543196029894376
+ALR-000170,2,1818,10.7.24.249,User deploy read /etc/shadow on WS-6689,0.5,0.3543857721907379
+ALR-000171,4,1835,10.4.73.207,Port scan detected from 10.8.211.248: 544 ports in 60 s,0.5,0.3545791577461319
+ALR-000172,3,1843,10.7.189.24,Firewall denied 10.0.137.97 -> 10.0.0.5:45173 (policy DMZ-IN),0.5,0.3546738377141175
+ALR-000173,3,1849,10.8.111.123,Process mimikatz.exe accessed lsass memory on WS-3114,0.5,0.354740814459402
+ALR-000174,3,1864,10.3.203.235,Process mimikatz.exe accessed lsass memory on WS-5887,0.5,0.3549076946696858
+ALR-000175,4,1879,10.7.163.235,Process mimikatz.exe accessed lsass memory on WS-3626,0.5,0.35508227046542895
+ALR-000176,3,1896,10.6.151.40,Process mimikatz.exe accessed lsass memory on WS-4027,0.5,0.3552879837029991
+ALR-000177,4,1906,10.7.235.44,New local administrator guest created on WS-8001,0.5,0.35540161626629807
+ALR-000178,2,1926,10.1.24.196,Failed password for deploy from 10.2.118.18 port 47369 ssh2,0.5,0.3556354675549574
+ALR-000179,3,1937,10.9.247.169,Port scan detected from 10.0.210.4: 741 ports in 60 s,0.5,0.3557626562538533
+ALR-000180,3,1946,10.3.203.235,Process mimikatz.exe accessed lsass memory on WS-5887,0.5,0.3558591593617597
+ALR-000181,1,1951,10.2.123.50,Antivirus quarantined Trojan.GenericKD.384 on WS-1295,0.5,0.355925754238351
+ALR-000182,1,1958,10.1.16.24,TLS certificate for WS-0155 expires in 721 days,0.5,0.35600243855196995
+ALR-000183,2,1971,10.1.21.59,Process mimikatz.exe accessed lsass memory on WS-4594,0.5,0.356154282811961
+ALR-000184,4,1972,10.0.106.151,Outbound DNS query volume above baseline for host WS-3940,0.5,0.3561633864484986
+ALR-000185,3,1989,10.2.40.129,New local administrator guest created on WS-1246,0.5,0.35635713233674304
+ALR-000186,3,2008,10.0.139.201,Port scan detected from 10.3.182.142: 444 ports in 60 s,0.5,0.3565796993819443
+ALR-000187,3,2020,10.3.37.22,powershell -enc JABzAD0ATgBlAHcALQBPAG spawned by winword.exe on WS-5189,0.5,0.3567183108867887
+ALR-000188,3,2029,10.1.67.23,Outbound DNS query volume above baseline for host WS-1469,0.5,0.356820569732232
+ALR-000189,4,2048,10.0.149.106,TLS certificate for WS-2779 expires in 703 days,0.5,0.3570409932239721
+ALR-000190,2,2056,10.1.85.112,powershell -enc JABzAD0ATgBlAHcALQBPAGIAagBlAGMAdAAgAEkATwAuAE0AZQBtAG8AcgB5AFMAdAByAGUAYQBt spawned by winword.exe on WS-5917,0.5,0.35713475499782416
+ALR-000191,3,2076,10.7.54.35,powershell -enc JABzAD0ATgBlAHcALQBPAGIAagBlAGMAdAAgAEkATwAuAE0AZQBtAG8AcgB5AFMAdAByAGU spawned by winword.exe on WS-6225,0.5,0.35736419826284627
+ALR-000192,4,2086,10.9.69.77,User j.smith read /etc/shadow on WS-6525,0.5,0.35747846463842753
+ALR-000193,3,2106,10.3.166.97,powershell -enc JABzAD0ATgBlAHcALQBPAGIAagBlAGMAdAAgAEkATwAuAE0AZQ spawned by winword.exe on WS-3274,0.5,0.3577176429388494
+ALR-000194,2,2123,10.1.85.112,powershell -enc JABzAD0ATgBlAHcALQBPAGIAagBlAGMAdAAgAEkATwAuAE0AZQBtAG8AcgB5AFMAdAByAGUAYQBt spawned by winword.exe on WS-5917,0.5,0.3579092380828166
+ALR-000195,1,2129,10.1.209.173,Port scan detected from 10.4.123.65: 734 ports in 60 s,0.5,0.35797875956426106
+ALR-000196,3,2131,10.9.205.137,Firewall denied 10.8.18.203 -> 10.0.0.5:64490 (policy DMZ-IN),0.5,0.3580067525731078
+ALR-000197,1,2150,10.3.181.43,Multiple 404 responses for /wp-login.php from 10.9.204.248,0.5,0.3582256742171866
+ALR-000198,1,2150,10.8.113.115,User deploy read /etc/shadow on WS-7910,0.5,0.3582227718440614
+ALR-000199,4,2152,10.2.178.80,User oracle read /etc/shadow on WS-1600,0.5,0.35824432448370486
+ALR-000200,1,2162,10.1.11.218,User root read /etc/shadow on WS-9043,0.5,0.35836569438673027
+ALR-000201,2,2176,10.2.95.164,Multiple 404 responses for /wp-login.php from 10.6.14.189,0.5,0.35852125728388967
+ALR-000202,1,2176,10.1.52.205,Impossible travel: svc_backup signed in from two countries within 270 min,0.5,0.3585238774884994
+ALR-000203,2,2192,10.6.200.151,Accepted publickey for guest from 10.5.234.159 port 12330 ssh2,0.5,0.35870803756374636
+ALR-000204,1,2196,10.1.93.96,New local administrator svc_backup created on WS-2259,0.5,0.3587615143648654
+ALR-000205,3,2211,10.2.85.126,powershell -enc JABzAD0ATgBlAHcALQBPAGIAagBlAGMAdAAgAE spawned by winword.exe on WS-0879,0.5,0.35892638784952496
+ALR-000206,4,2226,10.8.253.105,Multiple 404 responses for /wp-login.php from 10.6.227.126,0.5,0.3591040907072639
+ALR-000207,1,2233,10.8.147.44,cmd.exe /c whoami executed by oracle on WS-1855,0.5,0.35918434202926625
+ALR-000208,2,2250,10.0.225.140,Process mimikatz.exe accessed lsass memory on WS-0529,0.5,0.3593755629098136
+ALR-000209,5,2252,10.3.107.208,New local administrator guest created on WS-2282,0.5,0.35940024905081824
+ALR-000210,2,2253,10.9.86.83,New local administrator a.kumar created on WS-8429,0.5,0.359419975920971
+ALR-000211,3,2257,10.0.141.222,Multiple 404 responses for /wp-login.php from 10.2.127.38,0.5,0.3594651470895715
+ALR-000212,3,2269,10.4.212.97,Port scan detected from 10.1.206.132: 713 ports in 60 s,0.5,0.3595973788477015
+ALR-000213,2,2283,10.0.47.188,Port scan detected from 10.1.203.56: 846 ports in 60 s,0.5,0.35975901120399983
+ALR-000214,2,2293,10.9.66.145,Impossible travel: oracle signed in from two countries within 18 min,0.5,0.3598835461952035
+ALR-000215,1,2298,10.6.103.177,Outbound DNS query volume above baseline for host WS-5906,0.5,0.3599373689222725
+ALR-000216,2,2318,10.4.119.110,Multiple 404 responses for /wp-login.php from 10.1.0.55,0.5,0.3601703284170092
+ALR-000217,3,2332,10.0.141.222,Multiple 404 responses for /wp-login.php from 10.2.127.38,0.5,0.3603345729609149
+ALR-000218,2,2335,10.2.244.19,Process mimikatz.exe accessed lsass memory on WS-6023,0.5,0.3603618164808856
+ALR-000219,3,2339,10.1.4.157,Multiple 404 responses for /wp-login.php from 10.7.179.185,0.5,0.36041087742605044
+ALR-000220,1,2353,10.1.71.193,Accepted publickey for deploy from 10.5.219.81 port 52868 ssh2,0.5,0.3605777052029804
+ALR-000221,3,2360,10.9.145.200,New local administrator admin created on WS-8349,0.5,0.3606503036145666
+ALR-000222,4,2380,10.3.253.99,Accepted publickey for j.smith from 10.7.36.136 port 59267 ssh2,0.5,0.3608825774463094
+ALR-000223,3,2392,10.5.88.196,Port scan detected from 10.0.34.4: 42 ports in 60 s,0.5,0.3610287229784131
+ALR-000224,3,2404,10.8.212.109,New local administrator deploy created on WS-5078,0.5,0.3611671481622785
+ALR-000225,2,2408,10.1.158.179,TLS certificate for WS-7119 expires in 120 days,0.5,0.36120966894236173
+ALR-000226,3,2409,10.2.61.4,New local administrator svc_backup created on WS-5681,0.5,0.3612168254939652
+ALR-000227,1,2417,10.4.60.198,Failed password for guest from 10.6.139.135 port 5209 ssh2,0.5,0.3613175145702605
+ALR-000228,2,2432,10.7.85.95,Outbound DNS query volume above baseline for host WS-8337,0.5,0.36148505024624894
+ALR-000229,2,2432,10.6.76.46,Impossible travel: admin signed in from two countries within 428 min,0.5,0.3614902474719122
+ALR-000230,3,2440,10.1.26.46,Process mimikatz.exe accessed lsass memory on WS-4626,0.5,0.3615770234534151
+ALR-000231,1,2442,10.3.149.145,cmd.exe /c whoami executed by a.kumar on WS-9695,0.5,0.36159900562014796
+ALR-000232,2,2448,10.3.77.2,TLS certificate for WS-0158 expires in 975 days,0.5,0.36167468935626507
+ALR-000233,3,2460,10.1.105.136,Process mimikatz.exe accessed lsass memory on WS-4585,0.5,0.36181010575473954
+ALR-000234,4,2476,10.7.43.149,Accepted publickey for svc_backup from 10.6.38.152 port 38236 ssh2,0.5,0.36199509314171485
+ALR-000235,4,2483,10.6.167.82,Port scan detected from 10.3.38.242: 800 ports in 60 s,0.5,0.36207684346445657
+ALR-000236,2,2487,10.5.208.31,Firewall denied 10.3.231.79 -> 10.0.0.5:31389 (policy DMZ-IN),0.5,0.3621233698415744
+ALR-000237,3,2496,10.0.110.214,Impossible travel: guest signed in from two countries within 407 min,0.5,0.3622276711505788
+ALR-000238,5,2505,10.0.207.219,Port scan detected from 10.1.236.27: 126 ports in 60 s,0.5,0.36233389219605067
+ALR-000239,4,2512,10.5.43.150,Antivirus quarantined Trojan.GenericKD.830 on WS-7266,0.5,0.36240864071012036
+ALR-000240,4,2522,10.0.86.237,Antivirus quarantined Trojan.GenericKD.178 on WS-6991,0.5,0.3625309647690192
+ALR-000241,2,2527,10.2.17.158,Antivirus quarantined Trojan.GenericKD.492 on WS-9023,0.5,0.3625866510744484
+ALR-000242,1,2539,10.8.127.162,cmd.exe /c whoami executed by admin on WS-7941,0.5,0.36272937858486515
+ALR-000243,1,2549,10.5.112.8,cmd.exe /c whoami executed by a.kumar on WS-9569,0.5,0.3628389727313992
+ALR-000244,4,2556,10.0.112.148,Impossible travel: deploy signed in from two countries within 327 min,0.5,0.36292438533422045
+ALR-000245,1,2567,10.5.72.145,Process mimikatz.exe accessed lsass memory on WS-0622,0.5,0.3630463609386932
+ALR-000246,3,2574,10.2.61.4,New local administrator svc_backup created on WS-5681,0.5,0.3631330904857055
+ALR-000247,1,2593,10.2.165.16,Failed password for svc_backup from 10.9.72.199 port 8293 ssh2,0.5,0.36335278719712555
+ALR-000248,3,2604,10.9.51.87,powershell -enc JABzAD0ATgBlAHcALQBPAGIAagBlAGMAdAAgAEkATwAuAE0AZQBtAG8A spawned by winword.exe on WS-7158,0.5,0.3634785170053258
+ALR-000249,3,2624,10.8.182.58,Multiple 404 responses for /wp-login.php from 10.6.157.188,0.5,0.363709253140186
+ALR-000250,5,2642,10.9.16.47,Antivirus quarantined Trojan.GenericKD.961 on WS-1706,0.5,0.36392303747678467
+ALR-000251,5,2644,10.2.45.211,New local administrator guest created on WS-4089,0.5,0.36393933690308344
+ALR-000252,1,2647,10.7.214.249,Outbound DNS query volume above baseline for host WS-6150,0.5,0.36397085999080575
+ALR-000253,3,2665,10.2.231.19,cmd.exe /c whoami executed by admin on WS-1716,0.5,0.3641820722256064
+ALR-000254,1,2677,10.1.173.153,Antivirus quarantined Trojan.GenericKD.623 on WS-2704,0.5,0.3643176262711975
+ALR-000255,1,2678,10.3.209.179,Firewall denied 10.4.152.61 -> 10.0.0.5:7309 (policy DMZ-IN),0.5,0.3643390182678688
+ALR-000256,2,2693,10.6.44.76,Impossible travel: oracle signed in from two countries within 655 min,0.5,0.3645119796922983
+ALR-000257,2,2708,10.6.241.126,Multiple 404 responses for /wp-login.php from 10.1.198.48,0.5,0.364678069219616
+ALR-000258,1,2716,10.4.31.39,cmd.exe /c whoami executed by root on WS-6783,0.5,0.36477579448366576
+ALR-000259,2,2733,10.8.214.248,Firewall denied 10.9.120.122 -> 10.0.0.5:20609 (policy DMZ-IN),0.5,0.3649676508958628
+ALR-000260,4,2734,10.9.75.31,cmd.exe /c whoami executed by oracle on WS-3158,0.5,0.36498674822851557
+ALR-000261,4,2747,10.2.132.82,New local administrator root created on WS-9045,0.5,0.3651321117697615
+ALR-000262,1,2761,10.9.214.29,TLS certificate for WS-9220 expires in 800 days,0.5,0.3652900350966535
+ALR-000263,4,2778,10.4.196.168,Port scan detected from 10.0.88.71: 635 ports in 60 s,0.5,0.36549345724652843
+ALR-000264,4,2790,10.6.167.82,Port scan detected from 10.3.38.242: 800 ports in 60 s,0.5,0.36562596489453025
+ALR-000265,4,2791,10.5.10.87,Impossible travel: a.kumar signed in from two countries within 997 min,0.5,0.36564692454560077
+ALR-000266,2,2800,10.5.137.187,TLS certificate for WS-6672 expires in 760 days,0.5,0.3657514854438811
+ALR-000267,2,2811,10.2.33.80,New local administrator deploy created on WS-3289,0.5,0.3658751621608011
+ALR-000268,2,2825,10.3.140.95,Impossible travel: oracle signed in from two countries within 699 min,0.5,0.3660329234916581
+ALR-000269,1,2840,10.7.179.89,Outbound DNS query volume above baseline for host WS-0814,0.5,0.366212669358347
+ALR-000270,3,2846,10.3.137.167,TLS certificate for WS-2838 expires in 617 days,0.5,0.366273603427163
+ALR-000271,4,2854,10.4.216.230,TLS certificate for WS-4951 expires in 695 days,0.5,0.36636702467946985
+ALR-000272,1,2866,10.5.144.77,Multiple 404 responses for /wp-login.php from 10.7.32.87,0.5,0.3665081500188746
+ALR-000273,1,2886,10.3.29.207,Impossible travel: deploy signed in from two countries within 304 min,0.5,0.3667369470442314
+ALR-000274,1,2898,10.9.97.88,New local administrator j.smith created on WS-5874,0.5,0.3668851114726299
+ALR-000275,1,2915,10.2.132.186,cmd.exe /c whoami executed by svc_backup on WS-3660,0.5,0.36707949394919426
+ALR-000276,3,2925,10.7.60.121,Failed password for root from 10.7.99.129 port 8876 ssh2,0.5,0.36719685321809986
+ALR-000277,1,2929,10.6.234.37,User svc_backup read /etc/shadow on WS-2898,0.5,0.36724140243998665
+ALR-000278,3,2943,10.2.81.126,cmd.exe /c whoami executed by root on WS-6610,0.5,0.36739843167789377
+ALR-000279,3,2944,10.0.164.194,Impossible travel: j.smith signed in from two countries within 233 min,0.5,0.36741062746455666
+ALR-000280,2,2953,10.9.156.43,Accepted publickey for admin from 10.4.148.117 port 48723 ssh2,0.5,0.36751861103527406
+ALR-000281,4,2957,10.5.96.43,cmd.exe /c whoami executed by deploy on WS-2150,0.5,0.3675670285909409
+ALR-000282,2,2973,10.0.192.225,Multiple 404 responses for /wp-login.php from 10.8.24.153,0.5,0.3677502913647772
+ALR-000283,2,2976,10.8.129.122,New local administrator svc_backup created on WS-1655,0.5,0.36778149487454953
+ALR-000284,2,2995,10.1.60.73,Accepted publickey for root from 10.7.101.156 port 14114 ssh2,0.5,0.3680069413564352
+ALR-000285,1,3006,10.0.254.234,Process mimikatz.exe accessed lsass memory on WS-1459,0.5,0.3681297497999705
+ALR-000286,1,3021,10.8.38.186,New local administrator root created on WS-4851,0.5,0.36830587828460337
+ALR-000287,4,3026,10.5.160.110,New local administrator root created on WS-2268,0.5,0.3683663164244246
+ALR-000288,5,3037,10.4.47.96,Impossible travel: guest signed in from two countries within 280 min,0.5,0.36849147754957007
+ALR-000289,3,3052,10.2.57.34,New local administrator admin created on WS-9679,0.5,0.36866272588134336
+ALR-000290,2,3066,10.5.14.221,Multiple 404 responses for /wp-login.php from 10.7.249.29,0.5,0.36882628063815626
+ALR-000291,3,3086,10.8.114.251,Multiple 404 responses for /wp-login.php from 10.8.48.111,0.5,0.3690532866895097
+ALR-000292,4,3106,10.8.27.3,Multiple 404 responses for /wp-login.php from 10.8.240.219,0.5,0.3692874634657086
+ALR-000293,1,3113,10.8.114.141,Multiple 404 responses for /wp-login.php from 10.6.120.21,0.5,0.3693730648904444
+ALR-000294,1,3128,10.7.9.27,TLS certificate for WS-9900 expires in 988 days,0.5,0.3695426492208326
+ALR-000295,3,3144,10.7.174.94,Impossible travel: admin signed in from two countries within 486 min,0.5,0.3697224168096154
+ALR-000296,3,3158,10.3.1.88,User a.kumar read /etc/shadow on WS-0751,0.5,0.3698936859432762
+ALR-000297,3,3171,10.3.61.239,Impossible travel: deploy signed in from two countries within 735 min,0.5,0.3700365113277644
+ALR-000298,5,3184,10.4.47.96,Impossible travel: guest signed in from two countries within 280 min,0.5,0.37018556197750824
+ALR-000299,4,3202,10.7.68.247,Port scan detected from 10.8.24.142: 860 ports in 60 s,0.5,0.370400215051135
+ALR-000300,4,3218,10.9.88.188,Impossible travel: svc_backup signed in from two countries within 905 min,0.5,0.37058759333099023
+ALR-000301,3,3230,10.3.140.102,User a.kumar read /etc/shadow on WS-9872,0.5,0.37071889265984326
+ALR-000302,2,3239,10.5.111.52,Process mimikatz.exe accessed lsass memory on WS-2914,0.5,0.370826895308722
+ALR-000303,3,3249,10.8.245.150,Antivirus quarantined Trojan.GenericKD.829 on WS-6921,0.5,0.3709428414991388
+ALR-000304,1,3249,10.0.102.69,cmd.exe /c whoami executed by svc_backup on WS-1017,0.5,0.37093892279357166
+ALR-000305,2,3266,10.8.129.122,New local administrator svc_backup created on WS-1655,0.5,0.37114154085644746
+ALR-000306,3,3283,10.8.199.61,Firewall denied 10.0.195.100 -> 10.0.0.5:28324 (policy DMZ-IN),0.5,0.3713339285189431
+ALR-000307,4,3291,10.7.115.234,Multiple 404 responses for /wp-login.php from 10.9.100.199,0.5,0.3714316133383571
+ALR-000308,1,3293,10.8.61.97,Failed password for deploy from 10.4.135.34 port 11570 ssh2,0.5,0.3714525775289588
+ALR-000309,1,3307,10.2.165.153,Failed password for a.kumar from 10.7.183.19 port 52406 ssh2,0.5,0.371614865817819
+ALR-000310,2,3323,10.6.206.24,User j.smith read /etc/shadow on WS-4810,0.5,0.3717966571736957
+ALR-000311,3,3339,10.0.58.172,User oracle read /etc/shadow on WS-5259,0.5,0.37198800059155934
+ALR-000312,2,3342,10.4.12.234,Firewall denied 10.8.228.125 -> 10.0.0.5:3897 (policy DMZ-IN),0.5,0.3720140165949656
+ALR-000313,1,3358,10.8.3.161,Accepted publickey for j.smith from 10.3.217.214 port 7834 ssh2,0.5,0.37220269826330227
+ALR-000314,4,3371,10.2.12.118,New local administrator guest created on WS-2917,0.5,0.3723507216501525
+ALR-000315,4,3389,10.6.198.116,Multiple 404 responses for /wp-login.php from 10.6.161.5,0.5,0.37255886625629
+ALR-000316,3,3408,10.0.37.92,Firewall denied 10.4.154.156 -> 10.0.0.5:6693 (policy DMZ-IN),0.5,0.37277790365895136
+ALR-000317,1,3420,10.2.112.35,New local administrator deploy created on WS-2361,0.5,0.37292271972457974
+ALR-000318,4,3440,10.8.72.32,Failed password for admin from 10.9.201.138 port 36906 ssh2,0.5,0.3731489821810289
+ALR-000319,4,3451,10.8.72.42,Outbound DNS query volume above baseline for host WS-2972,0.5,0.3732767835695667
+ALR-000320,4,3452,10.8.236.166,Firewall denied 10.4.34.65 -> 10.0.0.5:7459 (policy DMZ-IN),0.5,0.3732920425881975
+ALR-000321,3,3462,10.3.51.73,Antivirus quarantined Trojan.GenericKD.633 on WS-5380,0.5,0.3734106473504897
+ALR-000322,3,3480,10.5.219.44,Failed password for guest from 10.3.113.183 port 49508 ssh2,0.5,0.3736134538598372
+ALR-000323,2,3490,10.5.156.125,Firewall denied 10.2.41.216 -> 10.0.0.5:19414 (policy DMZ-IN),0.5,0.3737344547461255
+ALR-000324,1,3510,10.0.15.209,Antivirus quarantined Trojan.GenericKD.268 on WS-9038,0.5,0.3739647922394586
+ALR-000325,3,3527,10.5.200.58,cmd.exe /c whoami executed by a.kumar on WS-1484,0.5,0.37416579174649023
+ALR-000326,4,3534,10.9.84.194,Firewall denied 10.7.81.46 -> 10.0.0.5:38140 (policy DMZ-IN),0.5,0.3742454893224346
+ALR-000327,1,3549,10.7.118.17,powershell -enc JABzAD0ATgBlAHcALQBPAGIAagBlAGMAdAAgAEkATwAuAE0AZQBtAG8AcgB5AFMAdA spawned by winword.exe on WS-8486,0.5,0.3744211980215017
+ALR-000328,4,3564,10.0.165.27,New local administrator a.kumar created on WS-6202,0.5,0.3745874682912793
+ALR-000329,2,3566,10.3.207.91,Impossible travel: guest signed in from two countries within 515 min,0.5,0.37461672797993806
+ALR-000330,2,3571,10.4.108.39,Outbound DNS query volume above baseline for host WS-6794,0.5,0.37466806478465303
+ALR-000331,2,3586,10.9.82.166,Impossible travel: deploy signed in from two countries within 608 min,0.5,0.37484123785640855
+ALR-000332,4,3602,10.8.72.32,Failed password for admin from 10.9.201.138 port 36906 ssh2,0.5,0.37502807337321126
+ALR-000333,1,3607,10.6.9.225,New local administrator a.kumar created on WS-7724,0.5,0.3750812849103575
+ALR-000334,3,3620,10.2.135.43,New local administrator guest created on WS-6316,0.5,0.37523985221091477
+ALR-000335,2,3636,10.6.76.156,Accepted publickey for svc_backup from 10.7.19.225 port 52395 ssh2,0.5,0.3754176909535182
+ALR-000336,4,3651,10.8.0.230,cmd.exe /c whoami executed by deploy on WS-0712,0.5,0.37559736796887677
+ALR-000337,2,3666,10.9.50.109,Outbound DNS query volume above baseline for host WS-1374,0.5,0.37576457058321167
+ALR-000338,1,3679,10.0.60.134,Failed password for deploy from 10.3.161.105 port 24765 ssh2,0.5,0.3759192964192541
+ALR-000339,2,3687,10.9.187.157,powershell -enc JABzAD0ATgBlAHcALQBPAGIAagB spawned by winword.exe on WS-9136,0.5,0.37600986921528945
+ALR-000340,5,3704,10.9.176.199,New local administrator deploy created on WS-7318,0.5,0.3762146434805786
+ALR-000341,2,3707,10.5.26.42,TLS certificate for WS-9835 expires in 447 days,0.5,0.3762418803551118
+ALR-000342,3,3714,10.6.205.158,Multiple 404 responses for /wp-login.php from 10.9.29.243,0.5,0.376323569961
+ALR-000343,4,3720,10.8.146.50,Failed password for j.smith from 10.9.86.173 port 3387 ssh2,0.5,0.37639244193099375
+ALR-000344,1,3725,10.6.180.172,TLS certificate for WS-1125 expires in 943 days,0.5,0.37644820543178004
+ALR-000345,2,3742,10.4.115.156,Process mimikatz.exe accessed lsass memory on WS-6671,0.5,0.37665097383294166
+ALR-000346,4,3758,10.8.131.225,Firewall denied 10.7.193.145 -> 10.0.0.5:32719 (policy DMZ-IN),0.5,0.37683220686199403
+ALR-000347,4,3772,10.0.246.30,powershell -enc JABzAD0ATgBlAHcALQBPAGIAagBlAGMAdAAg spawned by winword.exe on WS-3768,0.5,0.3769938784765937
+ALR-000348,1,3783,10.4.127.74,Accepted publickey for deploy from 10.5.38.142 port 62063 ssh2,0.5,0.3771216736690004
+ALR-000349,4,3801,10.3.255.189,Process mimikatz.exe accessed lsass memory on WS-3323,0.5,0.37733047496432953
+ALR-000350,1,3812,10.1.252.158,Failed password for admin from 10.7.190.159 port 21695 ssh2,0.5,0.3774628875221557
+ALR-000351,5,3820,10.8.143.102,Process mimikatz.exe accessed lsass memory on WS-8860,0.5,0.37754880098898014
+ALR-000352,1,3825,10.8.235.81,New local administrator admin created on WS-1651,0.5,0.3776056002958657
+ALR-000353,1,3833,10.4.241.246,Antivirus quarantined Trojan.GenericKD.431 on WS-3450,0.5,0.37770058573666543
+ALR-000354,1,3844,10.2.67.251,Antivirus quarantined Trojan.GenericKD.444 on WS-9099,0.5,0.37783067033241957
+ALR-000355,3,3848,10.7.4.46,TLS certificate for WS-4916 expires in 258 days,0.5,0.37787363954163694
+ALR-000356,3,3849,10.0.110.209,powershell -enc JABzAD0ATgBlAHcALQBPAGIAagBlAGMAdAAgAEk spawned by winword.exe on WS-4257,0.5,0.37788321321627466
+ALR-000357,2,3857,10.5.101.148,Antivirus quarantined Trojan.GenericKD.501 on WS-8364,0.5,0.37797867257040263
+ALR-000358,1,3859,10.2.85.164,cmd.exe /c whoami executed by guest on WS-1169,0.5,0.3780088047016814
+ALR-000359,1,3869,10.4.202.70,Port scan detected from 10.9.230.106: 876 ports in 60 s,0.5,0.37812379486238906
+ALR-000360,4,3876,10.1.107.43,TLS certificate for WS-7753 expires in 563 days,0.5,0.3781995904073485
+ALR-000361,5,3888,10.1.134.159,Outbound DNS query volume above baseline for host WS-4656,0.5,0.37833834428904844
+ALR-000362,1,3904,10.5.166.222,Port scan detected from 10.8.139.141: 994 ports in 60 s,0.5,0.3785205268648782
+ALR-000363,2,3909,10.9.222.135,Multiple 404 responses for /wp-login.php from 10.5.246.139,0.5,0.37858415628081454
+ALR-000364,1,3917,10.8.69.89,powershell -enc JABzAD0ATgBlAHcALQBPAGIAagBlAGMAdAAgAEkATwAuAE0AZQBtAG8AcgB5AFMA spawned by winword.exe on WS-8060,0.5,0.37867733040766466
+ALR-000365,3,3917,10.9.118.204,Failed password for guest from 10.3.210.226 port 37760 ssh2,0.5,0.3786719731305704
+ALR-000366,2,3937,10.4.40.109,Multiple 404 responses for /wp-login.php from 10.8.139.73,0.5,0.37890770669383295
+ALR-000367,1,3939,10.7.231.70,New local administrator oracle created on WS-0814,0.5,0.37892479195104023
+ALR-000368,1,3942,10.7.4.60,Accepted publickey for svc_backup from 10.0.252.56 port 23431 ssh2,0.5,0.37896197693399325
+ALR-000369,3,3953,10.5.41.216,cmd.exe /c whoami executed by svc_backup on WS-1170,0.5,0.37908899014419944
+ALR-000370,4,3961,10.1.127.99,cmd.exe /c whoami executed by oracle on WS-1540,0.5,0.3791874626746221
+ALR-000371,5,3976,10.5.81.162,New local administrator admin created on WS-4896,0.5,0.37935900844982895
+ALR-000372,1,3982,10.6.166.4,Outbound DNS query volume above baseline for host WS-3983,0.5,0.37942721222076375
+ALR-000373,1,3997,10.1.127.41,Port scan detected from 10.9.173.239: 63 ports in 60 s,0.5,0.379599972163668
+ALR-000374,1,4014,10.3.162.252,Firewall denied 10.7.98.6 -> 10.0.0.5:46194 (policy DMZ-IN),0.5,0.3797980543505316
+ALR-000375,2,4015,10.4.250.49,Antivirus quarantined Trojan.GenericKD.283 on WS-7675,0.5,0.3798088166320086
+ALR-000376,2,4032,10.7.151.210,powershell -enc JABzAD0ATgBlAHcALQBPAGIAagBlAGMAdAAgAEkATwAuAE0AZQBtAG8AcgB5AF spawned by winword.exe on WS-8290,0.5,0.3800029822516373
+ALR-000377,2,4032,10.9.122.83,New local administrator root created on WS-8152,0.5,0.38000961585286497
+ALR-000378,3,4041,10.1.49.134,Multiple 404 responses for /wp-login.php from 10.0.66.46,0.5,0.3801133902064659
+ALR-000379,4,4044,10.1.127.99,cmd.exe /c whoami executed by oracle on WS-1540,0.5,0.3801433630091708
+ALR-000380,3,4059,10.4.25.94,Process mimikatz.exe accessed lsass memory on WS-1311,0.5,0.38031716019577955
+ALR-000381,4,4070,10.6.188.204,New local administrator admin created on WS-1154,0.5,0.3804505353878041
+ALR-000382,1,4076,10.3.197.49,Process mimikatz.exe accessed lsass memory on WS-9145,0.5,0.3805094975759647
+ALR-000383,3,4096,10.6.53.43,cmd.exe /c whoami executed by svc_backup on WS-2592,0.5,0.3807496046337863
+ALR-000384,3,4107,10.5.190.106,cmd.exe /c whoami executed by deploy on WS-3505,0.5,0.3808700111662978
+ALR-000385,2,4115,10.6.0.186,Failed password for a.kumar from 10.9.8.133 port 9876 ssh2,0.5,0.3809628497407104
+ALR-000386,1,4121,10.4.79.25,Failed password for oracle from 10.5.79.36 port 18390 ssh2,0.5,0.3810341413188776
+ALR-000387,1,4129,10.6.111.188,Accepted publickey for guest from 10.7.88.125 port 55137 ssh2,0.5,0.3811299058211735
+ALR-000388,3,4149,10.9.195.21,cmd.exe /c whoami executed by admin on WS-7116,0.5,0.38135787044230596
+ALR-000389,4,4156,10.0.195.14,powershell -enc JABzAD0ATgBlAHcALQB spawned by winword.exe on WS-3618,0.5,0.38144117662929744
+ALR-000390,3,4168,10.9.46.57,TLS certificate for WS-1353 expires in 489 days,0.5,0.38158000802219744
+ALR-000391,1,4185,10.8.222.199,New local administrator svc_backup created on WS-7994,0.5,0.3817814824992664
+ALR-000392,3,4202,10.3.124.19,powershell -enc JABzAD0ATgBlAHcALQBPAGIAagBlAGMAdAAgAEk spawned by winword.exe on WS-6777,0.5,0.3819742979376618
+ALR-000393,3,4212,10.4.86.253,User oracle read /etc/shadow on WS-3826,0.5,0.38208646264728385
+ALR-000394,1,4214,10.9.75.223,Impossible travel: a.kumar signed in from two countries within 314 min,0.5,0.38211380840997056
+ALR-000395,2,4224,10.3.132.141,Port scan detected from 10.0.192.150: 46 ports in 60 s,0.5,0.3822286595317322
+ALR-000396,3,4233,10.4.27.120,Multiple 404 responses for /wp-login.php from 10.1.198.170,0.5,0.3823298988359889
+ALR-000397,5,4253,10.8.50.232,User oracle read /etc/shadow on WS-8203,0.5,0.3825662544612625
+ALR-000398,4,4253,10.6.188.204,New local administrator admin created on WS-1154,0.5,0.3825579752256132
+ALR-000399,1,4268,10.5.180.91,Multiple 404 responses for /wp-login.php from 10.3.141.208,0.5,0.38274289755430946
+ALR-000400,4,4268,10.3.77.88,TLS certificate for WS-3727 expires in 429 days,0.5,0.38274159331850605
+ALR-000401,4,4281,10.5.229.139,Outbound DNS query volume above baseline for host WS-5063,0.5,0.38288264611867934
+ALR-000402,4,4285,10.2.80.82,Accepted publickey for root from 10.2.162.215 port 58671 ssh2,0.5,0.38293647282867854
+ALR-000403,2,4298,10.4.77.200,Process mimikatz.exe accessed lsass memory on WS-4373,0.5,0.38308021271876325
+ALR-000404,3,4317,10.5.40.177,cmd.exe /c whoami executed by oracle on WS-6127,0.5,0.3833100760212548
+ALR-000405,1,4332,10.0.209.196,Failed password for a.kumar from 10.6.113.191 port 45020 ssh2,0.5,0.3834774589184982
+ALR-000406,2,4346,10.5.234.228,Process mimikatz.exe accessed lsass memory on WS-6233,0.5,0.3836428911447022
+ALR-000407,2,4364,10.0.55.116,Port scan detected from 10.3.202.252: 573 ports in 60 s,0.5,0.383845553174024
+ALR-000408,1,4384,10.7.203.227,powershell -enc JABzAD0ATgBlAHcALQBPAGIAagBlAGMAdAAgAEkATwAuAE0AZ spawned by winword.exe on WS-0894,0.5,0.3840816480632103
+ALR-000409,2,4398,10.8.57.47,cmd.exe /c whoami executed by svc_backup on WS-0409,0.5,0.3842364443201055
+ALR-000410,1,4404,10.5.83.184,New local administrator root created on WS-5947,0.5,0.3843148042521242
+ALR-000411,1,4420,10.8.194.12,cmd.exe /c whoami executed by svc_backup on WS-2370,0.5,0.3844938214107091
+ALR-000412,3,4433,10.7.147.161,Outbound DNS query volume above baseline for host WS-4147,0.5,0.3846431967553625
+ALR-000413,1,4448,10.7.121.56,Antivirus quarantined Trojan.GenericKD.616 on WS-9851,0.5,0.3848199212521793
+ALR-000414,3,4465,10.3.25.48,Outbound DNS query volume above baseline for host WS-0532,0.5,0.3850173812530197
+ALR-000415,1,4474,10.1.213.46,Outbound DNS query volume above baseline for host WS-9486,0.5,0.38511627381727287
+ALR-000416,4,4483,10.1.218.216,Firewall denied 10.4.241.35 -> 10.0.0.5:9020 (policy DMZ-IN),0.5,0.385221839162736
+ALR-000417,3,4489,10.1.44.124,New local administrator a.kumar created on WS-9424,0.5,0.3852937667887847
+ALR-000418,2,4508,10.7.252.207,Outbound DNS query volume above baseline for host WS-0393,0.5,0.38551555844392177
+ALR-000419,5,4514,10.6.23.86,User j.smith read /etc/shadow on WS-4169,0.5,0.38558680357856445
+ALR-000420,3,4530,10.1.170.88,TLS certificate for WS-5537 expires in 946 days,0.5,0.38576545542446883
+ALR-000421,3,4545,10.7.79.161,Port scan detected from 10.7.211.238: 857 ports in 60 s,0.5,0.38594701796396186
+ALR-000422,1,4555,10.9.169.205,cmd.exe /c whoami executed by guest on WS-0511,0.5,0.38605740076446227
+ALR-000423,2,4560,10.9.59.222,cmd.exe /c whoami executed by a.kumar on WS-1423,0.5,0.38612258004292543
+ALR-000424,2,4574,10.8.154.45,Accepted publickey for guest from 10.0.103.234 port 7092 ssh2,0.5,0.38627744491734783
+ALR-000425,2,4590,10.7.158.199,User svc_backup read /etc/shadow on WS-0599,0.5,0.3864635131461265
+ALR-000426,2,4606,10.0.44.86,Port scan detected from 10.1.159.6: 656 ports in 60 s,0.5,0.38664767897686303
+ALR-000427,1,4612,10.5.225.172,Accepted publickey for a.kumar from 10.2.80.71 port 8525 ssh2,0.5,0.3867138965494853
+ALR-000428,2,4615,10.5.138.37,New local administrator a.kumar created on WS-5102,0.5,0.3867584156870601
+ALR-000429,1,4629,10.0.54.99,Failed password for root from 10.6.200.46 port 47205 ssh2,0.5,0.3869165661073934
+ALR-000430,2,4643,10.3.40.250,cmd.exe /c whoami executed by oracle on WS-7673,0.5,0.3870805186828417
+ALR-000431,2,4663,10.3.114.37,Impossible travel: a.kumar signed in from two countries within 809 min,0.5,0.38730502346350565
+ALR-000432,1,4677,10.1.179.123,Port scan detected from 10.4.178.155: 522 ports in 60 s,0.5,0.38747090021669306
+ALR-000433,3,4680,10.4.236.103,Antivirus quarantined Trojan.GenericKD.395 on WS-7904,0.5,0.3875032999135716
+ALR-000434,5,4698,10.9.175.140,New local administrator j.smith created on WS-9408,0.5,0.38771147785131066
+ALR-000435,3,4717,10.7.90.79,TLS certificate for WS-9772 expires in 791 days,0.5,0.38793280992011486
+ALR-000436,1,4732,10.3.71.228,Antivirus quarantined Trojan.GenericKD.401 on WS-4776,0.5,0.38810909759132484
+ALR-000437,4,4738,10.4.155.236,TLS certificate for WS-6623 expires in 869 days,0.5,0.388176590744371
+ALR-000438,2,4739,10.0.0.181,Firewall denied 10.1.144.222 -> 10.0.0.5:3067 (policy DMZ-IN),0.5,0.38819095291013545
+ALR-000439,2,4759,10.6.222.140,Process mimikatz.exe accessed lsass memory on WS-6302,0.5,0.38842579287364676
+ALR-000440,5,4772,10.2.68.3,Accepted publickey for admin from 10.2.249.169 port 29645 ssh2,0.5,0.3885716434748323
+ALR-000441,4,4785,10.9.217.160,Outbound DNS query volume above baseline for host WS-7374,0.5,0.3887245297235332
+ALR-000442,3,4798,10.3.137.106,Firewall denied 10.0.19.146 -> 10.0.0.5:32695 (policy DMZ-IN),0.5,0.3888767565097458
+ALR-000443,3,4800,10.4.238.133,Accepted publickey for root from 10.3.241.162 port 49631 ssh2,0.5,0.3889001279100027
+ALR-000444,1,4818,10.5.5.121,Port scan detected from 10.9.169.108: 298 ports in 60 s,0.5,0.3891012519172285
+ALR-000445,3,4837,10.9.133.16,Multiple 404 responses for /wp-login.php from 10.9.86.147,0.5,0.3893268238646957
+ALR-000446,1,4846,10.1.142.65,Outbound DNS query volume above baseline for host WS-1828,0.5,0.3894293688506354
+ALR-000447,2,4850,10.2.133.201,New local administrator j.smith created on WS-0543,0.5,0.38946781706359423
+ALR-000448,1,4869,10.7.211.198,TLS certificate for WS-5654 expires in 57 days,0.5,0.3896969866394966
+ALR-000449,2,4872,10.7.154.122,New local administrator j.smith created on WS-2379,0.5,0.38973260989302144
+ALR-000450,2,4881,10.5.21.25,Firewall denied 10.6.139.86 -> 10.0.0.5:18740 (policy DMZ-IN),0.5,0.3898367622678934
+ALR-000451,3,4899,10.3.99.134,User svc_backup read /etc/shadow on WS-1114,0.5,0.39003862431109815
+ALR-000452,2,4902,10.4.128.50,Failed password for admin from 10.9.47.15 port 62529 ssh2,0.5,0.39007784829695286
+ALR-000453,3,4921,10.1.44.220,Antivirus quarantined Trojan.GenericKD.261 on WS-3019,0.5,0.3902989312231976
+ALR-000454,4,4923,10.4.218.178,Multiple 404 responses for /wp-login.php from 10.4.82.200,0.5,0.39031764585479134
+ALR-000455,1,4933,10.4.91.113,Accepted publickey for oracle from 10.3.201.46 port 43326 ssh2,0.5,0.3904356209780273
+ALR-000456,3,4946,10.7.132.27,Failed password for root from 10.1.128.199 port 30245 ssh2,0.5,0.39058311792145156
+ALR-000457,2,4966,10.8.57.47,cmd.exe /c whoami executed by svc_backup on WS-0409,0.5,0.3908208446020378
+ALR-000458,2,4974,10.6.1.132,New local administrator oracle created on WS-1149,0.5,0.39090884452600866
+ALR-000459,2,4989,10.5.170.175,powershell -enc JABzAD0ATgBlAHcALQBPAGIAagBlAGMAdAAgAEkATwAuAE0AZQBtAG8AcgB5AFMAdAByA spawned by winword.exe on WS-5572,0.5,0.39107918723617424
+ALR-000460,1,4998,10.0.196.170,Process mimikatz.exe accessed lsass memory on WS-5887,0.5,0.391185511619383
+ALR-000461,1,5012,10.3.12.185,Antivirus quarantined Trojan.GenericKD.660 on WS-8857,0.5,0.39134938793063023
+ALR-000462,1,5026,10.5.28.87,cmd.exe /c whoami executed by admin on WS-8571,0.5,0.39150898464419664
+ALR-000463,3,5043,10.1.18.189,Outbound DNS query volume above baseline for host WS-0751,0.5,0.39170518953941524
+ALR-000464,1,5043,10.4.49.117,Antivirus quarantined Trojan.GenericKD.118 on WS-1743,0.5,0.3917086741224965
+ALR-000465,4,5062,10.6.172.208,Impossible travel: deploy signed in from two countries within 560 min,0.5,0.39192499069912895
+ALR-000466,3,5068,10.5.32.31,powershell -enc JABzAD0ATgBlAHcALQBPAGIAagBlAGMAdAAgAEkATwAu spawned by winword.exe on WS-9068,0.5,0.3919963860131393
+ALR-000467,2,5086,10.9.59.222,cmd.exe /c whoami executed by a.kumar on WS-1423,0.5,0.3922000455564239
+ALR-000468,3,5106,10.0.249.21,Failed password for admin from 10.2.45.181 port 43737 ssh2,0.5,0.3924342410243061
+ALR-000469,1,5121,10.4.230.106,Process mimikatz.exe accessed lsass memory on WS-8191,0.5,0.3926054831695016
+ALR-000470,1,5130,10.3.98.31,Firewall denied 10.9.185.221 -> 10.0.0.5:50905 (policy DMZ-IN),0.5,0.392713911975449
+ALR-000471,1,5150,10.3.57.204,Outbound DNS query volume above baseline for host WS-0707,0.5,0.39294361005590017
+ALR-000472,2,5156,10.7.22.27,New local administrator admin created on WS-0477,0.5,0.39301362577403587
+ALR-000473,3,5163,10.5.214.51,New local administrator guest created on WS-1607,0.5,0.3930906293334482
+ALR-000474,1,5169,10.7.248.14,TLS certificate for WS-6120 expires in 141 days,0.5,0.3931711782333378
+ALR-000475,1,5189,10.5.65.9,New local administrator admin created on WS-7628,0.5,0.3933936462605064
+ALR-000476,1,5199,10.2.87.148,Firewall denied 10.1.210.220 -> 10.0.0.5:35218 (policy DMZ-IN),0.5,0.3935070617886217
+ALR-000477,3,5213,10.3.126.84,TLS certificate for WS-0084 expires in 429 days,0.5,0.39367574550701684
+ALR-000478,2,5228,10.6.201.123,cmd.exe /c whoami executed by root on WS-9151,0.5,0.39384303965465584
+ALR-000479,1,5241,10.4.122.166,Accepted publickey for admin from 10.7.156.42 port 47115 ssh2,0.5,0.393999668506812
+ALR-000480,2,5241,10.2.207.48,cmd.exe /c whoami executed by guest on WS-1159,0.5,0.3940036269460886
+ALR-000481,2,5257,10.6.1.132,New local administrator oracle created on WS-1149,0.5,0.3941789140017662
+ALR-000482,3,5276,10.1.171.189,Failed password for guest from 10.0.56.99 port 24983 ssh2,0.5,0.3944036394989255
+ALR-000483,3,5281,10.8.104.36,User j.smith read /etc/shadow on WS-9505,0.5,0.39446568536383514
+ALR-000484,4,5288,10.8.216.71,Failed password for root from 10.5.176.116 port 32889 ssh2,0.5,0.39453979118853694
+ALR-000485,2,5305,10.4.231.159,User root read /etc/shadow on WS-6401,0.5,0.39473532127595445
+ALR-000486,1,5307,10.2.254.39,Impossible travel: j.smith signed in from two countries within 956 min,0.5,0.394757616379016
+ALR-000487,3,5320,10.4.96.17,Failed password for j.smith from 10.8.171.106 port 38949 ssh2,0.5,0.394915461913849
+ALR-000488,3,5335,10.8.227.118,powershell -enc JABzAD0ATgBlAHcALQBPAGIAagBlAGMAdAAgAEk spawned by winword.exe on WS-3716,0.5,0.395089851457554
+ALR-000489,1,5336,10.2.82.183,Firewall denied 10.2.89.215 -> 10.0.0.5:47430 (policy DMZ-IN),0.5,0.39509753225654165
+ALR-000490,2,5346,10.5.94.53,Firewall denied 10.5.176.38 -> 10.0.0.5:25463 (policy DMZ-IN),0.5,0.3952123658986039
+ALR-000491,2,5349,10.7.74.243,Port scan detected from 10.2.2.249: 521 ports in 60 s,0.5,0.3952544411025635
+ALR-000492,1,5358,10.9.75.205,Antivirus quarantined Trojan.GenericKD.144 on WS-0657,0.5,0.3953500994922765
+ALR-000493,3,5367,10.1.171.189,Failed password for guest from 10.0.56.99 port 24983 ssh2,0.5,0.3954606477523253
+ALR-000494,2,5381,10.9.99.150,Firewall denied 10.4.100.6 -> 10.0.0.5:6502 (policy DMZ-IN),0.5,0.39562277734081536
+ALR-000495,2,5383,10.7.162.155,Antivirus quarantined Trojan.GenericKD.380 on WS-7007,0.5,0.39564181727461517
+ALR-000496,2,5392,10.7.44.56,New local administrator oracle created on WS-6945,0.5,0.39574982077273324
+ALR-000497,1,5410,10.4.243.254,Impossible travel: guest signed in from two countries within 656 min,0.5,0.3959528558613076
+ALR-000498,3,5415,10.2.102.48,Impossible travel: deploy signed in from two countries within 856 min,0.5,0.3960173889079499
+ALR-000499,1,5432,10.0.78.68,powershell -enc JABzAD0ATgBlAHcALQBPAGIAagBlAGMAdAAgAEkATwAuAE0AZQBtAG8AcgB5 spawned by winword.exe on WS-8060,0.5,0.3962123362382395
+ALR-000500,1,5432,10.1.185.149,Port scan detected from 10.4.243.250: 384 ports in 60 s,0.5,0.3962109200091947
+ALR-000501,1,5432,10.0.74.82,Port scan detected from 10.5.83.14: 431 ports in 60 s,0.5,0.39621342138279925
+ALR-000502,1,5443,10.3.98.31,Firewall denied 10.9.185.221 -> 10.0.0.5:50905 (policy DMZ-IN),0.5,0.3963388259915535
+ALR-000503,3,5445,10.2.48.154,cmd.exe /c whoami executed by svc_backup on WS-4933,0.5,0.3963641886331887
+ALR-000504,3,5456,10.2.6.36,Firewall denied 10.5.248.106 -> 10.0.0.5:23326 (policy DMZ-IN),0.5,0.39648556473317054
+ALR-000505,3,5463,10.8.58.107,Port scan detected from 10.1.67.237: 358 ports in 60 s,0.5,0.3965668393461926
+ALR-000506,4,5467,10.9.175.45,New local administrator a.kumar created on WS-2333,0.5,0.39661973328658107
+ALR-000507,1,5473,10.1.39.5,cmd.exe /c whoami executed by oracle on WS-0538,0.5,0.3966832793559161
+ALR-000508,4,5474,10.0.33.78,Multiple 404 responses for /wp-login.php from 10.1.63.236,0.5,0.3966934251445726
+ALR-000509,3,5485,10.0.249.21,Failed password for admin from 10.2.45.181 port 43737 ssh2,0.5,0.39682647785550507
+ALR-000510,2,5493,10.2.123.130,Antivirus quarantined Trojan.GenericKD.989 on WS-3139,0.5,0.3969137981678542
+ALR-000511,1,5510,10.1.39.5,cmd.exe /c whoami executed by oracle on WS-0538,0.5,0.3971113193721087
+ALR-000512,4,5516,10.7.187.179,Antivirus quarantined Trojan.GenericKD.390 on WS-5814,0.5,0.39718250556675444
+ALR-000513,3,5523,10.5.63.120,Accepted publickey for svc_backup from 10.7.184.181 port 19916 ssh2,0.5,0.39725796255970824
+ALR-000514,1,5538,10.9.159.176,Impossible travel: oracle signed in from two countries within 195 min,0.5,0.3974402910625016
+ALR-000515,2,5553,10.0.251.173,Accepted publickey for deploy from 10.7.43.31 port 10419 ssh2,0.5,0.39761124019725685
+ALR-000516,4,5556,10.2.33.94,Process mimikatz.exe accessed lsass memory on WS-6959,0.5,0.39763943171190785
+ALR-000517,3,5574,10.6.182.122,Multiple 404 responses for /wp-login.php from 10.7.142.38,0.5,0.39784831068274873
+ALR-000518,4,5589,10.0.50.189,Failed password for root from 10.7.13.249 port 12761 ssh2,0.5,0.39802423390803005
+ALR-000519,1,5598,10.1.252.203,Port scan detected from 10.4.254.126: 557 ports in 60 s,0.5,0.39812997435042424
+ALR-000520,5,5615,10.0.220.226,Accepted publickey for deploy from 10.7.161.219 port 25687 ssh2,0.5,0.3983310357125076
+ALR-000521,3,5632,10.2.251.111,Outbound DNS query volume above baseline for host WS-9321,0.5,0.39852778578670034
+ALR-000522,2,5649,10.2.28.101,powershell -enc JABzAD0ATgBlAHcALQBPAGIAagBlAGMAdA spawned by winword.exe on WS-5780,0.5,0.3987238460759214
+ALR-000523,1,5649,10.5.178.208,New local administrator admin created on WS-5655,0.5,0.39872373506638903
+ALR-000524,3,5656,10.9.43.234,New local administrator root created on WS-0323,0.5,0.39880222363214357
+ALR-000525,4,5669,10.4.10.179,Port scan detected from 10.5.193.147: 588 ports in 60 s,0.5,0.39894777112863744
+ALR-000526,1,5672,10.7.173.43,Antivirus quarantined Trojan.GenericKD.862 on WS-1235,0.5,0.3989855402286312
+ALR-000527,1,5681,10.9.205.206,Process mimikatz.exe accessed lsass memory on WS-4479,0.5,0.3990942688360607
+ALR-000528,2,5696,10.1.154.130,cmd.exe /c whoami executed by a.kumar on WS-6592,0.5,0.39925955918906036
+ALR-000529,1,5713,10.8.95.148,Port scan detected from 10.7.137.240: 830 ports in 60 s,0.5,0.3994588141303417
+ALR-000530,3,5726,10.0.102.94,Port scan detected from 10.3.77.192: 866 ports in 60 s,0.5,0.3996066741583726
+ALR-000531,4,5728,10.4.146.166,Outbound DNS query volume above baseline for host WS-1861,0.5,0.3996334058238128
+ALR-000532,3,5737,10.6.216.166,Failed password for j.smith from 10.2.139.35 port 2933 ssh2,0.5,0.3997375549042434
+ALR-000533,4,5754,10.7.10.15,Impossible travel: root signed in from two countries within 920 min,0.5,0.399936100236452
+ALR-000534,4,5756,10.2.120.29,Antivirus quarantined Trojan.GenericKD.245 on WS-1479,0.5,0.39995574713274734
+ALR-000535,3,5766,10.6.120.240,TLS certificate for WS-4499 expires in 452 days,0.5,0.40007576638419234
+ALR-000536,2,5784,10.1.162.140,TLS certificate for WS-2375 expires in 373 days,0.5,0.4002791365822824
+ALR-000537,4,5793,10.4.10.179,Port scan detected from 10.5.193.147: 588 ports in 60 s,0.5,0.4003910771619946
+ALR-000538,3,5794,10.3.129.142,TLS certificate for WS-3873 expires in 880 days,0.5,0.40040318299206024
+ALR-000539,4,5806,10.4.46.240,Impossible travel: j.smith signed in from two countries within 939 min,0.5,0.40053719103474367
+ALR-000540,1,5826,10.1.251.121,New local administrator deploy created on WS-1645,0.5,0.4007741413845568
+ALR-000541,2,5842,10.8.167.117,New local administrator admin created on WS-2230,0.5,0.4009567638255761
+ALR-000542,1,5851,10.2.127.133,New local administrator svc_backup created on WS-5234,0.5,0.40105971619174224
+ALR-000543,3,5855,10.5.144.51,Accepted publickey for deploy from 10.5.93.101 port 58459 ssh2,0.5,0.4011069074792865
+ALR-000544,2,5862,10.7.162.155,Antivirus quarantined Trojan.GenericKD.380 on WS-7007,0.5,0.40118570174946605
+ALR-000545,1,5882,10.1.236.51,powershell -enc JABzAD0ATgBlAHcALQBPAGIAa spawned by winword.exe on WS-9837,0.5,0.4014136422944464
+ALR-000546,3,5893,10.0.222.198,Port scan detected from 10.1.114.183: 970 ports in 60 s,0.5,0.40154975555020783
+ALR-000547,2,5901,10.2.220.220,Process mimikatz.exe accessed lsass memory on WS-6694,0.5,0.40163457063313496
+ALR-000548,2,5909,10.3.189.150,Multiple 404 responses for /wp-login.php from 10.1.5.121,0.5,0.40173465054671115
+ALR-000549,3,5915,10.9.131.19,Accepted publickey for admin from 10.0.170.239 port 16414 ssh2,0.5,0.4017984138373743
+ALR-000550,4,5934,10.0.129.130,Antivirus quarantined Trojan.GenericKD.993 on WS-2167,0.5,0.40202025878595565
+ALR-000551,1,5952,10.7.173.225,Port scan detected from 10.1.162.182: 147 ports in 60 s,0.5,0.40222936439833024
+ALR-000552,2,5953,10.4.184.238,TLS certificate for WS-7140 expires in 916 days,0.5,0.40223797004788264
+ALR-000553,1,5968,10.7.27.49,Outbound DNS query volume above baseline for host WS-4264,0.5,0.4024188796712405
+ALR-000554,4,5971,10.0.226.92,New local administrator oracle created on WS-2426,0.5,0.40245194201112827
+ALR-000555,1,5980,10.8.139.145,Multiple 404 responses for /wp-login.php from 10.9.2.135,0.5,0.4025507478832561
+ALR-000556,3,5987,10.5.13.73,Multiple 404 responses for /wp-login.php from 10.6.191.152,0.5,0.4026312242554397
+ALR-000557,3,5989,10.7.232.161,powershell -enc JABzAD0ATgBlAHcALQBPAGIAagBlAGMAdAAgAEkATwAuAE0AZQBtAG8AcgB5AFMAdAByAGUAYQBt spawned by winword.exe on WS-7424,0.5,0.40266073130332325
+ALR-000558,4,6007,10.4.165.205,Failed password for root from 10.8.195.24 port 27163 ssh2,0.5,0.40286967490324643
+ALR-000559,4,6019,10.2.198.200,TLS certificate for WS-7084 expires in 755 days,0.5,0.4030018426671623
+ALR-000560,3,6038,10.5.102.126,Port scan detected from 10.7.137.145: 94 ports in 60 s,0.5,0.4032191036641919
+ALR-000561,2,6049,10.6.47.11,Firewall denied 10.7.114.166 -> 10.0.0.5:45997 (policy DMZ-IN),0.5,0.40335110382554323
+ALR-000562,1,6069,10.6.40.233,cmd.exe /c whoami executed by oracle on WS-4922,0.5,0.4035817441309726
+ALR-000563,3,6078,10.0.55.131,TLS certificate for WS-9314 expires in 834 days,0.5,0.4036856733493219
+ALR-000564,2,6096,10.1.236.46,cmd.exe /c whoami executed by svc_backup on WS-4877,0.5,0.4038958619596914
+ALR-000565,1,6110,10.2.108.48,Accepted publickey for a.kumar from 10.1.222.137 port 2198 ssh2,0.5,0.4040510888481334
+ALR-000566,3,6130,10.9.249.78,Antivirus quarantined Trojan.GenericKD.16 on WS-2214,0.5,0.4042889538353136
+ALR-000567,1,6130,10.0.107.124,Multiple 404 responses for /wp-login.php from 10.3.223.216,0.5,0.40429029335647504
+ALR-000568,2,6144,10.1.85.232,Outbound DNS query volume above baseline for host WS-7365,0.5,0.40445082959903855
+ALR-000569,2,6162,10.5.4.27,Multiple 404 responses for /wp-login.php from 10.6.253.189,0.5,0.4046527980171441
+ALR-000570,2,6163,10.9.249.60,New local administrator admin created on WS-5175,0.5,0.4046709290637758
+ALR-000571,2,6183,10.7.177.115,New local administrator deploy created on WS-3150,0.5,0.40490645200153036
+ALR-000572,4,6199,10.5.239.34,powershell -enc JABzAD0ATgBlAHcALQBPAGIAagBlA spawned by winword.exe on WS-2655,0.5,0.405088938042639
+ALR-000573,1,6201,10.3.80.156,Port scan detected from 10.6.252.78: 572 ports in 60 s,0.5,0.40511013580952115
+ALR-000574,2,6212,10.2.89.212,Impossible travel: admin signed in from two countries within 125 min,0.5,0.4052358381236219
+ALR-000575,3,6220,10.0.136.230,Outbound DNS query volume above baseline for host WS-1818,0.5,0.405326573074726
+ALR-000576,1,6223,10.1.85.162,Accepted publickey for j.smith from 10.5.80.187 port 20168 ssh2,0.5,0.40536407148495696
+ALR-000577,2,6226,10.2.62.218,Process mimikatz.exe accessed lsass memory on WS-7761,0.5,0.4054046141998798
+ALR-000578,3,6228,10.6.184.162,Multiple 404 responses for /wp-login.php from 10.2.215.202,0.5,0.40541840864448153
+ALR-000579,5,6241,10.8.185.242,Failed password for oracle from 10.2.5.184 port 53862 ssh2,0.5,0.4055743039390279
+ALR-000580,3,6251,10.6.31.101,cmd.exe /c whoami executed by admin on WS-8517,0.5,0.40568893516507076
+ALR-000581,3,6268,10.5.176.3,Impossible travel: a.kumar signed in from two countries within 661 min,0.5,0.40588068276015765
+ALR-000582,3,6287,10.5.207.199,Process mimikatz.exe accessed lsass memory on WS-6390,0.5,0.406102355091484
+ALR-000583,2,6291,10.3.47.131,Firewall denied 10.8.174.194 -> 10.0.0.5:42684 (policy DMZ-IN),0.5,0.4061488296082904
+ALR-000584,1,6308,10.4.216.253,Firewall denied 10.0.190.67 -> 10.0.0.5:42114 (policy DMZ-IN),0.5,0.40634362346130104
+ALR-000585,2,6328,10.9.2.117,User j.smith read /etc/shadow on WS-4662,0.5,0.4065751568213498
+ALR-000586,3,6346,10.8.126.27,User j.smith read /etc/shadow on WS-6975,0.5,0.4067919877356846
+ALR-000587,1,6347,10.3.228.20,User deploy read /etc/shadow on WS-9574,0.5,0.40679756057330235
+ALR-000588,4,6361,10.6.83.37,Firewall denied 10.7.234.34 -> 10.0.0.5:64464 (policy DMZ-IN),0.5,0.4069637936414853
+ALR-000589,1,6367,10.2.189.236,Accepted publickey for deploy from 10.1.61.95 port 38495 ssh2,0.5,0.40703111540701287
+ALR-000590,2,6378,10.4.248.8,cmd.exe /c whoami executed by svc_backup on WS-5000,0.5,0.4071587461238324
+ALR-000591,1,6393,10.1.85.162,Accepted publickey for j.smith from 10.5.80.187 port 20168 ssh2,0.5,0.4073316446285048
+ALR-000592,3,6394,10.9.231.231,User deploy read /etc/shadow on WS-8271,0.5,0.4073383439941358
+ALR-000593,3,6408,10.1.209.100,Process mimikatz.exe accessed lsass memory on WS-7260,0.5,0.4075008359613367
+ALR-000594,3,6413,10.4.63.165,Firewall denied 10.3.27.246 -> 10.0.0.5:38395 (policy DMZ-IN),0.5,0.40755931552413305
+ALR-000595,4,6413,10.2.9.71,cmd.exe /c whoami executed by j.smith on WS-8742,0.5,0.40756729221439697
+ALR-000596,4,6414,10.5.223.47,TLS certificate for WS-1492 expires in 119 days,0.5,0.4075775404079649
+ALR-000597,1,6423,10.1.78.79,TLS certificate for WS-0959 expires in 307 days,0.5,0.407684732280601
+ALR-000598,2,6427,10.6.61.14,Process mimikatz.exe accessed lsass memory on WS-8265,0.5,0.4077279063870048
+ALR-000599,3,6428,10.1.247.8,TLS certificate for WS-9604 expires in 693 days,0.5,0.40773409825010365
+ALR-000600,1,6445,10.9.208.115,Accepted publickey for j.smith from 10.2.191.139 port 12046 ssh2,0.5,0.4079349816530198
+ALR-000601,1,6462,10.7.148.168,Outbound DNS query volume above baseline for host WS-4111,0.5,0.4081326806101907
+ALR-000602,1,6473,10.8.144.12,Outbound DNS query volume above baseline for host WS-2015,0.5,0.40825554231222605
+ALR-000603,1,6481,10.8.162.227,Multiple 404 responses for /wp-login.php from 10.4.231.70,0.5,0.4083496845882609
+ALR-000604,4,6500,10.2.1.156,Port scan detected from 10.0.88.106: 782 ports in 60 s,0.5,0.4085740233380839
+ALR-000605,2,6520,10.7.63.91,Impossible travel: deploy signed in from two countries within 129 min,0.5,0.4087986882894078
+ALR-000606,1,6526,10.0.143.175,New local administrator guest created on WS-4968,0.5,0.4088660921051307
+ALR-000607,1,6541,10.7.107.2,Process mimikatz.exe accessed lsass memory on WS-8094,0.5,0.4090496970814218
+ALR-000608,3,6559,10.2.33.151,Outbound DNS query volume above baseline for host WS-3735,0.5,0.4092516145979205
+ALR-000609,3,6567,10.8.129.175,Firewall denied 10.0.218.165 -> 10.0.0.5:45136 (policy DMZ-IN),0.5,0.40934730159218896
+ALR-000610,3,6580,10.7.253.93,Firewall denied 10.3.24.72 -> 10.0.0.5:61211 (policy DMZ-IN),0.5,0.4095019957145931
+ALR-000611,1,6592,10.9.12.254,New local administrator j.smith created on WS-3226,0.5,0.40963189355024593
+ALR-000612,1,6612,10.6.12.152,cmd.exe /c whoami executed by guest on WS-3906,0.5,0.4098641658787191
+ALR-000613,1,6622,10.1.224.196,Accepted publickey for oracle from 10.9.63.22 port 64890 ssh2,0.5,0.40998073932076995
+ALR-000614,1,6624,10.7.28.78,Antivirus quarantined Trojan.GenericKD.55 on WS-9163,0.5,0.41000323522146787
+ALR-000615,3,6636,10.3.5.117,TLS certificate for WS-0426 expires in 466 days,0.5,0.410144626936177
+ALR-000616,1,6642,10.1.99.232,Antivirus quarantined Trojan.GenericKD.744 on WS-7888,0.5,0.4102085829504842
+ALR-000617,1,6649,10.2.159.150,TLS certificate for WS-5058 expires in 619 days,0.5,0.4102986896485033
+ALR-000618,3,6649,10.2.29.61,Firewall denied 10.6.176.51 -> 10.0.0.5:65020 (policy DMZ-IN),0.5,0.4103009050332226
+ALR-000619,3,6651,10.7.169.219,Antivirus quarantined Trojan.GenericKD.109 on WS-2659,0.5,0.4103149660267346
+ALR-000620,4,6652,10.3.117.120,Antivirus quarantined Trojan.GenericKD.828 on WS-5432,0.5,0.4103286641410877
+ALR-000621,5,6664,10.5.5.19,User admin read /etc/shadow on WS-7216,0.5,0.4104673041681592
+ALR-000622,1,6675,10.3.80.156,Port scan detected from 10.6.252.78: 572 ports in 60 s,0.5,0.41059843581580385
+ALR-000623,4,6684,10.2.173.217,Firewall denied 10.2.100.6 -> 10.0.0.5:12563 (policy DMZ-IN),0.5,0.41069925278382385
+ALR-000624,3,6688,10.1.173.240,Process mimikatz.exe accessed lsass memory on WS-6101,0.5,0.41075072080037567
+ALR-000625,4,6707,10.1.60.37,Outbound DNS query volume above baseline for host WS-5210,0.5,0.41097161839668284
+ALR-000626,3,6714,10.9.96.219,Firewall denied 10.2.167.64 -> 10.0.0.5:4514 (policy DMZ-IN),0.5,0.4110447146493828
+ALR-000627,1,6732,10.1.240.203,Multiple 404 responses for /wp-login.php from 10.2.198.193,0.5,0.4112513608085894
+ALR-000628,2,6737,10.7.253.122,powershell -enc JABzAD0ATgBlAHcALQBPAGIAagBlAGMAdAAgAEkATwAuAE0AZQBtAG8AcgB5AFMAdAByAGU spawned by winword.exe on WS-3326,0.5,0.4113148998635635
+ALR-000629,4,6743,10.9.80.240,Impossible travel: guest signed in from two countries within 304 min,0.5,0.41137803363954095
+ALR-000630,2,6750,10.9.172.110,Port scan detected from 10.6.209.95: 326 ports in 60 s,0.5,0.4114631283445625
+ALR-000631,1,6755,10.1.183.231,Accepted publickey for a.kumar from 10.8.40.202 port 19139 ssh2,0.5,0.4115184676456551
+ALR-000632,2,6756,10.5.128.78,New local administrator a.kumar created on WS-8899,0.5,0.4115373440374168
+ALR-000633,2,6765,10.6.207.211,Antivirus quarantined Trojan.GenericKD.234 on WS-3729,0.5,0.4116366244422608
+ALR-000634,3,6780,10.8.239.185,Impossible travel: oracle signed in from two countries within 441 min,0.5,0.41181520645559455
+ALR-000635,2,6793,10.8.15.96,Outbound DNS query volume above baseline for host WS-5811,0.5,0.4119628737965313
+ALR-000636,3,6805,10.4.166.151,Failed password for admin from 10.2.78.251 port 63456 ssh2,0.5,0.41210353714498205
+ALR-000637,2,6824,10.6.104.243,TLS certificate for WS-1780 expires in 338 days,0.5,0.41232252279190174
+ALR-000638,1,6844,10.1.90.9,Impossible travel: oracle signed in from two countries within 292 min,0.5,0.41255538552814663
+ALR-000639,1,6860,10.8.5.44,User deploy read /etc/shadow on WS-2116,0.5,0.4127399889308666
+ALR-000640,4,6862,10.3.66.223,Process mimikatz.exe accessed lsass memory on WS-9423,0.5,0.412763945554432
+ALR-000641,2,6878,10.3.3.254,Outbound DNS query volume above baseline for host WS-4045,0.5,0.41294432186989066
+ALR-000642,3,6893,10.1.147.166,Port scan detected from 10.4.200.157: 427 ports in 60 s,0.5,0.4131154520271574
+ALR-000643,2,6912,10.2.48.101,New local administrator admin created on WS-8811,0.5,0.4133360227156083
+ALR-000644,2,6918,10.8.62.95,Accepted publickey for root from 10.8.166.105 port 30576 ssh2,0.5,0.4134122182541716
+ALR-000645,2,6932,10.8.15.96,Outbound DNS query volume above baseline for host WS-5811,0.5,0.4135661603860814
+ALR-000646,3,6946,10.3.203.10,Failed password for a.kumar from 10.1.69.84 port 44952 ssh2,0.5,0.41373567963534175
+ALR-000647,3,6963,10.7.71.121,Impossible travel: a.kumar signed in from two countries within 104 min,0.5,0.4139241637361609
+ALR-000648,1,6980,10.0.139.40,Port scan detected from 10.2.110.183: 223 ports in 60 s,0.5,0.41412054776614676
+ALR-000649,3,7000,10.1.199.177,powershell -enc JABzAD0ATgBlAHcALQBPAGIAagBl spawned by winword.exe on WS-6184,0.5,0.4143603468522286
+ALR-000650,1,7011,10.0.215.8,Failed password for guest from 10.3.32.57 port 63856 ssh2,0.5,0.4144875905200525
+ALR-000651,1,7016,10.8.55.209,User guest read /etc/shadow on WS-8876,0.5,0.41454613581497435
+ALR-000652,2,7023,10.2.7.103,Multiple 404 responses for /wp-login.php from 10.0.199.55,0.5,0.4146223295290207
+ALR-000653,1,7043,10.3.210.78,cmd.exe /c whoami executed by oracle on WS-1553,0.5,0.41485745811085917
+ALR-000654,5,7055,10.2.170.45,Multiple 404 responses for /wp-login.php from 10.7.34.86,0.5,0.4149969482285377
+ALR-000655,1,7071,10.9.6.60,Failed password for root from 10.4.121.189 port 29106 ssh2,0.5,0.41517627735409324
+ALR-000656,1,7082,10.6.104.165,Failed password for j.smith from 10.9.227.190 port 58520 ssh2,0.5,0.415302341573611
+ALR-000657,5,7083,10.4.12.59,Impossible travel: guest signed in from two countries within 930 min,0.5,0.41531320168318053
+ALR-000658,3,7090,10.3.195.134,User svc_backup read /etc/shadow on WS-8056,0.5,0.41539704949287864
+ALR-000659,1,7094,10.2.104.61,Firewall denied 10.6.239.80 -> 10.0.0.5:11782 (policy DMZ-IN),0.5,0.4154487912812477
+ALR-000660,3,7101,10.3.139.221,cmd.exe /c whoami executed by oracle on WS-2749,0.5,0.415523459709449
+ALR-000661,3,7120,10.7.10.196,TLS certificate for WS-2504 expires in 568 days,0.5,0.4157503967873371
+ALR-000662,2,7132,10.6.246.19,User svc_backup read /etc/shadow on WS-3107,0.5,0.4158871599274836
+ALR-000663,4,7143,10.6.191.99,Port scan detected from 10.9.36.105: 945 ports in 60 s,0.5,0.416017981875156
+ALR-000664,3,7161,10.4.178.131,New local administrator oracle created on WS-6948,0.5,0.4162184532178712
+ALR-000665,2,7162,10.0.75.67,Antivirus quarantined Trojan.GenericKD.976 on WS-9476,0.5,0.4162380978385947
+ALR-000666,1,7162,10.6.203.181,Antivirus quarantined Trojan.GenericKD.851 on WS-2717,0.5,0.41623585079317693
+ALR-000667,2,7171,10.6.157.188,TLS certificate for WS-4408 expires in 768 days,0.5,0.416331559482066
+ALR-000668,1,7183,10.2.251.1,Accepted publickey for root from 10.6.213.168 port 19920 ssh2,0.5,0.4164730711853433
+ALR-000669,1,7187,10.1.230.146,Impossible travel: j.smith signed in from two countries within 830 min,0.5,0.4165175391100701
+ALR-000670,4,7200,10.1.85.21,powershell -enc JABzAD0ATgBlAHcALQBPAGIAagBlAGMAdAAgAEkATwAuAE0AZQBtA spawned by winword.exe on WS-5606,0.5,0.416670507521954
+ALR-000671,1,7215,10.0.136.193,Failed password for admin from 10.1.108.134 port 52914 ssh2,0.5,0.41684703682184254
+ALR-000672,2,7223,10.5.219.87,User guest read /etc/shadow on WS-6529,0.5,0.41694409339483574
+ALR-000673,4,7234,10.0.233.223,New local administrator deploy created on WS-8694,0.5,0.4170701179014805
+ALR-000674,3,7241,10.7.211.170,Process mimikatz.exe accessed lsass memory on WS-0750,0.5,0.4171448521228567
+ALR-000675,2,7255,10.9.41.90,TLS certificate for WS-3197 expires in 731 days,0.5,0.41730999155221504
+ALR-000676,3,7273,10.0.65.128,cmd.exe /c whoami executed by root on WS-7312,0.5,0.41751738225634566
+ALR-000677,1,7290,10.1.54.112,New local administrator admin created on WS-4594,0.5,0.4177085514802538
+ALR-000678,3,7305,10.2.251.24,cmd.exe /c whoami executed by guest on WS-6177,0.5,0.41788520702529197
+ALR-000679,3,7317,10.6.119.58,powershell -enc JABzAD0ATgBlAHcALQBPAGIAagBlAGMAdAAgAEkATwAuAE0AZQBtA spawned by winword.exe on WS-5575,0.5,0.4180266533648965
+ALR-000680,1,7320,10.5.194.148,New local administrator admin created on WS-3111,0.5,0.41806143934039774
+ALR-000681,3,7330,10.2.113.28,TLS certificate for WS-4864 expires in 859 days,0.5,0.418179599302862
+ALR-000682,1,7344,10.0.163.80,Firewall denied 10.4.244.162 -> 10.0.0.5:55332 (policy DMZ-IN),0.5,0.4183368340762925
+ALR-000683,4,7356,10.2.107.218,New local administrator j.smith created on WS-6420,0.5,0.4184835873188995
+ALR-000684,2,7361,10.5.216.174,Port scan detected from 10.6.200.19: 291 ports in 60 s,0.5,0.41854071520637565
+ALR-000685,1,7378,10.9.27.218,New local administrator a.kumar created on WS-7240,0.5,0.41873029906827114
+ALR-000686,4,7382,10.3.4.93,New local administrator root created on WS-6998,0.5,0.4187746871430934
+ALR-000687,5,7383,10.2.26.31,Firewall denied 10.9.222.249 -> 10.0.0.5:10760 (policy DMZ-IN),0.5,0.4187873025997273
+ALR-000688,3,7395,10.2.192.199,New local administrator root created on WS-7293,0.5,0.4189276856610312
+ALR-000689,3,7397,10.8.115.6,Antivirus quarantined Trojan.GenericKD.395 on WS-2968,0.5,0.41895231895267676
+ALR-000690,1,7410,10.5.32.183,Impossible travel: svc_backup signed in from two countries within 804 min,0.5,0.41910225443922433
+ALR-000691,3,7412,10.1.106.248,Multiple 404 responses for /wp-login.php from 10.2.92.2,0.5,0.419127391391971
+ALR-000692,3,7416,10.1.131.218,cmd.exe /c whoami executed by admin on WS-5957,0.5,0.41917500133293695
+ALR-000693,1,7416,10.8.150.169,Firewall denied 10.2.251.178 -> 10.0.0.5:21532 (policy DMZ-IN),0.5,0.41916678713304156
+ALR-000694,1,7432,10.0.121.10,Process mimikatz.exe accessed lsass memory on WS-9866,0.5,0.4193533488495389
+ALR-000695,3,7440,10.1.130.67,TLS certificate for WS-4165 expires in 694 days,0.5,0.4194495214816164
+ALR-000696,1,7444,10.4.98.183,User svc_backup read /etc/shadow on WS-7105,0.5,0.41949653229727185
+ALR-000697,1,7451,10.1.208.17,User root read /etc/shadow on WS-2398,0.5,0.4195803915138694
+ALR-000698,5,7451,10.3.193.244,Accepted publickey for root from 10.2.156.151 port 54851 ssh2,0.5,0.4195804599868176
+ALR-000699,3,7469,10.9.50.230,Failed password for svc_backup from 10.5.199.47 port 23645 ssh2,0.5,0.4197845291194912
+ALR-000700,1,7481,10.0.79.169,Outbound DNS query volume above baseline for host WS-6065,0.5,0.41992639476549043
+ALR-000701,2,7500,10.7.181.205,Port scan detected from 10.4.219.134: 314 ports in 60 s,0.5,0.4201422969088919
+ALR-000702,2,7509,10.1.40.20,New local administrator j.smith created on WS-1386,0.5,0.42024896113585597
+ALR-000703,1,7524,10.6.69.123,Port scan detected from 10.6.7.158: 733 ports in 60 s,0.5,0.42042637773450187
+ALR-000704,3,7535,10.8.21.156,Port scan detected from 10.8.115.45: 861 ports in 60 s,0.5,0.4205524576531863
+ALR-000705,2,7536,10.5.57.87,Multiple 404 responses for /wp-login.php from 10.8.60.75,0.5,0.4205557881934312
+ALR-000706,1,7556,10.4.18.240,Port scan detected from 10.0.182.2: 338 ports in 60 s,0.5,0.4207954216438396
+ALR-000707,3,7556,10.6.181.3,Accepted publickey for deploy from 10.7.101.22 port 35698 ssh2,0.5,0.4207937031428825
+ALR-000708,3,7571,10.6.181.3,Accepted publickey for deploy from 10.7.101.22 port 35698 ssh2,0.5,0.42097097429857255
+ALR-000709,2,7578,10.5.219.229,Outbound DNS query volume above baseline for host WS-7199,0.5,0.421042316858579
+ALR-000710,2,7591,10.5.57.87,Multiple 404 responses for /wp-login.php from 10.8.60.75,0.5,0.4211921379305743
+ALR-000711,1,7597,10.6.169.231,Failed password for svc_backup from 10.3.245.246 port 44621 ssh2,0.5,0.421265062258225
+ALR-000712,3,7612,10.5.204.129,New local administrator deploy created on WS-0347,0.5,0.42144650570909364
+ALR-000713,1,7612,10.5.219.250,Antivirus quarantined Trojan.GenericKD.86 on WS-7962,0.5,0.4214391827911542
+ALR-000714,2,7631,10.3.143.197,Accepted publickey for a.kumar from 10.3.219.51 port 32081 ssh2,0.5,0.4216615090330528
+ALR-000715,4,7636,10.2.117.31,Outbound DNS query volume above baseline for host WS-2396,0.5,0.42171544924560167
+ALR-000716,2,7638,10.8.156.180,Multiple 404 responses for /wp-login.php from 10.3.172.110,0.5,0.42174199115475264
+ALR-000717,2,7647,10.5.214.64,User admin read /etc/shadow on WS-5270,0.5,0.421849108936847
+ALR-000718,1,7666,10.7.186.86,powershell -enc JABzAD0ATgBlAHcALQBPAGIAagBlAGMAdAAgAEk spawned by winword.exe on WS-2135,0.5,0.4220638558783257
+ALR-000719,3,7677,10.9.190.61,Multiple 404 responses for /wp-login.php from 10.3.196.23,0.5,0.42218844016131574
+ALR-000720,1,7680,10.6.169.231,Failed password for svc_backup from 10.3.245.246 port 44621 ssh2,0.5,0.42222910177219675
+ALR-000721,4,7686,10.1.175.78,New local administrator oracle created on WS-3141,0.5,0.422292510170844
+ALR-000722,4,7703,10.7.60.234,TLS certificate for WS-8256 expires in 811 days,0.5,0.422488786456494
+ALR-000723,1,7711,10.0.31.204,New local administrator j.smith created on WS-8413,0.5,0.4225828288926265
+ALR-000724,3,7727,10.6.139.53,Outbound DNS query volume above baseline for host WS-0146,0.5,0.42277022070030595
+ALR-000725,3,7741,10.4.155.219,Process mimikatz.exe accessed lsass memory on WS-0748,0.5,0.4229301394099458
+ALR-000726,4,7761,10.2.138.224,cmd.exe /c whoami executed by admin on WS-0023,0.5,0.42317087217385196
+ALR-000727,4,7772,10.8.135.185,Outbound DNS query volume above baseline for host WS-0171,0.5,0.42329496708544817
+ALR-000728,5,7780,10.8.54.185,New local administrator deploy created on WS-3615,0.5,0.42338846154077414
+ALR-000729,3,7800,10.2.228.60,New local administrator deploy created on WS-1536,0.5,0.4236190128368522
+ALR-000730,2,7805,10.2.144.6,powershell -enc JABzAD0ATgBlAHcALQBPAGIAa spawned by winword.exe on WS-3078,0.5,0.42367266669626574
+ALR-000731,3,7812,10.6.51.186,Firewall denied 10.0.51.97 -> 10.0.0.5:26189 (policy DMZ-IN),0.5,0.423750264942995
+ALR-000732,1,7832,10.1.137.37,Multiple 404 responses for /wp-login.php from 10.0.54.139,0.5,0.4239816327677709
+ALR-000733,3,7836,10.7.83.79,User oracle read /etc/shadow on WS-4383,0.5,0.4240294265252696
+ALR-000734,1,7837,10.8.212.37,Failed password for j.smith from 10.0.116.110 port 26280 ssh2,0.5,0.4240435967766478
+ALR-000735,3,7849,10.1.251.44,Accepted publickey for j.smith from 10.1.144.92 port 6023 ssh2,0.5,0.4241843327147854
+ALR-000736,3,7851,10.2.219.136,User svc_backup read /etc/shadow on WS-4941,0.5,0.4242100827813363
+ALR-000737,2,7854,10.5.135.208,New local administrator root created on WS-2402,0.5,0.42424687607308215
+ALR-000738,1,7869,10.6.142.38,Accepted publickey for guest from 10.2.93.197 port 26256 ssh2,0.5,0.4244194274909897
+ALR-000739,3,7882,10.2.125.99,TLS certificate for WS-3771 expires in 395 days,0.5,0.42456715004942946
+ALR-000740,3,7895,10.3.44.61,User admin read /etc/shadow on WS-7765,0.5,0.4247189233132602
+ALR-000741,2,7896,10.2.150.118,Outbound DNS query volume above baseline for host WS-0916,0.5,0.424733308422262
+ALR-000742,1,7900,10.6.190.14,New local administrator root created on WS-9731,0.5,0.42477940543625314
+ALR-000743,1,7911,10.0.213.39,cmd.exe /c whoami executed by svc_backup on WS-4908,0.5,0.4249030778816484
+ALR-000744,3,7925,10.4.56.40,Failed password for admin from 10.9.88.129 port 11532 ssh2,0.5,0.4250659207617779
+ALR-000745,4,7939,10.9.156.182,Process mimikatz.exe accessed lsass memory on WS-8545,0.5,0.42522960512148733
+ALR-000746,1,7945,10.6.94.211,New local administrator root created on WS-6638,0.5,0.4252993839031104
+ALR-000747,1,7956,10.1.53.20,User guest read /etc/shadow on WS-8874,0.5,0.4254228531034962
+ALR-000748,2,7956,10.8.103.164,Failed password for j.smith from 10.4.43.251 port 38387 ssh2,0.5,0.4254232565073155
+ALR-000749,3,7971,10.9.190.61,Multiple 404 responses for /wp-login.php from 10.3.196.23,0.5,0.4256014427043245
+ALR-000750,4,7980,10.7.60.234,TLS certificate for WS-8256 expires in 811 days,0.5,0.42569781118650785
+ALR-000751,2,7992,10.6.182.250,Outbound DNS query volume above baseline for host WS-8251,0.5,0.4258372707061061
+ALR-000752,4,7996,10.2.138.224,cmd.exe /c whoami executed by admin on WS-0023,0.5,0.4258911492343779
+ALR-000753,1,7997,10.7.40.227,Multiple 404 responses for /wp-login.php from 10.3.110.207,0.5,0.42589714145736884
+ALR-000754,3,8013,10.8.174.115,cmd.exe /c whoami executed by svc_backup on WS-7060,0.5,0.4260832887370055
+ALR-000755,5,8025,10.9.38.246,Outbound DNS query volume above baseline for host WS-5072,0.5,0.42621967059940824
+ALR-000756,2,8027,10.2.151.42,Accepted publickey for a.kumar from 10.9.186.91 port 6871 ssh2,0.5,0.42623850689925125
+ALR-000757,5,8035,10.7.71.241,Accepted publickey for oracle from 10.0.186.220 port 19808 ssh2,0.5,0.42633770699266793
+ALR-000758,2,8039,10.9.160.96,Accepted publickey for deploy from 10.8.230.68 port 58525 ssh2,0.5,0.4263865450338598
+ALR-000759,3,8046,10.2.53.75,TLS certificate for WS-3655 expires in 399 days,0.5,0.4264634165205892
+ALR-000760,2,8048,10.8.238.28,Accepted publickey for svc_backup from 10.1.203.197 port 29408 ssh2,0.5,0.42648290319166354
+ALR-000761,2,8058,10.7.58.72,Port scan detected from 10.8.79.243: 657 ports in 60 s,0.5,0.42659818894984614
+ALR-000762,3,8059,10.0.185.203,TLS certificate for WS-0376 expires in 977 days,0.5,0.42660937605653876
+ALR-000763,1,8067,10.2.35.71,TLS certificate for WS-8598 expires in 221 days,0.5,0.42671135601312427
+ALR-000764,1,8072,10.6.175.247,cmd.exe /c whoami executed by a.kumar on WS-6867,0.5,0.4267664423218652
+ALR-000765,2,8077,10.9.199.211,Failed password for j.smith from 10.1.74.83 port 44544 ssh2,0.5,0.4268263757547734
+ALR-000766,2,8081,10.6.134.134,New local administrator admin created on WS-9477,0.5,0.42687297742530217
+ALR-000767,2,8087,10.2.193.56,User j.smith read /etc/shadow on WS-5961,0.5,0.42693318338245834
+ALR-000768,1,8103,10.7.233.106,TLS certificate for WS-5503 expires in 118 days,0.5,0.42712438839327965
+ALR-000769,3,8116,10.2.223.98,powershell -enc JABzAD0ATgBlAHcALQBPAGIAagBlAGMAdAAgAEkATwAuAE0AZQBtAG8Ac spawned by winword.exe on WS-1701,0.5,0.4272703795039348
+ALR-000770,3,8129,10.9.51.163,Port scan detected from 10.4.215.55: 566 ports in 60 s,0.5,0.4274223154926091
+ALR-000771,2,8144,10.7.211.233,Impossible travel: deploy signed in from two countries within 292 min,0.5,0.42759469353122215
+ALR-000772,4,8152,10.6.123.2,TLS certificate for WS-6135 expires in 862 days,0.5,0.42769118211883594
+ALR-000773,1,8171,10.9.220.62,Firewall denied 10.3.201.213 -> 10.0.0.5:4404 (policy DMZ-IN),0.5,0.42790885282915064
+ALR-000774,1,8183,10.5.81.112,Process mimikatz.exe accessed lsass memory on WS-6423,0.5,0.4280449748935571
+ALR-000775,1,8191,10.5.104.24,Accepted publickey for admin from 10.6.5.161 port 51488 ssh2,0.5,0.42814588349159455
+ALR-000776,1,8208,10.6.12.191,New local administrator svc_backup created on WS-3634,0.5,0.4283431108857175
+ALR-000777,4,8215,10.6.133.169,Failed password for a.kumar from 10.1.73.161 port 2540 ssh2,0.5,0.4284206842832256
+ALR-000778,1,8234,10.4.92.24,Accepted publickey for oracle from 10.5.106.101 port 7621 ssh2,0.5,0.4286445153751095
+ALR-000779,1,8249,10.6.192.228,User oracle read /etc/shadow on WS-2928,0.5,0.42881406732297084
+ALR-000780,2,8250,10.5.247.158,Antivirus quarantined Trojan.GenericKD.622 on WS-3160,0.5,0.428821327787171
+ALR-000781,1,8266,10.5.58.231,Process mimikatz.exe accessed lsass memory on WS-2074,0.5,0.4290139783565011
+ALR-000782,3,8268,10.4.239.191,cmd.exe /c whoami executed by oracle on WS-4098,0.5,0.42903408240675556
+ALR-000783,1,8276,10.9.159.43,cmd.exe /c whoami executed by j.smith on WS-6943,0.5,0.4291247961866235
+ALR-000784,3,8286,10.6.102.146,User guest read /etc/shadow on WS-0554,0.5,0.42923721061993564
+ALR-000785,4,8299,10.8.180.102,Failed password for root from 10.2.165.110 port 52856 ssh2,0.5,0.42939625359729694
+ALR-000786,3,8310,10.1.4.82,New local administrator admin created on WS-5269,0.5,0.4295170844024174
+ALR-000787,1,8322,10.3.52.144,powershell -enc JABzAD0ATgBlAHcALQBPAGIAagBlAGMAdAAgAEkATwAuAE0AZQBtAG8AcgB5AFMAdABy spawned by winword.exe on WS-7131,0.5,0.4296640682316689
+ALR-000788,3,8328,10.2.223.98,powershell -enc JABzAD0ATgBlAHcALQBPAGIAagBlAGMAdAAgAEkATwAuAE0AZQBtAG8Ac spawned by winword.exe on WS-1701,0.5,0.42972485727771964
+ALR-000789,1,8336,10.2.167.152,TLS certificate for WS-9434 expires in 6 days,0.5,0.42981800989169516
+ALR-000790,2,8340,10.8.20.87,Multiple 404 responses for /wp-login.php from 10.1.240.25,0.5,0.42986841217876876
+ALR-000791,3,8351,10.5.252.157,Failed password for deploy from 10.4.232.127 port 56642 ssh2,0.5,0.42999652537141264
+ALR-000792,4,8354,10.9.156.182,Process mimikatz.exe accessed lsass memory on WS-8545,0.5,0.4300339174782234
+ALR-000793,2,8358,10.6.115.44,Accepted publickey for j.smith from 10.5.2.240 port 46128 ssh2,0.5,0.43007289380430974
+ALR-000794,1,8361,10.2.35.71,TLS certificate for WS-8598 expires in 221 days,0.5,0.430105419681522
+ALR-000795,3,8371,10.6.138.179,Outbound DNS query volume above baseline for host WS-5232,0.5,0.4302294020408626
+ALR-000796,3,8384,10.8.123.148,Port scan detected from 10.4.164.198: 233 ports in 60 s,0.5,0.43037445766541255
+ALR-000797,2,8393,10.3.105.178,Accepted publickey for root from 10.7.30.55 port 1884 ssh2,0.5,0.4304758056424331
+ALR-000798,1,8408,10.9.160.195,powershell -enc JABzAD0ATgBlAHcALQBPAGIAagBlAGMAdAAgAEk spawned by winword.exe on WS-3585,0.5,0.4306516273243815
+ALR-000799,2,8422,10.6.96.18,powershell -enc JABzAD0ATgBlAHcALQBPAG spawned by winword.exe on WS-9458,0.5,0.4308141724507353
+ALR-000800,1,8425,10.7.95.69,Failed password for oracle from 10.8.231.91 port 18428 ssh2,0.5,0.4308453049454195
+ALR-000801,2,8438,10.6.170.14,Port scan detected from 10.5.50.13: 751 ports in 60 s,0.5,0.4310068132231276
+ALR-000802,1,8447,10.4.252.133,TLS certificate for WS-3598 expires in 119 days,0.5,0.4311092841425179
+ALR-000803,1,8465,10.1.141.58,Antivirus quarantined Trojan.GenericKD.509 on WS-4396,0.5,0.4313143653435996
+ALR-000804,1,8471,10.9.147.188,Failed password for root from 10.2.244.190 port 21033 ssh2,0.5,0.43138251753208046
+ALR-000805,4,8476,10.2.6.171,Port scan detected from 10.5.10.46: 904 ports in 60 s,0.5,0.4314355799482765
+ALR-000806,5,8476,10.9.0.126,Impossible travel: j.smith signed in from two countries within 582 min,0.5,0.4314414847886097
+ALR-000807,1,8483,10.2.48.26,powershell -enc JABzAD0ATgBlAHcALQBPAGIAagBlAGMAdAAgAEkATwAuAE0AZQBtAG8Acg spawned by winword.exe on WS-8941,0.5,0.4315201484961425
+ALR-000808,4,8494,10.4.170.229,Firewall denied 10.1.138.176 -> 10.0.0.5:35057 (policy DMZ-IN),0.5,0.4316528749858672
+ALR-000809,1,8498,10.9.220.93,Process mimikatz.exe accessed lsass memory on WS-4488,0.5,0.43169163022056856
+ALR-000810,4,8512,10.2.135.234,Multiple 404 responses for /wp-login.php from 10.5.200.151,0.5,0.43185518153853153
+ALR-000811,4,8528,10.1.221.204,Port scan detected from 10.4.56.249: 951 ports in 60 s,0.5,0.43204578559092477
+ALR-000812,1,8532,10.8.83.78,Port scan detected from 10.1.150.4: 224 ports in 60 s,0.5,0.43209479082771385
+ALR-000813,2,8535,10.6.180.170,Impossible travel: admin signed in from two countries within 806 min,0.5,0.43212424509770886
+ALR-000814,1,8552,10.4.73.188,Process mimikatz.exe accessed lsass memory on WS-0527,0.5,0.4323186012494883
+ALR-000815,2,8572,10.1.133.236,powershell -enc JABzAD0ATgBlAHcALQBPAGIAagBlAGMAdAAgAEkATwAuAE0AZQBtA spawned by winword.exe on WS-5284,0.5,0.43255424459036196
+ALR-000816,2,8578,10.3.154.79,Accepted publickey for a.kumar from 10.9.236.140 port 13041 ssh2,0.5,0.43262695187897515
+ALR-000817,2,8581,10.5.183.120,User deploy read /etc/shadow on WS-7558,0.5,0.43265080377553755
+ALR-000818,1,8594,10.4.124.149,Firewall denied 10.2.150.14 -> 10.0.0.5:50525 (policy DMZ-IN),0.5,0.43280321812658884
+ALR-000819,4,8608,10.7.27.22,Failed password for a.kumar from 10.1.170.153 port 7407 ssh2,0.5,0.43296446615045525
+ALR-000820,3,8609,10.8.27.180,Process mimikatz.exe accessed lsass memory on WS-2536,0.5,0.4329811892050451
+ALR-000821,3,8609,10.3.58.18,Failed password for svc_backup from 10.9.61.134 port 7372 ssh2,0.5,0.43298425173778665
+ALR-000822,1,8625,10.1.153.104,Port scan detected from 10.3.133.211: 881 ports in 60 s,0.5,0.4331636047851788
+ALR-000823,1,8638,10.2.123.44,Firewall denied 10.7.245.75 -> 10.0.0.5:19993 (policy DMZ-IN),0.5,0.43331967863415133
+ALR-000824,3,8646,10.1.237.107,Impossible travel: deploy signed in from two countries within 579 min,0.5,0.4334029556232559
+ALR-000825,2,8655,10.3.154.79,Accepted publickey for a.kumar from 10.9.236.140 port 13041 ssh2,0.5,0.43350797207593894
+ALR-000826,4,8674,10.5.71.120,New local administrator oracle created on WS-5862,0.5,0.43372933609462877
+ALR-000827,3,8680,10.6.32.45,Multiple 404 responses for /wp-login.php from 10.5.173.118,0.5,0.4338060018795436
+ALR-000828,1,8689,10.7.192.247,Port scan detected from 10.9.132.34: 604 ports in 60 s,0.5,0.43390749101527215
+ALR-000829,1,8708,10.0.81.60,Accepted publickey for root from 10.7.243.83 port 50825 ssh2,0.5,0.4341210799807207
+ALR-000830,4,8715,10.6.215.237,Accepted publickey for admin from 10.9.128.30 port 3476 ssh2,0.5,0.4342095027625593
+ALR-000831,4,8735,10.5.55.179,Port scan detected from 10.2.102.51: 450 ports in 60 s,0.5,0.4344430031747422
+ALR-000832,2,8741,10.8.98.23,Antivirus quarantined Trojan.GenericKD.916 on WS-2303,0.5,0.4345074561528034
+ALR-000833,4,8754,10.5.94.175,New local administrator oracle created on WS-7762,0.5,0.43465838112837496
+ALR-000834,4,8771,10.7.218.161,TLS certificate for WS-8475 expires in 307 days,0.5,0.4348597596488252
+ALR-000835,2,8778,10.0.114.211,powershell -enc JABzAD0ATgBlAHcALQBPAGIAagBlAGMAdA spawned by winword.exe on WS-2587,0.5,0.4349327754096527
+ALR-000836,2,8796,10.9.159.103,Antivirus quarantined Trojan.GenericKD.670 on WS-4310,0.5,0.43514212003655445
+ALR-000837,2,8809,10.0.71.53,Firewall denied 10.0.120.127 -> 10.0.0.5:5802 (policy DMZ-IN),0.5,0.43529899720180787
+ALR-000838,1,8810,10.6.41.228,Firewall denied 10.2.138.186 -> 10.0.0.5:3759 (policy DMZ-IN),0.5,0.4353038678405631
+ALR-000839,2,8830,10.3.10.239,Failed password for admin from 10.3.194.175 port 45824 ssh2,0.5,0.43554121961091874
+ALR-000840,2,8842,10.6.70.30,Port scan detected from 10.9.188.91: 449 ports in 60 s,0.5,0.43567220117109273
+ALR-000841,1,8849,10.6.23.254,cmd.exe /c whoami executed by admin on WS-2077,0.5,0.43575467357852093
+ALR-000842,3,8859,10.3.149.34,Antivirus quarantined Trojan.GenericKD.258 on WS-1252,0.5,0.4358731492640068
+ALR-000843,4,8874,10.3.227.183,powershell -enc JABzAD0ATgBlAHcALQBPAGIAagBlAGMAdAAgAEkATwAuAE0AZQBtAG8AcgB5AFMAdAByAGUAY spawned by winword.exe on WS-4002,0.5,0.4360476783047379
+ALR-000844,1,8891,10.6.248.72,Accepted publickey for j.smith from 10.2.118.79 port 49645 ssh2,0.5,0.436241746584304
+ALR-000845,4,8895,10.2.135.234,Multiple 404 responses for /wp-login.php from 10.5.200.151,0.5,0.4362856649158396
+ALR-000846,5,8915,10.0.255.215,Failed password for a.kumar from 10.4.196.77 port 55233 ssh2,0.5,0.4365171862985551
+ALR-000847,4,8927,10.6.227.12,Process mimikatz.exe accessed lsass memory on WS-8725,0.5,0.4366648140351197
+ALR-000848,4,8944,10.9.172.237,Impossible travel: a.kumar signed in from two countries within 745 min,0.5,0.4368553251394831
+ALR-000849,4,8957,10.0.55.142,TLS certificate for WS-9312 expires in 789 days,0.5,0.43700632453718663
+ALR-000850,5,8969,10.3.67.233,Failed password for a.kumar from 10.4.43.64 port 51574 ssh2,0.5,0.43715006654962657
+ALR-000851,2,8970,10.4.6.32,powershell -enc JABzAD0ATgBlAHcA spawned by winword.exe on WS-0283,0.5,0.43716071666817646
+ALR-000852,4,8981,10.3.209.15,Antivirus quarantined Trojan.GenericKD.186 on WS-7217,0.5,0.43728523231901184
+ALR-000853,2,8989,10.3.89.38,Impossible travel: admin signed in from two countries within 702 min,0.5,0.4373755855607679
+ALR-000854,3,9007,10.3.31.244,New local administrator a.kumar created on WS-5790,0.5,0.4375863247021627
+ALR-000855,1,9014,10.7.57.131,Accepted publickey for j.smith from 10.3.166.147 port 25361 ssh2,0.5,0.4376718048314689
+ALR-000856,2,9023,10.5.171.250,TLS certificate for WS-2627 expires in 379 days,0.5,0.4377732500301613
+ALR-000857,1,9027,10.9.108.207,User guest read /etc/shadow on WS-0535,0.5,0.43781559723387387
+ALR-000858,1,9047,10.3.214.138,New local administrator root created on WS-8593,0.5,0.4380478208909375
+ALR-000859,1,9053,10.3.168.63,cmd.exe /c whoami executed by guest on WS-1891,0.5,0.43812186646070583
+ALR-000860,2,9066,10.8.39.235,User oracle read /etc/shadow on WS-6863,0.5,0.43827433119243253
+ALR-000861,1,9070,10.6.70.156,powershell -enc JABzAD0ATgBlAHcALQBPAGIAagBlAGMAdAAgAEkATwAuAE0A spawned by winword.exe on WS-6693,0.5,0.43831377237612945
+ALR-000862,4,9088,10.3.92.225,Port scan detected from 10.2.61.108: 730 ports in 60 s,0.5,0.43852349150902076
+ALR-000863,1,9091,10.6.12.177,Outbound DNS query volume above baseline for host WS-5806,0.5,0.43855597591052375
+ALR-000864,1,9098,10.5.55.185,Failed password for root from 10.5.229.234 port 27820 ssh2,0.5,0.4386407611898256
+ALR-000865,3,9113,10.9.42.39,Failed password for guest from 10.7.194.83 port 29767 ssh2,0.5,0.4388141041627727
+ALR-000866,2,9116,10.0.218.74,User deploy read /etc/shadow on WS-0688,0.5,0.43885142955904577
+ALR-000867,1,9122,10.9.160.26,User a.kumar read /etc/shadow on WS-7974,0.5,0.4389222742835626
+ALR-000868,1,9131,10.9.54.237,Process mimikatz.exe accessed lsass memory on WS-8335,0.5,0.43902594142175116
+ALR-000869,2,9132,10.3.3.126,Impossible travel: admin signed in from two countries within 438 min,0.5,0.4390384990495906
+ALR-000870,1,9136,10.1.61.114,TLS certificate for WS-4563 expires in 751 days,0.5,0.43908000771200484
+ALR-000871,3,9147,10.3.38.84,Outbound DNS query volume above baseline for host WS-8403,0.5,0.43920252951327343
+ALR-000872,1,9157,10.1.162.49,Impossible travel: admin signed in from two countries within 895 min,0.5,0.4393263461454091
+ALR-000873,1,9163,10.2.254.73,Outbound DNS query volume above baseline for host WS-1103,0.5,0.43938715298212644
+ALR-000874,1,9168,10.9.54.237,Process mimikatz.exe accessed lsass memory on WS-8335,0.5,0.43944566320207984
+ALR-000875,1,9180,10.5.247.136,Multiple 404 responses for /wp-login.php from 10.4.118.225,0.5,0.4395910175897447
+ALR-000876,2,9199,10.1.112.29,cmd.exe /c whoami executed by a.kumar on WS-6961,0.5,0.43981131642285
+ALR-000877,2,9209,10.6.65.199,Port scan detected from 10.9.210.176: 299 ports in 60 s,0.5,0.43992825863798274
+ALR-000878,3,9222,10.4.162.106,TLS certificate for WS-0896 expires in 276 days,0.5,0.4400724754404143
+ALR-000879,1,9232,10.7.209.57,Antivirus quarantined Trojan.GenericKD.972 on WS-1808,0.5,0.4401937314887579
+ALR-000880,1,9236,10.0.194.24,cmd.exe /c whoami executed by guest on WS-8498,0.5,0.4402366621983249
+ALR-000881,2,9241,10.3.148.206,Outbound DNS query volume above baseline for host WS-4075,0.5,0.4402895659817325
+ALR-000882,2,9241,10.8.203.203,Port scan detected from 10.2.144.78: 648 ports in 60 s,0.5,0.4402978131472007
+ALR-000883,1,9242,10.6.205.34,Impossible travel: a.kumar signed in from two countries within 22 min,0.5,0.4403085687659113
+ALR-000884,1,9259,10.9.200.50,Impossible travel: a.kumar signed in from two countries within 311 min,0.5,0.44050197190876217
+ALR-000885,3,9262,10.7.192.75,TLS certificate for WS-7920 expires in 293 days,0.5,0.4405372441900395
+ALR-000886,1,9278,10.7.201.244,User root read /etc/shadow on WS-0408,0.5,0.44071915108506554
+ALR-000887,1,9289,10.4.170.37,cmd.exe /c whoami executed by root on WS-8026,0.5,0.4408542544834478
+ALR-000888,2,9301,10.9.119.16,cmd.exe /c whoami executed by oracle on WS-5536,0.5,0.4409866324316903
+ALR-000889,4,9319,10.4.107.194,Firewall denied 10.8.255.81 -> 10.0.0.5:63904 (policy DMZ-IN),0.5,0.4411946255490735
+ALR-000890,3,9335,10.1.53.109,New local administrator root created on WS-2656,0.5,0.4413864355586572
+ALR-000891,5,9341,10.0.217.127,Outbound DNS query volume above baseline for host WS-4862,0.5,0.44145116317590916
+ALR-000892,3,9349,10.5.84.37,powershell -enc JABzAD0ATgBlAHcALQBPAGIAagBlAGMAdAAgAEkATwAuA spawned by winword.exe on WS-4117,0.5,0.4415465383303667
+ALR-000893,3,9359,10.2.84.135,New local administrator oracle created on WS-2464,0.5,0.4416611299101987
+ALR-000894,1,9359,10.1.234.85,Accepted publickey for admin from 10.9.239.153 port 11277 ssh2,0.5,0.44166082122918565
+ALR-000895,1,9366,10.3.140.73,Impossible travel: deploy signed in from two countries within 958 min,0.5,0.4417432222988128
+ALR-000896,1,9386,10.2.52.188,Process mimikatz.exe accessed lsass memory on WS-2076,0.5,0.4419731877745341
+ALR-000897,3,9398,10.9.141.248,cmd.exe /c whoami executed by oracle on WS-3799,0.5,0.4421073728215381
+ALR-000898,1,9417,10.0.165.20,Failed password for svc_backup from 10.8.225.109 port 44595 ssh2,0.5,0.4423322103739684
+ALR-000899,2,9420,10.6.242.91,powershell -enc JABzAD0ATgBlAHcALQBPAGIAag spawned by winword.exe on WS-3505,0.5,0.4423673085090083
+ALR-000900,4,9428,10.8.226.126,New local administrator a.kumar created on WS-2917,0.5,0.4424539043970692
+ALR-000901,2,9442,10.6.109.158,Firewall denied 10.6.191.46 -> 10.0.0.5:62181 (policy DMZ-IN),0.5,0.4426157710316647
+ALR-000902,3,9448,10.3.38.84,Outbound DNS query volume above baseline for host WS-8403,0.5,0.44269648291725144
+ALR-000903,2,9459,10.0.139.9,Multiple 404 responses for /wp-login.php from 10.7.203.12,0.5,0.4428163189070998
+ALR-000904,4,9477,10.7.232.126,Outbound DNS query volume above baseline for host WS-0473,0.5,0.4430221338690181
+ALR-000905,1,9482,10.6.61.15,Port scan detected from 10.5.49.220: 875 ports in 60 s,0.5,0.44307983318451893
+ALR-000906,3,9482,10.5.86.232,Antivirus quarantined Trojan.GenericKD.428 on WS-6606,0.5,0.44308382218256054
+ALR-000907,4,9483,10.8.75.187,powershell -enc JABzAD0ATgBlAHcALQBPAGIAagBlAGMAdAAgAEkATwAuAE0AZQBtAG8AcgB5 spawned by winword.exe on WS-9971,0.5,0.4431004351363928
+ALR-000908,4,9488,10.0.159.71,Firewall denied 10.1.174.120 -> 10.0.0.5:38259 (policy DMZ-IN),0.5,0.44315770282537736
+ALR-000909,1,9491,10.1.95.82,Antivirus quarantined Trojan.GenericKD.473 on WS-6137,0.5,0.44318860374695096
+ALR-000910,3,9498,10.3.67.80,Failed password for deploy from 10.4.91.72 port 10226 ssh2,0.5,0.44327251486826236
+ALR-000911,1,9504,10.4.132.179,Port scan detected from 10.1.250.91: 359 ports in 60 s,0.5,0.4433412084691614
+ALR-000912,3,9518,10.2.18.244,Impossible travel: deploy signed in from two countries within 663 min,0.5,0.44350392862104193
+ALR-000913,3,9527,10.8.137.24,Firewall denied 10.4.111.120 -> 10.0.0.5:18118 (policy DMZ-IN),0.5,0.44360984600239295
+ALR-000914,1,9547,10.9.165.96,Antivirus quarantined Trojan.GenericKD.646 on WS-1714,0.5,0.4438352306519108
+ALR-000915,2,9547,10.5.51.48,User a.kumar read /etc/shadow on WS-0357,0.5,0.4438367568948405
+ALR-000916,2,9565,10.6.242.214,Process mimikatz.exe accessed lsass memory on WS-6573,0.5,0.44404785666230673
+ALR-000917,4,9572,10.8.55.108,TLS certificate for WS-2688 expires in 526 days,0.5,0.44412901096774443
+ALR-000918,4,9591,10.3.71.34,Multiple 404 responses for /wp-login.php from 10.0.46.80,0.5,0.44434985121686676
+ALR-000919,3,9596,10.3.88.78,powershell -enc JABzAD0ATgBlAHcALQBPAGIAagBlAGMAdAAgAEkATwAuAE0AZQBtAG8AcgB5AF spawned by winword.exe on WS-7153,0.5,0.44439908093509684
+ALR-000920,2,9613,10.7.81.89,Accepted publickey for oracle from 10.8.201.179 port 14949 ssh2,0.5,0.4446027477427574
+ALR-000921,1,9620,10.2.162.196,Outbound DNS query volume above baseline for host WS-6957,0.5,0.4446848419802655
+ALR-000922,3,9631,10.9.13.57,Antivirus quarantined Trojan.GenericKD.844 on WS-8216,0.5,0.4448104748237378
+ALR-000923,3,9643,10.2.255.49,Failed password for j.smith from 10.4.222.24 port 23279 ssh2,0.5,0.44494903774642347
+ALR-000924,3,9652,10.7.17.67,TLS certificate for WS-1744 expires in 478 days,0.5,0.44504984660452496
+ALR-000925,2,9655,10.0.82.82,Outbound DNS query volume above baseline for host WS-6582,0.5,0.4450851359579638
+ALR-000926,3,9668,10.9.230.129,User oracle read /etc/shadow on WS-2931,0.5,0.44523412214094416
+ALR-000927,2,9670,10.9.132.51,Firewall denied 10.6.24.119 -> 10.0.0.5:19486 (policy DMZ-IN),0.5,0.44525471835533154
+ALR-000928,3,9681,10.5.129.109,User a.kumar read /etc/shadow on WS-5848,0.5,0.445382726484283
+ALR-000929,3,9690,10.5.18.137,New local administrator deploy created on WS-1550,0.5,0.445486928419804
+ALR-000930,1,9705,10.7.124.236,Impossible travel: oracle signed in from two countries within 152 min,0.5,0.44567126517254285
+ALR-000931,1,9725,10.8.40.87,Multiple 404 responses for /wp-login.php from 10.6.205.6,0.5,0.44589736325295554
+ALR-000932,2,9727,10.1.98.147,powershell -enc JABzAD0ATgBlAHcALQBPAGIAagBlAGMAdAAgAEkATwAuAE0AZQBt spawned by winword.exe on WS-0801,0.5,0.44592509986746165
+ALR-000933,3,9740,10.2.141.129,Multiple 404 responses for /wp-login.php from 10.9.204.233,0.5,0.4460701892850829
+ALR-000934,3,9740,10.4.136.119,Antivirus quarantined Trojan.GenericKD.228 on WS-5319,0.5,0.44607254749007713
+ALR-000935,3,9759,10.9.168.139,TLS certificate for WS-5238 expires in 356 days,0.5,0.44629322101434404
+ALR-000936,2,9773,10.8.87.173,TLS certificate for WS-9361 expires in 992 days,0.5,0.4464473037072315
+ALR-000937,1,9790,10.8.189.78,powershell -enc JABzAD0ATgBlAHcALQBPAGIAagBlAGMAdAAgAEkATwAuAE0AZQBtAG8 spawned by winword.exe on WS-9584,0.5,0.4466505148859089
+ALR-000938,3,9803,10.4.251.254,Process mimikatz.exe accessed lsass memory on WS-2024,0.5,0.4467950308708797
+ALR-000939,1,9806,10.2.205.141,TLS certificate for WS-4570 expires in 329 days,0.5,0.44682965045723216
+ALR-000940,3,9809,10.5.200.58,Impossible travel: deploy signed in from two countries within 162 min,0.5,0.44686649216493374
+ALR-000941,2,9821,10.5.237.168,Outbound DNS query volume above baseline for host WS-6723,0.5,0.44701253614700104
+ALR-000942,3,9828,10.1.209.243,Failed password for guest from 10.9.127.43 port 38334 ssh2,0.5,0.447092176420396
+ALR-000943,4,9828,10.6.98.218,Outbound DNS query volume above baseline for host WS-3274,0.5,0.44708495972999757
+ALR-000944,2,9828,10.3.227.254,Process mimikatz.exe accessed lsass memory on WS-5428,0.5,0.44708663137964644
+ALR-000945,5,9835,10.0.16.175,Multiple 404 responses for /wp-login.php from 10.8.240.221,0.5,0.44716855014008283
+ALR-000946,3,9852,10.8.12.113,Port scan detected from 10.4.203.213: 374 ports in 60 s,0.5,0.4473637167771612
+ALR-000947,2,9868,10.1.53.38,Impossible travel: a.kumar signed in from two countries within 424 min,0.5,0.447550132860126
+ALR-000948,1,9875,10.1.168.165,New local administrator root created on WS-4260,0.5,0.447631767067458
+ALR-000949,3,9885,10.9.140.153,Failed password for svc_backup from 10.2.147.7 port 15508 ssh2,0.5,0.4477520847002974
+ALR-000950,1,9894,10.4.243.183,Port scan detected from 10.2.65.38: 881 ports in 60 s,0.5,0.4478582947164437
+ALR-000951,1,9901,10.9.165.96,Antivirus quarantined Trojan.GenericKD.646 on WS-1714,0.5,0.4479305598368409
+ALR-000952,1,9905,10.8.207.123,Antivirus quarantined Trojan.GenericKD.323 on WS-8210,0.5,0.44798241722747284
+ALR-000953,4,9920,10.7.89.124,TLS certificate for WS-3383 expires in 231 days,0.5,0.4481504515296275
+ALR-000954,2,9923,10.7.6.216,New local administrator j.smith created on WS-6529,0.5,0.448194130378987
+ALR-000955,3,9939,10.8.40.249,cmd.exe /c whoami executed by admin on WS-2994,0.5,0.44837786961736426
+ALR-000956,3,9946,10.2.20.251,Antivirus quarantined Trojan.GenericKD.752 on WS-3114,0.5,0.448456784903737
+ALR-000957,1,9950,10.3.124.150,cmd.exe /c whoami executed by oracle on WS-0837,0.5,0.4485039854580371
+ALR-000958,2,9956,10.7.101.26,Firewall denied 10.9.249.77 -> 10.0.0.5:38335 (policy DMZ-IN),0.5,0.44856862903294786
+ALR-000959,2,9959,10.3.233.1,powershell -enc JABzAD0ATgBlAHcALQBPAGIAagBlAGMAdAAgAEkATwAuAE0A spawned by winword.exe on WS-2893,0.5,0.4486001268210331
+ALR-000960,1,9968,10.8.127.88,powershell -enc JABzAD0ATgBlAHcA spawned by winword.exe on WS-2985,0.5,0.44871122941606667
+ALR-000961,1,9984,10.1.221.173,powershell -enc JABzAD0ATgBlAHcALQBPAGIAagB spawned by winword.exe on WS-8825,0.5,0.4488891227461521
+ALR-000962,1,9987,10.8.156.82,cmd.exe /c whoami executed by oracle on WS-3446,0.5,0.4489341123235217
+ALR-000963,2,9992,10.2.80.157,Multiple 404 responses for /wp-login.php from 10.5.242.168,0.5,0.44899282597249623
+ALR-000964,4,10000,10.4.189.38,powershell -enc JABzAD0ATgBlAHcALQBPAGIAagBlAGMAdAAgAEkAT spawned by winword.exe on WS-6969,0.5,0.4490833511626888
+ALR-000965,2,10000,10.6.181.166,cmd.exe /c whoami executed by svc_backup on WS-3314,0.5,0.44907637634202086
+ALR-000966,1,10009,10.6.195.84,Firewall denied 10.3.225.220 -> 10.0.0.5:18978 (policy DMZ-IN),0.5,0.4491793080365043
+ALR-000967,3,10024,10.0.199.177,New local administrator oracle created on WS-9603,0.5,0.4493600986445424
+ALR-000968,2,10044,10.7.145.29,Port scan detected from 10.1.166.251: 846 ports in 60 s,0.5,0.4495938267303926
+ALR-000969,1,10062,10.1.224.63,User a.kumar read /etc/shadow on WS-2302,0.5,0.4497997658321357
+ALR-000970,2,10072,10.7.109.48,User oracle read /etc/shadow on WS-3261,0.5,0.44991299362841286
+ALR-000971,1,10091,10.1.210.110,TLS certificate for WS-6120 expires in 18 days,0.5,0.4501308901728589
+ALR-000972,4,10092,10.5.251.73,Antivirus quarantined Trojan.GenericKD.801 on WS-9148,0.5,0.45014596578249233
+ALR-000973,1,10108,10.7.97.193,Accepted publickey for deploy from 10.4.238.116 port 59308 ssh2,0.5,0.4503281338787878
+ALR-000974,2,10128,10.6.10.103,Antivirus quarantined Trojan.GenericKD.332 on WS-3691,0.5,0.45055734554148597
+ALR-000975,3,10135,10.8.234.168,Multiple 404 responses for /wp-login.php from 10.9.181.229,0.5,0.4506420217527672
+ALR-000976,1,10141,10.8.20.200,Outbound DNS query volume above baseline for host WS-3771,0.5,0.45071248631885247
+ALR-000977,1,10146,10.3.181.7,Outbound DNS query volume above baseline for host WS-3418,0.5,0.4507717647777405
+ALR-000978,3,10158,10.9.63.24,Outbound DNS query volume above baseline for host WS-8014,0.5,0.45091080729575145
+ALR-000979,1,10168,10.1.184.123,powershell -enc JABzAD0ATgBlAHcALQBPAGIAagBlAGMAdAAgAEkATwAuAE0AZQBtAG8AcgB5AFMAdAByAG spawned by winword.exe on WS-6882,0.5,0.4510222083549481
+ALR-000980,4,10179,10.6.153.59,New local administrator root created on WS-4501,0.5,0.4511513435359066
+ALR-000981,1,10180,10.9.4.33,Firewall denied 10.2.240.196 -> 10.0.0.5:3579 (policy DMZ-IN),0.5,0.45116607705923584
+ALR-000982,2,10189,10.2.214.45,Outbound DNS query volume above baseline for host WS-1793,0.5,0.4512722465157043
+ALR-000983,3,10195,10.4.164.8,cmd.exe /c whoami executed by admin on WS-0561,0.5,0.4513393513543401
+ALR-000984,2,10208,10.7.101.26,Firewall denied 10.9.249.77 -> 10.0.0.5:38335 (policy DMZ-IN),0.5,0.45148733295707577
+ALR-000985,1,10224,10.5.114.24,TLS certificate for WS-6801 expires in 878 days,0.5,0.4516668940922619
+ALR-000986,4,10228,10.0.159.122,Port scan detected from 10.2.165.169: 981 ports in 60 s,0.5,0.45171822898080627
+ALR-000987,3,10231,10.9.100.33,Process mimikatz.exe accessed lsass memory on WS-1554,0.5,0.4517533958635941
+ALR-000988,1,10250,10.2.154.85,New local administrator oracle created on WS-2158,0.5,0.45197397028610836
+ALR-000989,4,10254,10.0.197.162,Failed password for j.smith from 10.2.7.37 port 42615 ssh2,0.5,0.45202018613103667
+ALR-000990,3,10266,10.7.176.49,Multiple 404 responses for /wp-login.php from 10.7.109.117,0.5,0.4521580926257305
+ALR-000991,2,10274,10.5.172.229,Outbound DNS query volume above baseline for host WS-7477,0.5,0.4522502421019784
+ALR-000992,1,10284,10.5.218.165,Failed password for svc_backup from 10.1.116.250 port 31002 ssh2,0.5,0.45236726592267346
+ALR-000993,2,10288,10.6.42.248,Impossible travel: svc_backup signed in from two countries within 796 min,0.5,0.452411093436413
+ALR-000994,3,10299,10.9.24.205,Firewall denied 10.8.117.178 -> 10.0.0.5:63097 (policy DMZ-IN),0.5,0.45254388726060707
+ALR-000995,4,10304,10.3.77.139,Antivirus quarantined Trojan.GenericKD.305 on WS-6568,0.5,0.45259661058881756
+ALR-000996,2,10317,10.2.153.1,Accepted publickey for a.kumar from 10.8.159.54 port 61517 ssh2,0.5,0.4527533302126662
+ALR-000997,2,10330,10.2.124.101,cmd.exe /c whoami executed by svc_backup on WS-4073,0.5,0.4529044885668666
+ALR-000998,2,10338,10.9.77.53,Port scan detected from 10.4.167.3: 535 ports in 60 s,0.5,0.45299449463483965
+ALR-000999,1,10358,10.7.152.211,Accepted publickey for oracle from 10.2.36.226 port 65183 ssh2,0.5,0.45321879056217196
+ALR-001000,4,10359,10.1.238.110,Antivirus quarantined Trojan.GenericKD.92 on WS-1689,0.5,0.45323861115843056

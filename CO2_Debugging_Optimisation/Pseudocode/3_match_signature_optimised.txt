@@ -1,0 +1,47 @@
+SentinelOps SOC Alert-Triage Module - Pseudocode 3 (OPTIMISED): match_signature (+ KMP alternative)
+=====================================================================================================
+Problem : same as the corrected version (all overlapping occurrences, case-sensitive, empty -> none).
+Method  : Boyer-Moore-Horspool. The window is compared RIGHT to LEFT; afterwards the window slides by
+          shift[c], where c = the text character under the window's last position.  Characters that do
+          not occur in P[0..m−2] let the window jump m positions at once.
+          Knuth-Morris-Pratt is provided as an alternative with a guaranteed linear worst case.
+Basic op: one character comparison.
+
+Algorithm ShiftTable(P, m)
+1. shift[c] ← m for every character c               // default (stored implicitly: missing key -> m)
+2. for k ← 0 to m − 2 do
+3.     shift[P[k]] ← m − 1 − k                       // distance of the last occurrence to the end
+4. return shift
+
+Algorithm MatchSignature_Horspool(T, n, P, m)
+1. if m = 0 or m > n then return [ ]
+2. shift ← ShiftTable(P, m);  positions ← [ ];  i ← 0
+3. while i ≤ n − m do
+4.     j ← m − 1
+5.     while j ≥ 0 and T[i + j] = P[j] do            // right-to-left check of the window
+6.         j ← j − 1
+7.     if j < 0 then append i to positions           // whole window matched
+8.     i ← i + shift[T[i + m − 1]]                    // skip using the window's last character
+9. return positions
+
+Algorithm FailureFunction(P, m)
+1. f[0] ← 0;  k ← 0
+2. for q ← 1 to m − 1 do
+3.     while k > 0 and P[q] ≠ P[k] do k ← f[k − 1]
+4.     if P[q] = P[k] then k ← k + 1
+5.     f[q] ← k                                      // longest proper border of P[0..q]
+6. return f
+
+Algorithm MatchSignature_KMP(T, n, P, m)
+1. if m = 0 or m > n then return [ ]
+2. f ← FailureFunction(P, m);  q ← 0;  positions ← [ ]
+3. for i ← 0 to n − 1 do
+4.     while q > 0 and T[i] ≠ P[q] do q ← f[q − 1]
+5.     if T[i] = P[q] then q ← q + 1
+6.     if q = m then
+7.         append i − m + 1 to positions;  q ← f[q − 1]     // continue: overlapping matches
+8. return positions
+
+Complexity: Horspool - preprocessing Θ(m); search best Θ(n / m), average on log text ≈ n/m … n,
+            worst Θ(nm) (e.g. T = aaa…a, P = baa…a);
+            KMP - Θ(m) preprocessing + at most 2n comparisons in the search: Θ(n + m) always.

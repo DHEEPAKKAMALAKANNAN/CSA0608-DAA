@@ -1,0 +1,5 @@
+function,op_reduction_x,time_speedup_x
+sort_alerts (random),241.17,264.79
+"find_alert x 1,000 (AlertIndex)",498.21,519.2
+match_signature x 5 (Horspool),8.8,18.49
+closest_alert_pair (D&C),1954.87,288.28

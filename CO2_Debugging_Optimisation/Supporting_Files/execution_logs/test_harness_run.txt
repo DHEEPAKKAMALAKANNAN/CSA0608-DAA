@@ -1,0 +1,113 @@
+=== original_alert_triage.py ===========================================================
+FAIL T01  D1  sort leaves the caller's list in arrival order  | expected input 001 002 003 | got input 002 001 003
+FAIL T02  D2  sort: critical alert arriving last goes first  | expected sev [5, 3, 2] | got sev [3, 2, 5]
+FAIL T03  D3  sort: equal severity -> oldest first  | expected t [10, 20, 30] | got t [20, 10, 30]
+FAIL T04  D4  sort: early exit on a nearly sorted queue  | expected <= 2n-3 = 17 comparisons | got 36 comparisons
+FAIL T05  D5  search finds the alert at index 0  | expected index 0 | got index -1
+FAIL T06  D6  search with an equal but new id string  | expected index 0 | got index -1
+FAIL T07  D7  search continues past the first mismatch  | expected index 2 | got index -1
+FAIL T07b D7  search in an empty batch returns -1  | expected -1 | got None
+FAIL T08  D8  signature at the very end of the message  | expected [21] | got []
+FAIL T08b D8  message equal to the signature  | expected [0] | got []
+FAIL T09  D9  early exit on mismatch (char comparisons)  | expected [] in <= n-m+1 = 18 char cmp | got [] in 51 char cmp
+FAIL T10  D10 empty signature matches nothing  | expected [] | got [0, 1, ..., 24] (25 hits)
+FAIL T11  D11 closest pair of an empty batch  | expected (inf, -1, -1) | got (0.0000, 0, 0)
+FAIL T12  D12 two alerts -> the pair (0, 1)  | expected (0.0300, 0, 1) | got (0.0000, 0, 1)
+FAIL T12b D12 single alert -> no pair  | expected (inf, -1, -1) | got (0.0000, 0, 0)
+FAIL T12c D12 n = 10 needs at most n(n-1)/2 distances  | expected <= n(n-1)/2 = 45 distances | got 100 distances
+FAIL T13  D13 y difference is part of the distance  | expected (0.2010, 0, 2) | got (0.0000, 0, 2)
+FAIL T14  D14 both pair indices updated together  | expected (0.0100, 0, 1) | got (0.0000, 0, 2)
+FAIL G01  -   sort 300 random alerts == reference  | expected == sorted(key) | got 296/300 positions differ
+PASS G02  -   sort an empty and a one-alert batch
+FAIL G03  -   sort an already triaged queue: unchanged  | expected order unchanged | got changed
+FAIL G04  -   search returns the FIRST duplicate  | expected index 1 (first) | got index -1
+PASS G05  -   search for an absent id returns -1
+FAIL G06  -   200 random look-ups == reference  | expected 200/200 agree | got 43/200 agree
+FAIL G07  -   overlapping matches are all reported  | expected [0, 1, 2] | got [0, 1]
+PASS G08  -   signature longer than the message
+PASS G09  -   5 signatures on a 300-alert log == ref
+PASS G10  -   matching is case-sensitive
+FAIL G11  -   closest pair of 300 alerts == reference  | expected (0.0005, 0, 2) | got (0.0000, 0, 299)
+FAIL G12  -   exact duplicate alerts -> distance 0  | expected (0.0000, 0, 2) | got (0.0000, 0, 3)
+PASS G13  -   sort is stable for identical keys
+RESULT: 6/31 tests passed (original_alert_triage)
+
+=== corrected_alert_triage.py ==========================================================
+PASS T01  D1  sort leaves the caller's list in arrival order
+PASS T02  D2  sort: critical alert arriving last goes first
+PASS T03  D3  sort: equal severity -> oldest first
+PASS T04  D4  sort: early exit on a nearly sorted queue
+PASS T05  D5  search finds the alert at index 0
+PASS T06  D6  search with an equal but new id string
+PASS T07  D7  search continues past the first mismatch
+PASS T07b D7  search in an empty batch returns -1
+PASS T08  D8  signature at the very end of the message
+PASS T08b D8  message equal to the signature
+PASS T09  D9  early exit on mismatch (char comparisons)
+PASS T10  D10 empty signature matches nothing
+PASS T11  D11 closest pair of an empty batch
+PASS T12  D12 two alerts -> the pair (0, 1)
+PASS T12b D12 single alert -> no pair
+PASS T12c D12 n = 10 needs at most n(n-1)/2 distances
+PASS T13  D13 y difference is part of the distance
+PASS T14  D14 both pair indices updated together
+PASS G01  -   sort 300 random alerts == reference
+PASS G02  -   sort an empty and a one-alert batch
+PASS G03  -   sort an already triaged queue: unchanged
+PASS G04  -   search returns the FIRST duplicate
+PASS G05  -   search for an absent id returns -1
+PASS G06  -   200 random look-ups == reference
+PASS G07  -   overlapping matches are all reported
+PASS G08  -   signature longer than the message
+PASS G09  -   5 signatures on a 300-alert log == ref
+PASS G10  -   matching is case-sensitive
+PASS G11  -   closest pair of 300 alerts == reference
+PASS G12  -   exact duplicate alerts -> distance 0
+PASS G13  -   sort is stable for identical keys
+RESULT: 31/31 tests passed (corrected_alert_triage)
+
+=== optimised_alert_triage.py ==========================================================
+PASS T01  D1  sort leaves the caller's list in arrival order
+PASS T02  D2  sort: critical alert arriving last goes first
+PASS T03  D3  sort: equal severity -> oldest first
+PASS T04  D4  sort: early exit on a nearly sorted queue
+PASS T05  D5  search finds the alert at index 0
+PASS T06  D6  search with an equal but new id string
+PASS T07  D7  search continues past the first mismatch
+PASS T07b D7  search in an empty batch returns -1
+PASS T08  D8  signature at the very end of the message
+PASS T08b D8  message equal to the signature
+PASS T09  D9  early exit on mismatch (char comparisons)
+PASS T10  D10 empty signature matches nothing
+PASS T11  D11 closest pair of an empty batch
+PASS T12  D12 two alerts -> the pair (0, 1)
+PASS T12b D12 single alert -> no pair
+PASS T12c D12 n = 10 needs at most n(n-1)/2 distances
+PASS T13  D13 y difference is part of the distance
+PASS T14  D14 both pair indices updated together
+PASS G01  -   sort 300 random alerts == reference
+PASS G02  -   sort an empty and a one-alert batch
+PASS G03  -   sort an already triaged queue: unchanged
+PASS G04  -   search returns the FIRST duplicate
+PASS G05  -   search for an absent id returns -1
+PASS G06  -   200 random look-ups == reference
+PASS G07  -   overlapping matches are all reported
+PASS G08  -   signature longer than the message
+PASS G09  -   5 signatures on a 300-alert log == ref
+PASS G10  -   matching is case-sensitive
+PASS G11  -   closest pair of 300 alerts == reference
+PASS G12  -   exact duplicate alerts -> distance 0
+PASS G13  -   sort is stable for identical keys
+PASS O01  -   AlertIndex look-ups == reference
+PASS O02  -   sentinel search restores the caller's list
+PASS O03  -   KMP matcher == reference (10 cases)
+PASS O04  -   x-sweep closest pair == reference
+PASS O05  -   Horspool on adversarial texts
+PASS O06  -   divide & conquer on a same-x batch
+RESULT: 37/37 tests passed (optimised_alert_triage)
+
+SUMMARY
+  original_alert_triage     6/31 passed  <- defects reproduced (expected)
+  corrected_alert_triage   31/31 passed
+  optimised_alert_triage   37/37 passed
+  defect table written to ..\Report\tables\defect_tests.csv

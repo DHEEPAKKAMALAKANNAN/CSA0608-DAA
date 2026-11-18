@@ -1,0 +1,99 @@
+--- original_alert_triage.py
++++ corrected_alert_triage.py
+@@ -1,6 +1,6 @@
+ """
+-SentinelOps SOC Alert-Triage Module - version 0.9 (ORIGINAL, as handed over for review)
+-=======================================================================================
++SentinelOps SOC Alert-Triage Module - version 1.0 (CORRECTED)
++=============================================================
+ The Security Operations Centre (SOC) receives a stream of alerts from the SIEM.  Before an
+ analyst picks up a shift's batch of alerts, this module runs four brute-force triage steps:
+ 
+@@ -15,7 +15,8 @@
+                                        correlate near-duplicate alerts; (inf, -1, -1) if n < 2
+ 
+ Every function updates COUNTERS so the SOC dashboard can show how much work each step costs.
+-NOTE: reconstructed faulty program for the CSA06 CO2 debugging task - it contains defects.
++CORRECTED version: the original program debugged with 14 minimal line-level fixes, each marked
++'# FIX Dn' (n = defect number in the report).  The structure and algorithms are unchanged.
+ """
+ import math
+ 
+@@ -51,16 +52,16 @@
+     """True if alert a must be triaged before alert b."""
+     if a.severity != b.severity:
+         return a.severity > b.severity            # higher severity first
+-    return a.timestamp > b.timestamp              # same severity: older alert first
++    return a.timestamp < b.timestamp              # FIX D3: '<' puts the older alert first
+ 
+ 
+ def sort_alerts(alerts):
+     """Return the alerts ordered by severity (desc) then timestamp (asc) using bubble sort."""
+-    ordered = alerts
++    ordered = list(alerts)                        # FIX D1: sort a copy, not the caller's list
+     n = len(ordered)
+-    swapped = False
+     for i in range(n - 1):
+-        for j in range(n - i - 2):
++        swapped = False                           # FIX D4: reset the flag at every pass
++        for j in range(n - i - 1):                # FIX D2: bound was n-i-2 (last pair skipped)
+             COUNTERS["sort_comparisons"] += 1
+             if _comes_before(ordered[j + 1], ordered[j]):
+                 ordered[j], ordered[j + 1] = ordered[j + 1], ordered[j]
+@@ -74,12 +75,11 @@
+ # ------------------------------------------------------------------ 2. sequential search
+ def find_alert(alerts, alert_id):
+     """Return the index of the first alert whose id equals alert_id, or -1 if there is none."""
+-    for i in range(1, len(alerts)):
++    for i in range(len(alerts)):                  # FIX D5: start at index 0, not 1
+         COUNTERS["search_comparisons"] += 1
+-        if alerts[i].alert_id is alert_id:
++        if alerts[i].alert_id == alert_id:        # FIX D6: compare values (==), not identity
+             return i
+-        else:
+-            return -1
++    return -1                                     # FIX D7: 'absent' only after the full scan
+ 
+ 
+ # ------------------------------------------------------------------ 3. brute-force string matching
+@@ -87,15 +87,16 @@
+     """Return every position where pattern occurs in text (brute force, overlaps included)."""
+     n = len(text)
+     m = len(pattern)
+-    if m > n:                                     # signature longer than the message
++    if m == 0 or m > n:                           # FIX D10: an empty signature matches nothing
+         return []
+     positions = []
+-    for i in range(n - m):
++    for i in range(n - m + 1):                    # FIX D8: include the last alignment n-m
+         matched = True
+         for j in range(m):
+             COUNTERS["char_comparisons"] += 1
+             if text[i + j] != pattern[j]:
+                 matched = False
++                break                             # FIX D9: stop at the first mismatch
+         if matched:
+             positions.append(i)
+     return positions
+@@ -105,17 +106,17 @@
+ def closest_alert_pair(alerts):
+     """Return (distance, i, j), i < j, for the two alerts whose feature points are closest."""
+     n = len(alerts)
+-    best, best_i, best_j = 0.0, 0, 0
++    best, best_i, best_j = math.inf, -1, -1       # FIX D11: start with 'no pair found'
+     for i in range(n):
+-        for j in range(n):
++        for j in range(i + 1, n):                 # FIX D12: pairs i < j only (no self-pair)
+             COUNTERS["distance_computations"] += 1
+             dx = alerts[i].x - alerts[j].x
+-            dy = alerts[i].y - alerts[i].y
++            dy = alerts[i].y - alerts[j].y        # FIX D13: index typo, was alerts[i].y twice
+             d = math.sqrt(dx ** 2 + dy ** 2)
+             if d < best:
+                 best = d
+                 best_i = i
+-            best_j = j
++                best_j = j                        # FIX D14: update both indices together
+     return best, best_i, best_j
+ 
+ 
