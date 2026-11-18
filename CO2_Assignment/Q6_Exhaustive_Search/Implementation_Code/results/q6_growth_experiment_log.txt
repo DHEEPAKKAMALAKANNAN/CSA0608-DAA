@@ -1,0 +1,24 @@
+Q6 GROWTH - exhaustive search over all 2^n loading plans (prediction: candidates x2 per package)
+   n  candidates 2^n    feasible  bit checks n2^n  best value    DP   time (s)  x time/+2  pred 4(n+2)/n
+--------------------------------------------------------------------------------------------------------
+  10           1,024         309           10,240         320    ok      0.001                          
+  12           4,096       1,074           49,152         387    ok      0.003       4.54           4.80
+  14          16,384       4,127          229,376         518    ok      0.016       4.75           4.67
+  16          65,536      15,922        1,048,576         587    ok      0.075       4.71           4.57
+  18         262,144      61,514        4,718,592         733    ok      0.375       4.98           4.50
+  20       1,048,576     239,010       20,971,520         895    ok      1.520       4.06           4.44
+  22       4,194,304     840,327       92,274,688         672    ok      6.231       4.10           4.40
+candidates = 2^n and bit checks = n*2^n at every n: YES;  optimum = DP optimum at every n: YES
+
+Fit T(n) = c * n * 2^n over n >= 16: c = 67.8 ns per bit check  (= 1492 ns per candidate at n = 22)
+DEPLOYMENT  response time 1 s  ->  largest n = 19 packages (predicted 0.68 s; n = 20 would need 1.42 s)
+  direct check n = 19: 524,288 candidates, measured 0.69 s -> within the 1 s limit
+  direct check n = 20: 1,048,576 candidates, measured 1.46 s -> exceeds the 1 s limit
+Sensitivity (largest n for other budgets): 1 s -> n = 19;  10 s -> n = 22;  60 s -> n = 25;  3600 s -> n = 30
+Projection of T(n) = c n 2^n:
+   n = 25:             33,554,432 candidates -> 56.88 s
+   n = 30:          1,073,741,824 candidates -> 36.4 min
+   n = 40:      1,099,511,627,776 candidates -> 34.5 days
+   n = 50:  1,125,899,906,842,624 candidates -> 121.0 years
+CSV  : results/q6_growth.csv, results/q6_deployment.csv   datasets: results/datasets/q6_manifest_n*.csv
+Graph: ../Output_Screenshots/q6_growth.png

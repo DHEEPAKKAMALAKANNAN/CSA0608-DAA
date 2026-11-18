@@ -1,0 +1,13 @@
+n,condition,m,predicted,observed,per_shift,matches,time_ms
+1000,C1 little work,38,963,963,1.0,0,0.14
+1000,C2 engineered worst case,38,36594,36594,38.0,0,4.12
+1000,C3 own: shared prefix,38,971,1124,1.1672,0,0.15
+10000,C1 little work,38,9963,9963,1.0,0,1.47
+10000,C2 engineered worst case,38,378594,378594,38.0,0,37.85
+10000,C3 own: shared prefix,38,10025,11008,1.1049,1,0.99
+100000,C1 little work,38,99963,99963,1.0,0,9.02
+100000,C2 engineered worst case,38,3798594,3798594,38.0,0,334.2
+100000,C3 own: shared prefix,38,100563,111533,1.1157,4,14.58
+1000000,C1 little work,38,999963,999963,1.0,0,107.59
+1000000,C2 engineered worst case,38,37998594,37998594,38.0,0,3326.89
+1000000,C3 own: shared prefix,38,1005845,1113248,1.1133,68,146.2

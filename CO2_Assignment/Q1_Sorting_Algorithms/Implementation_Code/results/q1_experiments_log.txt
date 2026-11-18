@@ -1,0 +1,71 @@
+
+n = 100   (n(n-1)/2 = 4,950;  time = median of 3 run(s))
+Dataset          Algorithm   Comparisons  Swaps/Shifts      Writes  Passes   Time ms  Inversions  Pred=Obs
+----------------------------------------------------------------------------------------------------------
+D1 Reverse       Selection         4,950            50         100      99      0.45        4950  yes
+                 Bubble            4,950         4,950       9,900      99      0.97              yes
+                 Insertion         4,950         4,950       5,049      99      0.79              yes
+D2 95%+5% batch  Selection         4,950            90         180      99      0.26         242  yes
+                 Bubble            4,884           242         484      88      0.30              yes
+                 Insertion           341           242         246      99      0.03              yes
+D3 Urgent last   Selection         4,950            99         198      99      0.44          99  yes
+                 Bubble            4,950            99         198      99      0.50              yes
+                 Insertion           197            99         100      99      0.03              yes
+R Random         Selection         4,950            97         194      99      0.27        2433  yes
+                 Bubble            4,895         2,433       4,866      89      0.43              yes
+                 Insertion         2,526         2,433       2,531      99      0.23              yes
+S Sorted         Selection         4,950             0           0      99      0.26           0  yes
+                 Bubble               99             0           0       1      0.01              yes
+                 Insertion            99             0           0      99      0.01              yes
+E2 Few unique    Selection         4,950            79         158      99      0.46        2464  yes
+                 Bubble            4,697         2,464       4,928      77      0.69              yes
+                 Insertion         2,562         2,464       2,545      99      0.23              yes
+
+n = 1,000   (n(n-1)/2 = 499,500;  time = median of 3 run(s))
+Dataset          Algorithm   Comparisons  Swaps/Shifts      Writes  Passes   Time ms  Inversions  Pred=Obs
+----------------------------------------------------------------------------------------------------------
+D1 Reverse       Selection       499,500           500       1,000     999     45.13      499500  yes
+                 Bubble          499,500       499,500     999,000     999     80.12              yes
+                 Insertion       499,500       499,500     500,499     999     45.14              yes
+D2 95%+5% batch  Selection       499,500           993       1,986     999     26.51       25011  yes
+                 Bubble          498,465        25,011      50,022     954     45.98              yes
+                 Insertion        26,010        25,011      25,061     999      3.09              yes
+D3 Urgent last   Selection       499,500           999       1,998     999     48.61         999  yes
+                 Bubble          499,500           999       1,998     999     51.41              yes
+                 Insertion         1,997           999       1,000     999      0.36              yes
+R Random         Selection       499,500           992       1,984     999     26.91      246626  yes
+                 Bubble          498,797       246,626     493,252     962     66.68              yes
+                 Insertion       247,617       246,626     247,616     999     39.13              yes
+S Sorted         Selection       499,500             0           0     999     42.87           0  yes
+                 Bubble              999             0           0       1      0.11              yes
+                 Insertion           999             0           0     999      0.18              yes
+E2 Few unique    Selection       499,500           793       1,586     999     29.32      196858  yes
+                 Bubble          473,849       196,858     393,716     773     69.96              yes
+                 Insertion       197,856       196,858     197,646     999     30.42              yes
+
+n = 5,000   (n(n-1)/2 = 12,497,500;  time = median of 1 run(s))
+Dataset          Algorithm   Comparisons  Swaps/Shifts      Writes  Passes   Time ms  Inversions  Pred=Obs
+----------------------------------------------------------------------------------------------------------
+D1 Reverse       Selection    12,497,500         2,500       5,000   4,999    967.12    12497500  yes
+                 Bubble       12,497,500    12,497,500  24,995,000   4,999   2137.72              yes
+                 Insertion    12,497,500    12,497,500  12,502,499   4,999   1567.74              yes
+D2 95%+5% batch  Selection    12,497,500         4,996       9,992   4,999    860.95      623290  yes
+                 Bubble       12,495,670       623,290   1,246,580   4,939   1333.72              yes
+                 Insertion       628,289       623,290     623,540   4,999     93.31              yes
+D3 Urgent last   Selection    12,497,500         4,999       9,998   4,999   1226.47        4999  yes
+                 Bubble       12,497,500         4,999       9,998   4,999   1271.49              yes
+                 Insertion         9,997         4,999       5,000   4,999      1.96              yes
+R Random         Selection    12,497,500         4,989       9,978   4,999    686.76     6319769  yes
+                 Bubble       12,495,085     6,319,769  12,639,538   4,930   1394.94              yes
+                 Insertion     6,324,763     6,319,769   6,324,761   4,999    665.43              yes
+S Sorted         Selection    12,497,500             0           0   4,999    698.20           0  yes
+                 Bubble            4,999             0           0       1      0.61              yes
+                 Insertion         4,999             0           0   4,999      0.96              yes
+E2 Few unique    Selection    12,497,500         3,954       7,908   4,999    878.26     5022308  yes
+                 Bubble       12,050,515     5,022,308  10,044,616   4,054   1280.25              yes
+                 Insertion     5,027,305     5,022,308   5,026,264   4,999    520.01              yes
+
+All results sorted correctly and every counter equals its exact prediction: YES
+CSV  : results\q1_results.csv
+Graph: ..\Output_Screenshots\q1_counts_by_dataset_n5000.png
+Graph: ..\Output_Screenshots\q1_comparisons_growth.png

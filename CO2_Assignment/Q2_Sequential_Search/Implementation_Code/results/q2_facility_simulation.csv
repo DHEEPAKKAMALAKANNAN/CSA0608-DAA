@@ -1,0 +1,3 @@
+scenario,active_records,events,searches,seq_comparisons,seq_lookup,seq_return,seq_reconcile,hash_probes,seq_hour_s,seq_reconcile_s,hash_hour_s,hash_reconcile_s,dict_bytes,answers_identical,worst_lookup_ms,burst_lookups_per_s,burst_cpu_share_model,burst_cpu_share_measured,hour_cpu_share
+1 hangar,500,2900,2300,710337,352643,162493,195201,2900,0.0314,0.0131,0.0006,0.0001,26032,True,0.039,8.3,0.00032,0.00022,9e-06
+20 facilities,10000,58000,46000,268702058,131891176,59374579,77436303,58000,20.1252,8.5052,0.0185,0.0043,415152,True,0.78,166.7,0.12995,0.14175,0.00559

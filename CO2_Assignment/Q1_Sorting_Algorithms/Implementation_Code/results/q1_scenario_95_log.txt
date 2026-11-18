@@ -1,0 +1,24 @@
+Q1 DESIGN DECISION - n = 5,000 orders; selection sort always needs n(n-1)/2 = 12,497,500 comparisons
+
+(a) Sorted existing orders + batch of k NEW orders appended at the end
+condition              inversions |  Selection comp |  Bubble comp passes*      swaps |  Insertion comp     shifts | ok
+-----------------------------------------------------------------------------------------------------------------------
+k = 1 (0.02 %)              3,413 |      12,497,500 |   11,240,595   3,414      3,413 |           8,412      3,413 | yes
+k = 5 (0.10 %)             10,564 |      12,497,500 |   12,247,222   4,292     10,564 |          15,563     10,564 | yes
+k = 25 (0.50 %)            56,095 |      12,497,500 |   12,450,222   4,692     56,095 |          61,094     56,095 | yes
+k = 50 (1.00 %)           110,573 |      12,497,500 |   12,496,759   4,961    110,573 |         115,572    110,573 | yes
+k = 100 (2.00 %)          275,212 |      12,497,500 |   12,495,355   4,934    275,212 |         280,211    275,212 | yes
+k = 250 (5.00 %)          649,805 |      12,497,500 |   12,489,499   4,873    649,805 |         654,804    649,805 | yes
+k = 500 (10.00 %)       1,170,805 |      12,497,500 |   12,483,472   4,832  1,170,805 |       1,175,804  1,170,805 | yes
+
+(b) Local disorder: a fraction of orders displaced by at most 10 positions
+condition              inversions |  Selection comp |  Bubble comp passes*      swaps |  Insertion comp     shifts | ok
+-----------------------------------------------------------------------------------------------------------------------
+1 % moved <=10                284 |      12,497,500 |       69,895      14        284 |           5,283        284 | yes
+5 % moved <=10              1,295 |      12,497,500 |       94,810      19      1,295 |           6,294      1,295 | yes
+10 % moved <=10             2,462 |      12,497,500 |       89,829      18      2,462 |           7,461      2,462 | yes
+* passes = Bubble Sort passes actually executed (early-exit flag); ok = sorted and counts = prediction
+
+Execution time for the 5 % batch case (k = 250):  Selection 747 ms   Bubble 1,159 ms   Insertion 66 ms
+CSV  : results\q1_scenario_95.csv
+Graph: ..\Output_Screenshots\q1_scenario_95.png

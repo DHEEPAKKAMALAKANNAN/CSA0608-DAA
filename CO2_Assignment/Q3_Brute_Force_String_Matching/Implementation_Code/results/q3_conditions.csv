@@ -1,0 +1,4 @@
+condition,text,pattern,n,m,shifts,predicted,observed,per_shift,observed_over_predicted,matches,first_match,time_ms,shifts_cost_1,shifts_cost_2-9,shifts_cost_10-19,shifts_cost_20-37,shifts_cost_38
+C1 little work,auth log,#IOC:RANSOMWARE-SHADOWCOPY-DELETE-0x7F,100000,38,99963,99963,99963,1.0,1.0,0,-1,14.85,99963,0,0,0,0
+C2 engineered worst case,'A' * n,AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAB,100000,38,99963,3798594,3798594,38.0,1.0,0,-1,317.89,0,0,0,0,99963
+C3 own: shared prefix,auth log,Failed password for invalid user admin,100000,38,99963,100563,111533,1.1157,1.1091,4,4127,9.88,99373,145,0,441,4

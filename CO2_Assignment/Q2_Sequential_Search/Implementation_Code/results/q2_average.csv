@@ -1,0 +1,7 @@
+n,targets,mean_comparisons,predicted_(n+1)/2,ratio,ci95_half_width
+50,all positions,25.5,25.5,1.0,0.0
+500,all positions,250.5,250.5,1.0,0.0
+5000,all positions,2500.5,2500.5,1.0,0.0
+50000,2000 random,25037.06,25000.5,1.0015,624.7
+500000,200 random,251536.14,250000.5,1.0061,20506.8
+1000000,100 random,438738.64,500000.5,0.8775,54371.3

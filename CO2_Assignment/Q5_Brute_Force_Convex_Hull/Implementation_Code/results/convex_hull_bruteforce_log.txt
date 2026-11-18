@@ -1,0 +1,31 @@
+CORRECTNESS TESTS  (expected hull = hand result and/or independent monotone-chain oracle, CCW order)
+PASS  Q5 single station                 corners  1, expected  1 | early exit: same | test count: exact
+PASS  Q5 two stations                   corners  2, expected  2 | early exit: same | test count: exact
+PASS  Q5 duplicates of two stations     corners  2, expected  2 | early exit: same | test count: exact
+PASS  Q5 three collinear                corners  2, expected  2 | early exit: same | test count: exact
+PASS  Q5 ten stations on one line       corners  2, expected  2 | early exit: same | test count: exact
+PASS  Q5 triangle + interior point      corners  3, expected  3 | early exit: same | test count: exact
+PASS  Q5 square: collinear sides+centre corners  4, expected  4 | early exit: same | test count: exact
+PASS  Q5 config A (10 boundary + 30 in) corners 10, expected 10 | early exit: same | test count: exact
+PASS  Q5 config B (collinear + dups)    corners  4, expected  4 | early exit: same | test count: exact
+PASS  Q5 150 random grid sets (collinear/duplicate-heavy) equal the oracle
+RESULT: 10/10 tests passed
+
+CONFIG A - perimeter + interior stations: 40 stations, 0 duplicate(s) removed -> n = 40
+  candidate pairs C(n,2) = 780;  orientation tests = 29,640 (formula n(n-1)(n-2)/2 = 29,640);  with early rejection: 4,055
+  accepted edges = 10;  a naive one-side rule (collinear condition dropped) would accept 10
+  hull corners (counter-clockwise) = 10:
+     ( 9236, 1018)  (17013, 2866)  (18889, 6783)  (18843, 6931)  (17690, 8597)
+     (11508,10929)  ( 8590,10938)  ( 2061, 8356)  ( 4238, 2159)  ( 6000, 1521)
+  expected corners found: YES;  matches monotone-chain oracle: YES
+
+CONFIG B - collinear sides, vertical edges, duplicates, diagonal: 25 stations, 2 duplicate(s) removed -> n = 23
+  candidate pairs C(n,2) = 253;  orientation tests = 5,313 (formula n(n-1)(n-2)/2 = 5,313);  with early rejection: 676
+  accepted edges = 4;  a naive one-side rule (collinear condition dropped) would accept 40
+  hull corners (counter-clockwise) = 4:
+     (    0,    0)  ( 8000,    0)  ( 8000, 5000)  (    0, 5000)
+  stations ON the boundary but not corners (collinear): 12 -> (2000,0) (4000,0) (6000,0) (2000,5000) (4000,5000) ...
+  expected corners found: YES;  matches monotone-chain oracle: YES
+
+CSV  : results/q5_configs.csv  datasets: results/datasets/q5_config_A.csv, q5_config_B.csv
+Graph: ../Output_Screenshots/q5_hull_configs.png

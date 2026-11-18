@@ -1,0 +1,39 @@
+CORRECTNESS TESTS  (expected optimum from independent 0/1-knapsack DP; feasible count from itertools)
+PASS  Q6 designed n=5 instance optimum     expected 102 (hand + DP), actual 102 = P1+P3, 15 kg
+PASS  Q6 candidates generated = 2^n        expected 32, actual 32
+PASS  Q6 empty manifest                    expected value 0 (load nothing)
+PASS  Q6 nothing fits                      expected empty load, value 0
+PASS  Q6 everything fits                   expected value 15 (all)
+PASS  Q6 tie -> lighter load kept          expected weight 3 kg
+PASS  Q6 40 random manifests (n = 1..14)   optimum equals DP and decoded load is consistent
+PASS  Q6 40 random manifests: counters     feasible = itertools, generated = 2^n, checks = n*2^n
+RESULT: 8/8 tests passed
+
+SMALL INSTANCE - payload limit 15 kg
+   P1  Surgical kit         9 kg  value  61  (6.78 per kg)
+   P2  Water purification   5 kg  value  32  (6.40 per kg)
+   P3  Vaccine cold-box     6 kg  value  41  (6.83 per kg)
+   P4  Satellite phone      3 kg  value  18  (6.00 per kg)
+   P5  Infant formula       4 kg  value  28  (7.00 per kg)
+
+FULL ENUMERATION (bits shown P5..P1; '*' = new best feasible plan)
+ mask  bits   packages         kg  value  feasible  best           mask  bits   packages         kg  value  feasible  best
+    0  00000  (none)            0      0  yes         0*             16  10000  P5                4     28  yes       102 
+    1  00001  P1                9     61  yes        61*             17  10001  P1+P5            13     89  yes       102 
+    2  00010  P2                5     32  yes        61              18  10010  P2+P5             9     60  yes       102 
+    3  00011  P1+P2            14     93  yes        93*             19  10011  P1+P2+P5         18    121  NO        102 
+    4  00100  P3                6     41  yes        93              20  10100  P3+P5            10     69  yes       102 
+    5  00101  P1+P3            15    102  yes       102*             21  10101  P1+P3+P5         19    130  NO        102 
+    6  00110  P2+P3            11     73  yes       102              22  10110  P2+P3+P5         15    101  yes       102 
+    7  00111  P1+P2+P3         20    134  NO        102              23  10111  P1+P2+P3+P5      24    162  NO        102 
+    8  01000  P4                3     18  yes       102              24  11000  P4+P5             7     46  yes       102 
+    9  01001  P1+P4            12     79  yes       102              25  11001  P1+P4+P5         16    107  NO        102 
+   10  01010  P2+P4             8     50  yes       102              26  11010  P2+P4+P5         12     78  yes       102 
+   11  01011  P1+P2+P4         17    111  NO        102              27  11011  P1+P2+P4+P5      21    139  NO        102 
+   12  01100  P3+P4             9     59  yes       102              28  11100  P3+P4+P5         13     87  yes       102 
+   13  01101  P1+P3+P4         18    120  NO        102              29  11101  P1+P3+P4+P5      22    148  NO        102 
+   14  01110  P2+P3+P4         14     91  yes       102              30  11110  P2+P3+P4+P5      18    119  NO        102 
+   15  01111  P1+P2+P3+P4      23    152  NO        102              31  11111  P1+P2+P3+P4+P5   27    180  NO        102 
+
+OPTIMUM: load P1 + P3 = 15 kg, value 102   [generated 32, feasible 20, bit checks 160, best-so-far updates 4]
+Check  : DP optimum = 102;  greedy by value/kg loads P2 + P3 + P5 = 15 kg, value 101 (misses the optimum by 1)

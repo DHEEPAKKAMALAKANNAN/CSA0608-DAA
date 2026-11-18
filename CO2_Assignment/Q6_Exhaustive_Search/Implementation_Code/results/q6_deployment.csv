@@ -1,0 +1,11 @@
+n,kind,candidates,time_s
+19,direct check,524288,0.688
+20,direct check,1048576,1.459
+19,largest n for 1 s,524288,0.675
+22,largest n for 10 s,4194304,6.257
+25,largest n for 60 s,33554432,56.879
+30,largest n for 3600 s,1073741824,2184.148
+25,projection,33554432,56.9
+30,projection,1073741824,2184.1
+40,projection,1099511627776,2982089.4
+50,projection,1125899906842624,3817074434.1
