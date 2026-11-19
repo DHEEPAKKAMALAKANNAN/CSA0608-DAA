@@ -1,0 +1,4 @@
+input,method,comparisons,comparisons_per_n,rounds_n_ge_100,poor_rounds,max_kept_fraction,longest_poor_streak,correct
+sorted batch,QuickSelect first pivot,74820922,7481.34,4986,4985,0.9999,4985,True
+sorted batch,Median of Medians g=5,72902,7.29,7,0,0.5065,0,True
+sorted batch,QuickSelect random pivot (seed 1),48790,4.88,8,0,0.8891,0,True

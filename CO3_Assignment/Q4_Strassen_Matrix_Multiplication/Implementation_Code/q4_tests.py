@@ -84,6 +84,41 @@ def main():
     check("cutoff >= n gives exactly the conventional counts (n = 50, cutoff 64)",
           ops.mults == 50 ** 3 and ops.adds == 50 * 50 * 49)
 
+    # Student B: the algebraic identities must hold for NON-commuting blocks (blocks are matrices, not numbers)
+    identities_ok = True
+    for _ in range(50):
+        blocks = [random_matrix(3, rng, -9, 9) for _ in range(8)]
+        a11, a12, a21, a22, b11, b12, b21, b22 = blocks
+        mul = lambda X, Y: conventional_multiply(X, Y, OpCounter())          # noqa: E731
+        add = lambda X, Y: [[x + y for x, y in zip(r, s)] for r, s in zip(X, Y)]    # noqa: E731
+        sub = lambda X, Y: [[x - y for x, y in zip(r, s)] for r, s in zip(X, Y)]    # noqa: E731
+        m1 = mul(add(a11, a22), add(b11, b22))
+        m2, m3 = mul(add(a21, a22), b11), mul(a11, sub(b12, b22))
+        m4, m5 = mul(a22, sub(b21, b11)), mul(add(a11, a12), b22)
+        m6, m7 = mul(sub(a21, a11), add(b11, b12)), mul(sub(a12, a22), add(b21, b22))
+        identities_ok &= add(sub(add(m1, m4), m5), m7) == add(mul(a11, b11), mul(a12, b21))
+        identities_ok &= add(m3, m5) == add(mul(a11, b12), mul(a12, b22))
+        identities_ok &= add(m2, m4) == add(mul(a21, b11), mul(a22, b21))
+        identities_ok &= add(add(sub(m1, m2), m3), m6) == add(mul(a21, b12), mul(a22, b22))
+    check("Strassen identities C11..C22 equal the 8 block products for non-commuting 3 x 3 blocks (50 trials)",
+          identities_ok)
+
+    # Student A: the overhead profiler (q4_overhead.py) must not change results and must restore the module
+    import q4_overhead
+    import q4_strassen
+    original_add = q4_strassen.mat_add
+    X, Y = random_matrix(64, rng), random_matrix(64, rng)
+    ops = OpCounter()
+    with q4_overhead.Profiler() as prof:
+        C = q4_strassen.strassen_multiply(X, Y, ops, 8)
+    check("profiler: wrapped Strassen (n = 64, c = 8) equals numpy and the module functions are restored",
+          C == numpy_product(X, Y) and q4_strassen.mat_add is original_add)
+    check("profiler counts: 18 block additions per splitting call (18 x 57 = 1,026) and 7^3 = 343 base-case calls",
+          prof.calls["mat_add"] + prof.calls["mat_sub"] == 18 * 57 and prof.calls["conventional_multiply"] == 343
+          and ops.calls == 400)
+    check("temporary-matrix count formula: n = 64, c = 8 -> 27 x 57 + 343 = 1,882",
+          q4_overhead.temporaries(64, 8) == 27 * 57 + 343)
+
     passed = sum(RESULTS)
     print("-" * 90)
     print(f"RESULT: {passed}/{len(RESULTS)} tests passed")

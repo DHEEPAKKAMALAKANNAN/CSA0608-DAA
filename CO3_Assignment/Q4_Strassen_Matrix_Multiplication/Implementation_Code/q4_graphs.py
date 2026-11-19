@@ -4,7 +4,10 @@
   results/q4_cutoff.png         cutoff sweep at n = 128 and 256: total operations and time against the cutoff
   results/q4_padding.png        static vs dynamic padding for n = 100, 129, 200 (operations and time)
   results/q4_decomposition.png  block decomposition (7 products) and the 7-way recursion tree with level sums
-Run:  py -3 q4_graphs.py   (after q4_experiments.py)
+  results/q4_block_padding.png  conventional block decomposition (8 products) and static vs dynamic padding
+  results/q4_timing.png         repeated timing and practical crossover (from q4_overhead.py)
+  results/q4_overhead.png       time shares of one Strassen product (from q4_overhead.py)
+Run:  py -3 q4_graphs.py   (after q4_experiments.py and q4_overhead.py)
 """
 import csv
 import math
@@ -196,11 +199,140 @@ def plot_decomposition():
     save(fig, "q4_decomposition.png")
 
 
+def plot_block_and_padding():
+    """Student B: the conventional 2 x 2 block decomposition with its 8 block products (left) and the two padding
+    policies for n = 100 (right): static padding to 128 vs dynamic padding of odd sizes only."""
+    fig = plt.figure(figsize=(15, 6.2))
+    ax = fig.add_axes([0.0, 0.0, 0.47, 0.92])
+    ax.axis("off")
+    ax.set_xlim(0, 10)
+    ax.set_ylim(0, 10)
+
+    def block_matrix(x0, y0, name, fc):
+        for r in range(2):
+            for c in range(2):
+                ax.add_patch(Rectangle((x0 + c * 1.1, y0 + (1 - r) * 1.1), 1.1, 1.1, fc=fc, ec="0.3"))
+                ax.text(x0 + c * 1.1 + 0.55, y0 + (1 - r) * 1.1 + 0.55, f"{name}{r + 1}{c + 1}", ha="center",
+                        va="center", fontsize=10)
+
+    block_matrix(0.3, 7.2, "A", "#dbe9f6")
+    ax.text(2.85, 8.3, "×", fontsize=16, ha="center", va="center")
+    block_matrix(3.3, 7.2, "B", "#e5f5e0")
+    ax.text(5.85, 8.3, "=", fontsize=16, ha="center", va="center")
+    block_matrix(6.3, 7.2, "C", "#fdebd0")
+    lines = ["Conventional block decomposition (each block (n/2) × (n/2)):",
+             "  C11 = A11·B11 + A12·B21      (products 1, 2)",
+             "  C12 = A11·B12 + A12·B22      (products 3, 4)",
+             "  C21 = A21·B11 + A22·B21      (products 5, 6)",
+             "  C22 = A21·B12 + A22·B22      (products 7, 8)",
+             "8 half-size products + 4 block additions:",
+             "  T(n) = 8T(n/2) + Θ(n²) = Θ(n^log₂8) = Θ(n³)",
+             "Strassen: 7 products + 18 block additions:",
+             "  T(n) = 7T(n/2) + Θ(n²) = Θ(n^log₂7) ≈ Θ(n^2.807)"]
+    for i, line in enumerate(lines):
+        ax.text(0.3, 6.1 - i * 0.62, line, fontsize=9.5, family="monospace",
+                fontweight="bold" if line.endswith(":") and not line.startswith(" ") else "normal")
+
+    ax = fig.add_axes([0.5, 0.0, 0.5, 0.92])
+    ax.axis("off")
+    ax.set_xlim(0, 10)
+    ax.set_ylim(0, 10)
+    ax.text(2.4, 9.5, "Static padding (once, to 2^k)", ha="center", fontsize=10, fontweight="bold")
+    ax.text(7.4, 9.5, "Dynamic padding (only odd sizes)", ha="center", fontsize=10, fontweight="bold")
+    static = ["100 → pad to 128", "64", "32", "16", "8 (cutoff)"]
+    dynamic = ["100", "50", "25 → pad to 26", "13 → pad to 14", "7 → pad to 8 (cutoff)"]
+    for i, (s, d) in enumerate(zip(static, dynamic)):
+        y = 8.5 - i * 1.55
+        ax.text(2.4, y, f"level {i}: {s}", ha="center", va="center", fontsize=9,
+                bbox=dict(boxstyle="round", fc="#fde0dd" if i == 0 else "#f0f0f0"))
+        ax.text(7.4, y, f"level {i}: {d}", ha="center", va="center", fontsize=9,
+                bbox=dict(boxstyle="round", fc="#fde0dd" if "pad" in d else "#f0f0f0"))
+        if i < 4:
+            ax.annotate("", xy=(2.4, y - 1.15), xytext=(2.4, y - 0.35), arrowprops=dict(arrowstyle="-|>", color="0.4"))
+            ax.annotate("", xy=(7.4, y - 1.15), xytext=(7.4, y - 0.35), arrowprops=dict(arrowstyle="-|>", color="0.4"))
+    ax.text(2.4, 0.75, "work of a 128-problem: (128/100)^2.807 ≈ 2.0×\n"
+            "worst case n = 129 → 256: (256/129)^2.807 ≈ 6.9×", ha="center", fontsize=8.5, color="0.2")
+    ax.text(7.4, 0.75, "sizes stay ≈ n/2^i; each padded node adds one zero\n"
+            "row + column (2m + 1 extra entries for an odd m × m matrix)", ha="center", fontsize=8.5, color="0.2")
+    fig.suptitle("Q4 – Conventional block decomposition (8 products) and the two padding policies (n = 100, cutoff 8)",
+                 fontsize=12)
+    save(fig, "q4_block_padding.png")
+
+
+def plot_timing(rows):
+    """E5: median time (with min-max bars) against n for conventional and hybrid Strassen; right: gains."""
+    fig, (ax1, ax2) = plt.subplots(1, 2, figsize=(13, 4.6))
+    styles = {"conventional": ("o-", C_CONV), "Strassen c=32": ("s-", C_STR), "Strassen c=64": ("^-", "tab:green")}
+    for method, (style, colour) in styles.items():
+        sub = [r for r in rows if r["method"] == method]
+        n = [r["n"] for r in sub]
+        med = [r["median_ms"] / 1e3 for r in sub]
+        err = [[(r["median_ms"] - r["min_ms"]) / 1e3 for r in sub],
+               [(r["max_ms"] - r["median_ms"]) / 1e3 for r in sub]]
+        ax1.errorbar(n, med, yerr=err, fmt=style, color=colour, capsize=3, label=method)
+        if method != "conventional":
+            ax2.plot(n, [r["time_gain"] for r in sub], style, color=colour, label=f"{method}: time gain")
+            ax2.plot(n, [r["ops_gain"] for r in sub], style[0] + ":", color=colour, alpha=0.6,
+                     label=f"{method}: operation gain")
+    conv = [r for r in rows if r["method"] == "conventional"]
+    grid = [c["n"] for c in conv]
+    ref = conv[0]["median_ms"] / 1e3
+    ax1.plot(grid, [ref * (x / grid[0]) ** 3 for x in grid], "--", color="0.5", lw=1, label="n³ (scaled to n = 64)")
+    ax1.set_xscale("log", base=2)
+    ax1.set_yscale("log")
+    ax1.set_title("Median time of 5 runs (3 for n ≥ 384), bars = min–max")
+    ax1.set_ylabel("time (s)")
+    ax2.axhline(1.0, color="0.3", lw=1)
+    ax2.text(grid[0], 1.01, " break-even (Strassen better above the line)", fontsize=8, color="0.3", va="bottom")
+    ax2.set_xscale("log", base=2)
+    ax2.set_title("Gain = conventional ÷ Strassen")
+    ax2.set_ylabel("gain (×)")
+    for ax in (ax1, ax2):
+        ax.set_xticks(grid)
+        ax.set_xticklabels([str(x) for x in grid])
+        ax.set_xlabel("matrix size n (zones)")
+        ax.grid(True, which="both", alpha=0.3)
+        ax.legend(fontsize=8)
+    fig.suptitle("Q4 – Practical crossover: repeated timing of conventional vs hybrid Strassen (dynamic padding)",
+                 fontsize=11)
+    save(fig, "q4_timing.png")
+
+
+def plot_overhead(rows):
+    """E6: stacked bars of the time shares of one Strassen product."""
+    cats = [("pct_add_sub", "block additions/subtractions", "#6baed6"),
+            ("pct_split_join", "split / join copying", "#fdae6b"),
+            ("pct_pad_unpad", "padding / unpadding", "#e377c2"),
+            ("pct_base case", "base-case conventional products", "#74c476"),
+            ("pct_recursion_rest", "recursion, calls, bookkeeping", "#bdbdbd")]
+    labels = [f"n = {r['n']}\nc = {r['cutoff']}" for r in rows]
+    fig, ax = plt.subplots(figsize=(11, 4.6))
+    bottom = [0.0] * len(rows)
+    for key, label, colour in cats:
+        vals = [r[key] for r in rows]
+        ax.bar(labels, vals, bottom=bottom, color=colour, label=label, edgecolor="0.3", lw=0.5)
+        for i, v in enumerate(vals):
+            if v >= 6:
+                ax.text(i, bottom[i] + v / 2, f"{v:.0f}%", ha="center", va="center", fontsize=8)
+        bottom = [b + v for b, v in zip(bottom, vals)]
+    ax.set_ylim(0, 100)
+    ax.set_ylabel("share of the time of one product (%)")
+    ax.set_xlabel("matrix size n and cutoff c")
+    ax.set_title("Q4 – Where Strassen's time goes (helpers wrapped with timers)")
+    ax.grid(True, axis="y", alpha=0.3)
+    ax.legend(fontsize=8, loc="upper left", bbox_to_anchor=(1.0, 1.0))
+    save(fig, "q4_overhead.png")
+
+
 def main():
     plot_growth(read_csv("q4_growth.csv"), read_csv("q4_crossover_formula.csv"))
     plot_cutoff(read_csv("q4_cutoff.csv"))
     plot_padding(read_csv("q4_padding.csv"))
     plot_decomposition()
+    plot_block_and_padding()
+    if os.path.exists(os.path.join(RESULTS, "q4_timing.csv")):
+        plot_timing(read_csv("q4_timing.csv"))
+        plot_overhead(read_csv("q4_overhead.csv"))
 
 
 if __name__ == "__main__":

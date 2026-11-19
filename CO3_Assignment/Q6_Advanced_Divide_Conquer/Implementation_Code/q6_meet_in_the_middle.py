@@ -13,6 +13,10 @@ Methods (pure Python, operations counted):
                best = max(a + b).  Time Theta(n * 2^(n/2)), memory Theta(2^(n/2)).
       matcher="two_pointer" replaces the binary searches by one linear scan (A ascending, B descending): the
       combine step becomes Theta(2^(n/2)) - an improvement that the sorted lists make possible.
+  best_fill_mitm_split   time-memory trade-off variant: store the sorted sums of only the first k parcels (2^k sums)
+                         and enumerate the other n - k parcels (Gray code), binary-searching each of their 2^(n-k)
+                         totals in the stored list: memory Theta(2^k), time Theta(2^k + k * 2^(n-k)).
+                         k = 0 is brute force, k = n/2 is the balanced split.
   best_fill_dp           reference: dynamic programming over the capacity (bitset of reachable totals).
 
 Run:  py -3 q6_meet_in_the_middle.py    (demo + experiments; writes ../Meet_in_the_Middle/results/*.csv)
@@ -130,6 +134,55 @@ def best_fill_mitm(weights, W, counter, matcher="binary"):
                 j -= 1
         counter.scan_steps += steps
     return best, ma | (mb << m)
+
+
+def best_fill_mitm_split(weights, W, k, counter):
+    """Best total <= W storing only the 2^k sorted subset sums of weights[:k] (time-memory trade-off).
+
+    The remaining n - k parcels are enumerated one subset at a time in Gray-code order (one addition each); for every
+    feasible total t the largest stored sum <= W - t is found by binary search. Returns the best total."""
+    A, _ = sorted_subset_sums(weights[:k], counter)       # the only list kept in memory: 2^k sums
+    rest = weights[k:]
+    pos, probes = bisect_right_count(A, W, None)           # the empty subset of the rest: best stored sum <= W
+    best, total, mask, na = A[pos], 0, 0, len(A)           # A[0] = 0 <= W, so pos >= 0
+    for i in range(1, 1 << len(rest)):
+        bit = (i & -i).bit_length() - 1
+        if mask >> bit & 1:
+            total -= rest[bit]
+        else:
+            total += rest[bit]
+        mask ^= 1 << bit
+        if total <= W:
+            lo, hi, pos = 0, na - 1, -1                   # largest stored sum <= W - total
+            target = W - total
+            while lo <= hi:
+                mid = (lo + hi) >> 1
+                probes += 1
+                if A[mid] <= target:
+                    pos, lo = mid, mid + 1
+                else:
+                    hi = mid - 1
+            if total + A[pos] > best:
+                best = total + A[pos]
+    counter.subsets += 1 << len(rest)
+    counter.additions += (1 << len(rest)) - 1
+    counter.probes += probes
+    return best
+
+
+def bisect_right_count(A, target, counter):
+    """(largest index j with A[j] <= target, probes used) by binary search on the ascending list A."""
+    lo, hi, pos, probes = 0, len(A) - 1, -1, 0
+    while lo <= hi:
+        mid = (lo + hi) >> 1
+        probes += 1
+        if A[mid] <= target:
+            pos, lo = mid, mid + 1
+        else:
+            hi = mid - 1
+    if counter is not None:
+        counter.probes += probes
+    return pos, probes
 
 
 def best_fill_dp(weights, W):

@@ -4,7 +4,10 @@
   results/q3_time.png            execution time against n with scaled n^2 and n^log2(3) overlays
   results/q3_threshold.png       hybrid threshold sweep at 617 and 1,234 digits (operations and time)
   results/q3_recursion_tree.png  decomposition (recursion tree) of 1234 x 5678, with the level sums
-Run:  py -3 q3_graphs.py   (after q3_experiments.py)
+  results/q3_crossover.png       repeated timing (median, min-max bars): pure Karatsuba at 256-4,096 digits and
+                                 hybrid Karatsuba (t = 16, 32) at 8-128 digits, from q3_crossover.py
+  results/q3_overhead_levels.png own digit additions and temporary digits per recursion level (q3_crossover.py)
+Run:  py -3 q3_graphs.py   (after q3_experiments.py and q3_crossover.py)
 """
 import csv
 import math
@@ -182,7 +185,69 @@ def plot_recursion_tree():
     save(fig, "q3_recursion_tree.png")
 
 
+def plot_crossover(pure, hybrid):
+    """Left: pure Karatsuba vs schoolbook (median time, min-max error bars); right: hybrid at small sizes."""
+    fig, (ax1, ax2) = plt.subplots(1, 2, figsize=(12, 4.6))
+    n = [r["n"] for r in pure]
+    for key, colour, label in (("sb", C_SB, "schoolbook"), ("k", C_K, "Karatsuba t = 1")):
+        med = [r[f"{key}_ms_median"] for r in pure]
+        lo = [m - r[f"{key}_ms_min"] for m, r in zip(med, pure)]
+        hi = [r[f"{key}_ms_max"] - m for m, r in zip(med, pure)]
+        ax1.errorbar(n, med, yerr=[lo, hi], fmt="o-", color=colour, capsize=3, label=f"{label} (median, min–max)")
+    ax1.loglog(n, [pure[0]["sb_ms_median"] * (x / n[0]) ** 2 for x in n], "--", color=C_SB, lw=1,
+               label="scaled n²")
+    ax1.loglog(n, [pure[-1]["k_ms_median"] * (3 ** math.ceil(math.log2(x)) / pure[-1]["k_mults"]) for x in n],
+               ":", color=C_K, lw=1, label="scaled 3^⌈log₂ n⌉")
+    ax1.set_xscale("log", base=2)
+    ax1.set_title("Pure Karatsuba (t = 1) vs schoolbook at 256–4,096 digits")
+    ax1.set_xlabel("number of digits n (log scale)")
+    ax1.set_ylabel("time per multiplication (ms, log scale)")
+    ax1.grid(True, which="both", alpha=0.3)
+    ax1.legend(fontsize=8)
+    n2 = [r["n"] for r in hybrid]
+    ax2.loglog(n2, [r["sb_us"] for r in hybrid], "o-", color=C_SB, label="schoolbook")
+    ax2.loglog(n2, [r["k16_us"] for r in hybrid], "s-", color=C_K16, label="hybrid t = 16")
+    ax2.loglog(n2, [r["k32_us"] for r in hybrid], "^-", color="tab:purple", label="hybrid t = 32")
+    ax2.loglog(n2, [r["k1_us"] for r in hybrid], "x--", color=C_K, label="pure Karatsuba t = 1")
+    ax2.set_xscale("log", base=2)
+    ax2.set_title("Small sizes (median of 21 runs)")
+    ax2.set_xlabel("number of digits n (log scale)")
+    ax2.set_ylabel("time per multiplication (µs, log scale)")
+    ax2.grid(True, which="both", alpha=0.3)
+    ax2.legend(fontsize=8)
+    fig.suptitle("Q3 – repeated timing experiments (q3_crossover.py)", fontsize=11)
+    save(fig, "q3_crossover.png")
+
+
+def plot_overhead(levels):
+    """Own digit additions and temporary digits per level for n = 64, t = 1 (bars) - the decomposition overhead."""
+    rows = [r for r in levels if r["n"] == 64 and r["threshold"] == 1]
+    d = [r["depth"] for r in rows]
+    fig, (ax1, ax2) = plt.subplots(1, 2, figsize=(12, 4.2))
+    ax1.bar([x - 0.2 for x in d], [r["own_adds"] for r in rows], 0.4, color=C_K,
+            label="digit additions/subtractions")
+    ax1.bar([x + 0.2 for x in d], [r["own_mults"] for r in rows], 0.4, color=C_SB,
+            label="single-digit multiplications")
+    ax1.set_xticks(d, [f"{x}\n{r['nodes']}×{r['digits_per_node']}" for x, r in zip(d, rows)], fontsize=7.5)
+    ax1.set_title("n = 64, t = 1: own work per recursion level")
+    ax1.set_xlabel("depth (nodes × digits per node)")
+    ax1.set_ylabel("operations")
+    ax1.grid(True, axis="y", alpha=0.3)
+    ax1.legend(fontsize=8)
+    ax2.bar(d, [r["temp_digits"] for r in rows], color="0.55")
+    ax2.set_xticks(d, [str(x) for x in d])
+    ax2.set_title("Digits held in temporary lists per level (n = 64, t = 1)")
+    ax2.set_xlabel("depth")
+    ax2.set_ylabel("digits allocated")
+    ax2.grid(True, axis="y", alpha=0.3)
+    fig.suptitle("Q3 – decomposition overhead: the additions grow by ≈ 1.5× per level, the multiplications "
+                 "appear only at the leaves", fontsize=10)
+    save(fig, "q3_overhead_levels.png")
+
+
 def main():
+    plot_crossover(read_csv("q3_crossover_pure.csv"), read_csv("q3_crossover_hybrid.csv"))
+    plot_overhead(read_csv("q3_overhead_levels.csv"))
     plot_growth(read_csv("q3_sizes.csv"))
     plot_time(read_csv("q3_sizes.csv"))
     plot_threshold(read_csv("q3_threshold.csv"))

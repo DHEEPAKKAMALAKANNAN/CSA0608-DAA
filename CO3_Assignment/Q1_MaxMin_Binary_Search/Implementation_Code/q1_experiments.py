@@ -5,6 +5,7 @@ Writes four CSV files to results/:
   q1_maxmin_inputs.csv   the same three methods on 4 input orders at n = 10,000 (data independence)
   q1_maxmin_sweep.csv    every n from 2 to 2,048: comparisons per reading of both division rules
   q1_binary_search.csv   all n successful and all n + 1 unsuccessful look-ups at 6 manifest sizes
+  q1_designed_cases.csv  designed look-ups (first/middle/last/deepest, absent below/inside/above) at 4 sizes
 Run:  py q1_experiments.py      (about 1 minute; seed 42)
 """
 import csv
@@ -166,6 +167,28 @@ def experiment_binary_search(rng):
                "sequential_unsuccessful", "time_us_per_successful_lookup"], rows)
 
 
+def experiment_designed_cases(rng):
+    """Student A, Part B: deliberately designed successful and unsuccessful look-ups at four manifest sizes."""
+    print("\n[5] Designed look-up cases (probes = three-way comparisons; bound = floor(log2 n) + 1)")
+    cases = ["first", "middle", "last", "deepest", "below min", "in a gap", "above max"]
+    print(f"{'n':>9} | " + " ".join(f"{c:>9}" for c in cases) + f" | {'bound':>5}")
+    rows = []
+    for n in (16, 1000, 1024, 1_000_000):
+        ids = [2 * x for x in sorted(rng.sample(range(5_000_000, 50_000_000), n))]
+        probes_all = [binary_search(ids, k)[1] for k in ids]    # deepest present key: most probes
+        deep = ids[probes_all.index(max(probes_all))]
+        keys = [ids[0], ids[(n - 1) // 2], ids[-1], deep,
+                ids[0] - 1, ids[n // 2] + 1, ids[-1] + 1]
+        counts = []
+        for case, key in zip(cases, keys):
+            idx, probes = binary_search(ids, key)
+            assert (idx >= 0) == (case in ("first", "middle", "last", "deepest"))
+            counts.append(probes)
+            rows.append([n, case, key, idx, probes, floor_log2(n) + 1])
+        print(f"{n:>9,} | " + " ".join(f"{c:>9}" for c in counts) + f" | {floor_log2(n) + 1:>5}")
+    write_csv("q1_designed_cases.csv", ["n", "case", "key", "index", "probes", "bound_floor_log2n_plus_1"], rows)
+
+
 def main():
     sys.setrecursionlimit(10_000)
     rng = random.Random(SEED)
@@ -176,7 +199,9 @@ def main():
     experiment_maxmin_inputs(rng)
     experiment_maxmin_sweep(rng)
     experiment_binary_search(rng)
-    print("\nCSV files written to results/: q1_maxmin_growth, q1_maxmin_inputs, q1_maxmin_sweep, q1_binary_search")
+    experiment_designed_cases(rng)
+    print("\nCSV files written to results/: q1_maxmin_growth, q1_maxmin_inputs, q1_maxmin_sweep, q1_binary_search,"
+          " q1_designed_cases")
 
 
 if __name__ == "__main__":

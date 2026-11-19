@@ -92,6 +92,22 @@ def main():
     _, _, c = closest_pair_dc(uniform_fleet(20000))
     check(f"D&C at n = 20,000 makes far fewer distance computations than n log2 n ({c.distances:,} < "
           f"{round(20000 * math.log2(20000)):,})", c.distances < 20000 * math.log2(20000))
+    # 7. small-n crossover study (q5_crossover.py) on equivalent datasets
+    from q5_crossover import SIZES, SEEDS
+    ok_same, ok_bf, ok_fewer = True, True, True
+    for n in SIZES:
+        for seed in SEEDS:
+            pts = uniform_fleet(n, seed)
+            db, _, cb = closest_pair_brute_force(pts)
+            dd, _, cd = closest_pair_dc(pts)
+            ok_same &= db == dd
+            ok_bf &= cb.distances == n * (n - 1) // 2
+            if n >= 6:
+                ok_fewer &= cd.distances < cb.distances
+    check(f"crossover fleets ({len(SIZES)} sizes x {len(SEEDS)} seeds, n = 2..256): D&C = brute force", ok_same)
+    check("crossover fleets: brute force makes exactly n(n-1)/2 distance computations for every small n", ok_bf)
+    check("crossover fleets: D&C makes strictly fewer distance computations than brute force for every n >= 6",
+          ok_fewer)
     print("-" * 90)
     print(f"RESULT: {sum(results)}/{len(results)} tests passed")
 

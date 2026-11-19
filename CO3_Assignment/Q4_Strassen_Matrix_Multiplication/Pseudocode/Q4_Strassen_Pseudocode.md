@@ -1,4 +1,4 @@
-# Q4 – Strassen versus Conventional Matrix Multiplication: Pseudocode (prepared before implementation)
+# Q4 – The Reality of Strassen's Matrix Multiplication: Pseudocode and Flowcharts
 
 **Scenario.** Multi-step zone-demand forecasts multiply n × n zone-to-zone matrices (n = 16 … several hundred
 zones, not always a power of 2). The cost is counted in scalar multiplications and scalar additions/subtractions.
@@ -58,6 +58,23 @@ Algorithm StrassenStaticPadding(A, B, n, c)           // alternative padding pol
 - Time: T(n) = 7·T(n/2) + Θ(n²) ⇒ Master Theorem a = 7, b = 2, f(n) = n², n^log₂7 ≈ n^2.807,
   f(n) = O(n^(2.807 − ε)) ⇒ case 1 ⇒ **T(n) = Θ(n^log₂7)**.
 - With cutoff c (n = c·2^k): M = 7^k·c³, A = 7^k·c²(c − 1) + 6(c²·7^k − n²).
+
+## Flowcharts
+
+`../Implementation_Code/q4_flowcharts.py` draws both algorithms with standard flowchart symbols.
+
+![Conventional multiplication](q4_flowchart_conventional.png)
+
+![Hybrid Strassen with cutoff and dynamic padding](q4_flowchart_strassen.png)
+
+## Conventional block decomposition and padding (Student B)
+
+Conventional block form: C11 = A11·B11 + A12·B21, C12 = A11·B12 + A12·B22, C21 = A21·B11 + A22·B21,
+C22 = A21·B12 + A22·B22 – eight half-size products, T(n) = 8T(n/2) + Θ(n²) = Θ(n³). Strassen's seven products
+reproduce the same four sums (checked algebraically and by `q4_tests.py` on non-commuting 3 × 3 blocks).
+Padding: static (once to the next power of 2) or dynamic (one zero row/column whenever the current size is odd).
+
+![Block decomposition and padding](../Implementation_Code/results/q4_block_padding.png)
 
 ## Decomposition diagram
 

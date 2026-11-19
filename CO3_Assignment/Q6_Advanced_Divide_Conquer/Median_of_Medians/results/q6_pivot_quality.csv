@@ -1,0 +1,4 @@
+method,runs,min_cpn,median_cpn,mean_cpn,p95_cpn,p99_cpn,max_cpn,rounds_n_ge_100,poor_rounds_pct,bad_rounds_pct,runs_with_poor_round_pct,max_kept_fraction,longest_poor_streak,all_correct
+"QuickSelect random pivot (300 seeds, same batch)",300,2.229,4.758,4.948,7.772,10.061,10.266,3150,17.81,43.14,79.3,0.9998,4,True
+QuickSelect first pivot (300 shuffled batches),300,2.126,4.986,5.195,8.22,9.596,10.521,3282,19.96,45.31,85.7,0.9998,5,True
+Median of Medians g=5 (300 shuffled batches),300,4.711,9.66,9.519,9.775,9.8,9.817,2064,0.0,0.0,0.0,0.5584,0,True

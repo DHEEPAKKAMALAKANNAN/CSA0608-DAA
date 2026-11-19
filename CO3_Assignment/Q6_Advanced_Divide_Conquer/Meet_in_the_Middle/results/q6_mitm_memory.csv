@@ -1,0 +1,8 @@
+n,method,stored_sums,theory_sums,peak_bytes,bytes_per_stored_sum,operations,correct
+16,brute force (Gray),0,0,312,0,131071,True
+16,MitM (both halves),512,512,29832,58.3,3452,True
+20,brute force (Gray),0,0,256,0,2097151,True
+20,MitM (both halves),2048,2048,166884,81.5,15989,True
+24,MitM (both halves),8192,8192,712948,87.0,70897,True
+28,MitM (both halves),32768,32768,2896140,88.4,319304,True
+32,MitM (both halves),131072,131072,11731476,89.5,1409712,True

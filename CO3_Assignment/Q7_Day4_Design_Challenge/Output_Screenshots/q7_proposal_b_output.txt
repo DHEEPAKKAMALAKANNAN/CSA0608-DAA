@@ -1,8 +1,0 @@
-Q7 - Student B prototype: random pivot + 3-way partition + insertion sort below 16 (n = 2,000)
-     input | comparisons / n lg n |   moves | depth | correct
-    random |      37,625     1.72 |  37,562 |    17 | True
-    sorted |      36,034     1.64 |  27,742 |    17 | True
-   reverse |      36,805     1.68 |  27,952 |    17 | True
-     slots |      20,333     0.93 |  21,838 |    14 | True
- all-equal |       4,000     0.18 |       0 |     1 | True
-Prediction: ~1.4-1.6 n lg n on random/sorted/reverse, 2n = 4,000 on all-equal, ~n lg 64 = 12,000 on slots

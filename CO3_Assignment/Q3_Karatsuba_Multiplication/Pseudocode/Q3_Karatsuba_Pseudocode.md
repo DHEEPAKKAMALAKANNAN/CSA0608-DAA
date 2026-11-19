@@ -1,4 +1,4 @@
-# Q3 – Karatsuba Multiplication of Large Integers: Pseudocode (prepared before implementation)
+# Q3 – Breaking the Quadratic Barrier: Karatsuba Multiplication – Pseudocode and Flowcharts
 
 **Scenario.** Signing a flight command multiplies two n-digit integers (n = 617 digits for RSA-2048, 1,234 digits
 for RSA-4096). Numbers are stored as little-endian base-10 digit arrays, so the cost can be counted in
@@ -50,6 +50,14 @@ Algorithm Karatsuba(a[0..n-1], b[0..n-1], t)          // equal lengths, returns 
 12. return r[0..2n-1]
 ```
 
+## Flowcharts
+
+Drawn with standard symbols by `../Implementation_Code/q3_flowcharts.py`.
+
+![Flowchart – schoolbook multiplication](q3_flowchart_schoolbook.png)
+
+![Flowchart – Karatsuba multiplication (subtractive variant, threshold t)](q3_flowchart_karatsuba.png)
+
 ## Recurrences (from the algorithm)
 
 - Single-digit multiplications: M(n) = 3·M(⌈n/2⌉), M(1) = 1 ⇒ **M(n) = 3^⌈log₂ n⌉ = n^log₂3 ≈ n^1.585** (n = 2^k).
@@ -63,3 +71,12 @@ The recursion tree of 1234 × 5678 (three children per node) is drawn by `q3_gra
 `../Implementation_Code/results/q3_recursion_tree.png`.
 
 ![Karatsuba recursion tree](../Implementation_Code/results/q3_recursion_tree.png)
+
+## Experiments (where the evidence is)
+
+- `q3_experiments.py` – growth of the counted operations (n = 8 … 2,048, incl. 617 / 1,000 / 1,234 digits) and the
+  threshold sweep at 617 and 1,234 digits.
+- `q3_crossover.py` – Student B's crossover investigation: repeated timing (median, min, max) of pure Karatsuba vs
+  schoolbook at 256 … 4,096 digits, hybrid (t = 16, 32) vs schoolbook at 8 … 128 digits, and the per-level overhead
+  breakdown (nodes, own additions, digits in temporary lists).
+

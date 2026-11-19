@@ -1,0 +1,10 @@
+variant,n,k,stored_sums,enumerated_subsets,operations,model_ops,time_s,peak_bytes,correct
+"store k, enumerate n-k",26,8,256,262144,2097769,2097920,0.5873,17056,True
+"store k, enumerate n-k",26,10,1024,65536,747412,658432,0.1815,92324,True
+"store k, enumerate n-k",26,12,4096,16384,240676,208896,0.0638,393396,True
+"store k, enumerate n-k",26,13,8192,8192,147336,131072,0.03,783140,True
+"store k, enumerate n-k",26,14,16384,4096,114566,106496,0.0234,1582812,True
+"store k, enumerate n-k",26,16,65536,1024,214885,212992,0.0472,6420916,True
+"store k, enumerate n-k",26,18,262144,256,791369,791040,0.1787,25956572,True
+"store k, enumerate n-k",26,20,1048576,64,3146933,3147008,1.0177,102751700,True
+"both halves, two-pointer",26,13,16384,0,64063,65536,0.0434,1433364,True

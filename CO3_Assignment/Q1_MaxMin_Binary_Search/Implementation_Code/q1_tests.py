@@ -94,6 +94,18 @@ def main():
         key = rng.randint(-2, 32)
         idx, _ = binary_search(a, key)
         ok &= (idx >= 0) == (key in a) and (idx < 0 or a[idx] == key)
+    ok = True
+    for n in range(1, 301):
+        ids = list(range(10, 10 + 2 * n, 2))
+        bound = floor_log2(n) + 1
+        ok &= binary_search(ids, ids[(n - 1) // 2]) == ((n - 1) // 2, 1)          # middle: first probe
+        ok &= binary_search(ids, ids[0])[0] == 0 and binary_search(ids, ids[0])[1] <= bound
+        ok &= binary_search(ids, ids[-1])[0] == n - 1 and binary_search(ids, ids[-1])[1] <= bound
+        for key in (ids[0] - 1, ids[n // 2] - 1, ids[-1] + 1):                      # below / gap / above
+            idx, p = binary_search(ids, key)
+            ok &= idx == -1 and floor_log2(n) <= p <= bound
+    check("Binary search: designed cases - middle in 1 probe; first/last <= bound; absent below/gap/above -1",
+          ok)
     check("Binary search: manifests with duplicate IDs agree with the `in` operator (300 cases)", ok)
 
     print("-" * 96)

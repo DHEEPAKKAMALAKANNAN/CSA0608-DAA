@@ -28,11 +28,13 @@ if hasattr(sys, "set_int_max_str_digits"):        # products of 2,048-digit numb
 class OpCounter:
     """Counts the basic digit operations of one (recursive) multiplication."""
 
-    def __init__(self):
+    def __init__(self, per_level=False):
         self.mults = 0        # single-digit multiplications
         self.adds = 0         # digit additions / subtractions (carries and borrows included)
         self.calls = 0        # multiplication calls = nodes of the recursion tree
         self.max_depth = 0    # deepest recursion level reached
+        # optional overhead breakdown: depth -> [calls, own mults, own adds, digits in temporary lists]
+        self.levels = {} if per_level else None
 
     @property
     def total(self):
@@ -156,6 +158,15 @@ def schoolbook_multiply(a, b, ops):
     return result
 
 
+def _record_level(ops, depth, mults, adds, temp_digits):
+    """Add one node's own work to the per-level overhead breakdown (only when ops.levels is enabled)."""
+    row = ops.levels.setdefault(depth, [0, 0, 0, 0])
+    row[0] += 1
+    row[1] += mults
+    row[2] += adds
+    row[3] += temp_digits
+
+
 def karatsuba_multiply(a, b, ops, threshold=1, depth=0, trace=None, label="root"):
     """Karatsuba multiplication (subtractive variant) of two equal-length digit lists -> 2n digits.
 
@@ -173,7 +184,10 @@ def karatsuba_multiply(a, b, ops, threshold=1, depth=0, trace=None, label="root"
     if depth > ops.max_depth:
         ops.max_depth = depth
     if n <= threshold:
+        m0, a_before = ops.mults, ops.adds
         product = schoolbook_multiply(a, b, ops)
+        if ops.levels is not None:                                  # overhead breakdown (optional)
+            _record_level(ops, depth, ops.mults - m0, ops.adds - a_before, 2 * n)
     else:
         m = (n + 1) // 2                                            # DIVIDE
         pad = [0] * (2 * m - n)
@@ -181,10 +195,13 @@ def karatsuba_multiply(a, b, ops, threshold=1, depth=0, trace=None, label="root"
         b0, b1 = b[:m], b[m:] + pad
         z0 = karatsuba_multiply(a0, b0, ops, threshold, depth + 1, trace, "z0")      # CONQUER
         z2 = karatsuba_multiply(a1, b1, ops, threshold, depth + 1, trace, "z2")
+        own_adds = ops.adds
         diff_a, sign_a = abs_difference(a0, a1, ops)
         diff_b, sign_b = abs_difference(b1, b0, ops)
+        own_adds = ops.adds - own_adds
         z1_mid = karatsuba_multiply(diff_a, diff_b, ops, threshold, depth + 1, trace,
                                     "z1'" + ("(-)" if sign_a * sign_b < 0 else ""))
+        combine_start = ops.adds
         middle = add_digits(z0, z2, ops)                                              # COMBINE
         if sign_a * sign_b > 0:
             middle = add_digits(middle, z1_mid, ops)
@@ -193,6 +210,9 @@ def karatsuba_multiply(a, b, ops, threshold=1, depth=0, trace=None, label="root"
         product = z0 + z2 + [0, 0]          # z0 at 10^0 and z2 at 10^(2m): placed side by side, no additions
         add_into(product, middle, m, ops)
         product = product[:2 * n]           # an n-digit x n-digit product has at most 2n digits
+        if ops.levels is not None:          # temporaries: 4 halves, 2 differences, middle sum(s), product
+            own_adds += ops.adds - combine_start
+            _record_level(ops, depth, 0, own_adds, 6 * m + 2 * (2 * m + 2) + 4 * m + 2 + 2 * n)
     if trace is not None:
         trace.append((depth, label, from_digits(a), from_digits(b), from_digits(product)))
     return product

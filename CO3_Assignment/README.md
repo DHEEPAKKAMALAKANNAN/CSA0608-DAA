@@ -1,78 +1,93 @@
-# CSA06 – Assignment 3 (CO3): Divide-and-Conquer Algorithm Engineering
+# CSA06 – Assignment 3 (CO3): Divide and Conquer – Design, Analysis and Experimental Validation
 
-**Course:** CSA06 – Design and Analysis of Algorithms · SIMATS Engineering · **Nature:** pair assignment ·
-**Student A:** V. Vasudevan (192425324) · **Student B:** [Student B Name] ([Reg. No.]) · **Date:** 19 November 2026
+**Course:** CSA06 – Design and Analysis of Algorithms · SIMATS Engineering · **Mode:** Pair Work – 2 students per group ·
+**Student A:** V. Vasudevan (192425324) · **Student B:** [Student B Name] ([Reg. No.]) · **Date:** 19 November 2026 ·
+**Total marks:** 50
 
-## Assumed question / scope
+## Overview
 
-The official question texts were not available; only the folder structure and the submission instructions were
-given. The question texts used here are **reconstructed** in the style of the CO2 assignment (problem context →
-challenge → predict → design → implement → measure → analyse → decide) and are reproduced verbatim at the start of
-every answer in the report. Assumed marks: Q1 6, Q2 7, Q3 6, Q4 7, Q5 7, Q6 7, Q7 10 (parts A–E, 2 each) = 50.
-All questions are set in one scenario, **a city drone-delivery operations centre**. If the official paper differs,
-the programs and evidence can be re-mapped to its wording. Student B's name and register number are placeholders.
+This folder answers the official CO3 question paper (Assignment 3, "Pair Work"). All seven questions are set in one
+scenario, a **city drone-delivery operations centre**. Every algorithm is hand-written in pure Python with explicit
+operation counters, tested against an independent reference, measured, and analysed with its recurrence.
 
-## Contents
+The report reproduces each official question verbatim. The answer follows the paper's structure: the
+**Shared Group Work**, then the **Student A** and **Student B** parts with each bullet answered, then the joint question. Each
+algorithm has a flowchart, decomposition or recursion-tree diagrams, code screenshots, execution-output screenshots
+and graphs.
+
+**Q7 problem.** The paper leaves the Day-4 problem to be announced on Day 4. To complete the challenge, the pair chose
+a problem that is new relative to Q1–Q6: the **most profitable contiguous run of delivery hours (Maximum Subarray
+Sum)**. If a different Day-4 problem is given, the same six-stage process applies.
+
+## Questions and individual responsibilities (as prescribed by the paper)
+
+| Q (marks) | Topic | Student A – primary | Student B – primary | Joint |
+|---|---|---|---|---|
+| Q1 (6) | Decomposition and Elimination in Ordered Data: Max/Min + Binary Search | Max/Min design & mathematical analysis; binary-search experimental investigation | Max/Min experimental validation; binary-search elimination logic | strategy, base case, returns, implementation, tests |
+| Q2 (7) | The Quality of Decomposition in Sorting | Quick Sort investigation: designed balanced/unbalanced inputs, partition sizes, recursion depth | Comparative D&C analysis of Merge Sort vs Quick Sort, O(n²) under imbalance | implementation, pivot strategy (last element), experiments, Joint Design Question |
+| Q3 (7) | Breaking the Quadratic Barrier: Karatsuba | algorithmic derivation, recurrence, Θ(n^1.585) | crossover investigation: repeated timing, counts, crossover, overhead | implementation, Joint Conclusion |
+| Q4 (7) | The Reality of Strassen's Matrix Multiplication (roles reversed) | experimental & engineering analysis: counts, repeated times, crossover, overhead, memory | algebraic design & correctness: 8 → 7 products, padding | implementation, verification, Joint Engineering Decision |
+| Q5 (6) | Upgrading Closest Pair Using D&C | decomposition design, strip/boundary | comparative evidence: distances, growth, practical crossover | design, implementation, Cross-Understanding |
+| Q6 (7) | Advanced D&C Mini-Investigations | Median of Medians (+ verification on MitM) | Meet-in-the-Middle subset sum (+ verification on pivot quality) | tests, graphs |
+| Q7 (10) | Day-4 Design Challenge (Stages 1–6) | Stage 1 proposal A; Stage 4 mathematical validation; Stage 5 evidence defence | Stage 1 proposal B; Stage 4 experimental validation; Stage 5 recurrence defence | Stages 2, 3 and 6 |
+
+The contribution record (`Final_Report/Student_Contribution_Record.docx`) must be confirmed by both students.
+
+## How to run (Python 3.13 + matplotlib; numpy only for the Q4 verification)
+
+```
+cd Q1_MaxMin_Binary_Search/Implementation_Code
+py -3 q1_maxmin_binsearch.py      # demonstration with traces
+py -3 q1_experiments.py           # experiments -> results/*.csv
+py -3 q1_tests.py                 # PASS/FAIL lines + RESULT
+py -3 q1_graphs.py                # graphs and diagrams -> results/*.png
+py -3 q1_flowcharts.py            # flowcharts -> ../Pseudocode/*.png
+```
+
+The other questions follow the same pattern.
+
+| Q | Main program | Additional programs |
+|---|---|---|
+| Q2 | `q2_sorting.py` | `q2_partition_study.py` |
+| Q3 | `q3_karatsuba.py` | `q3_crossover.py` |
+| Q4 | `q4_strassen.py` | `q4_overhead.py` |
+| Q5 | `q5_closest_pair.py` | `q5_crossover.py` |
+| Q6 | `q6_median_of_medians.py`, `q6_meet_in_the_middle.py` | `q6_pivot_quality.py`, `q6_mitm_memory.py` |
+| Q7 | `q7_max_subarray.py` | `q7_experiments.py`, and the two Stage-1 proposals in `Student_A_Initial_Design/` and `Student_B_Initial_Design/` |
+
+Every random generator is seeded (42), so operation counts are exactly reproducible. Times vary with the load on the
+machine.
+
+**Tests:** Q1 18/18, Q2 20/20, Q3 17/17, Q4 17/17, Q5 22/22, Q6 32/32, Q7 20/20, a total of **146/146 passed**.
+
+## Folder structure
 
 ```
 CO3_Assignment/
-├── Q1_MaxMin_Binary_Search/            Pseudocode/  Implementation_Code/ (+ results/)  Output_Screenshots/
+├── Q1_MaxMin_Binary_Search/            Pseudocode/ (md + flowcharts)  Implementation_Code/ (+ results/)  Output_Screenshots/
 ├── Q2_MergeSort_QuickSort/             Pseudocode/  Implementation_Code/ (+ results/)  Output_Screenshots/
 ├── Q3_Karatsuba_Multiplication/        Pseudocode/  Implementation_Code/ (+ results/)  Output_Screenshots/
 ├── Q4_Strassen_Matrix_Multiplication/  Pseudocode/  Implementation_Code/ (+ results/)  Output_Screenshots/
 ├── Q5_Divide_Conquer_Closest_Pair/     Pseudocode/  Implementation_Code/ (+ results/)  Output_Screenshots/
 ├── Q6_Advanced_Divide_Conquer/
-│   ├── Median_of_Medians/              README.md (design, analysis, results) + results/ (CSV, graphs)
-│   ├── Meet_in_the_Middle/             README.md (design, analysis, results) + results/ (CSV, graphs)
+│   ├── Median_of_Medians/              README.md (Student A investigation) + results/ (CSV, graphs)
+│   ├── Meet_in_the_Middle/             README.md (Student B investigation) + results/ (CSV, graphs)
 │   └── Pseudocode/  Implementation_Code/  Output_Screenshots/
 ├── Q7_Day4_Design_Challenge/
-│   ├── Student_A_Initial_Design/       README.md + proposal_a_median3_hoare.py (independent proposal A)
-│   ├── Student_B_Initial_Design/       README.md + proposal_b_threeway_cutoff.py (independent proposal B)
-│   ├── Joint_Final_Design/             README.md (comparison, kept/rejected elements, objectives, defence)
+│   ├── Student_A_Initial_Design/       README.md + proposal_a_midpoint_split.py + flowchart (Stage 1, kept unchanged)
+│   ├── Student_B_Initial_Design/       README.md + proposal_b_four_tuple.py + flowchart (Stage 1, kept unchanged)
+│   ├── Joint_Final_Design/             README.md (Stage 2 comparison record, Stage 3 joint design)
 │   └── Pseudocode/  Implementation_Code/ (+ results/)  Output_Screenshots/
 ├── Final_Report/
-│   ├── CO3_Assignment_Report.docx / .pdf / .md   (report in the department's sample format)
-│   └── Student_Contribution_Record.docx / .md     (Student A / Student B / shared, Q1–Q7)
+│   ├── CO3_Assignment_Report.docx / .pdf        (report in the department's sample format)
+│   └── Student_Contribution_Record.docx           (Question | Student A | Student B | Joint Work)
 └── README.md
 ```
 
-Each question folder contains: `Pseudocode/` (written before implementation: divide / conquer / combine, numbered
-pseudocode, recurrence), `Implementation_Code/` (algorithms with operation counters, an experiment program, a test
-program and a graph script; CSV files and graphs in `results/`) and `Output_Screenshots/` (code screenshots and real
-execution screenshots with the captured `.txt` output).
+Each question folder contains three sub-folders:
 
-## Questions, programs and key results
-
-| Q | Task in the scenario | Programs (`Implementation_Code/`) | Key result |
-|---|---|---|---|
-| Q1 | Max/min battery temperature per flight; parcel look-up in a sorted manifest | `q1_maxmin_binsearch.py`, `q1_experiments.py`, `q1_tests.py`, `q1_graphs.py` | D&C Max–Min ⌈3n/2⌉ − 2 vs 2n − 2 comparisons (25% fewer); middle split up to 11% worse for non-powers of 2; binary search exactly ⌊log₂ n⌋ + 1 = 20 probes at 10⁶ |
-| Q2 | Sorting delivery orders by deadline | `q2_sorting.py`, `q2_experiments.py`, `q2_tests.py`, `q2_graphs.py` | Merge Sort ≤ n log₂ n − n + 1 on every input; Lomuto Quick Sort n(n − 1)/2 and depth n − 1 on sorted (last pivot) and all-equal (every pivot) data |
-| Q3 | Signing commands: 617- / 1,234-digit products | `q3_karatsuba.py`, `q3_experiments.py`, `q3_tests.py`, `q3_graphs.py` | multiplications exactly n² vs 3^⌈log₂ n⌉; hybrid with threshold 16 digits 3.5–4.6× fewer operations |
-| Q4 | Zone-demand matrix products | `q4_strassen.py`, `q4_experiments.py`, `q4_tests.py`, `q4_graphs.py` | 7^k vs 8^k multiplications, 6(7^k − 4^k) additions; hybrid with dynamic padding and cutoff 32 recommended |
-| Q5 | Closest pair of airborne drones | `q5_closest_pair.py`, `q5_experiments.py`, `q5_tests.py`, `q5_graphs.py` | D&C 1.1–1.4n distance computations, ≤ 2 strip neighbours (bound 7); 20,000 drones in 0.11–0.15 s |
-| Q6 | Median delivery time; payload packing | `q6_median_of_medians.py`, `q6_meet_in_the_middle.py`, `q6_tests.py`, `q6_graphs.py` | MoM ≈ 9–10n comparisons at every size; Meet-in-the-Middle packs 40 parcels in 2 s (brute force 22) |
-| Q7 | Robust sorting for the dispatch scheduler | `q7_introsort_hybrid.py`, `q7_adversary.py`, `q7_experiments.py`, `q7_tests.py`, `q7_graphs.py` (+ the two prototypes) | joint hybrid: 0.15–1.45 n log₂ n on all natural inputs, ≤ 3.66 n log₂ n on adversarial inputs, depth ≤ log₂ n |
-
-## How to run (Python 3.13, matplotlib; numpy only for the Q4 verification)
-
-```
-cd Q1_MaxMin_Binary_Search/Implementation_Code
-py q1_maxmin_binsearch.py      # demonstration with recursion traces
-py q1_experiments.py           # experiments -> results/*.csv
-py q1_tests.py                 # PASS/FAIL lines + RESULT
-py q1_graphs.py                # graphs and decomposition diagrams -> results/*.png
-```
-
-The other questions follow the same pattern (`qN_<algorithm>.py`, `qN_experiments.py`, `qN_tests.py`,
-`qN_graphs.py`; Q6 has `q6_median_of_medians.py` and `q6_meet_in_the_middle.py`; Q7's experiment program imports
-Q2's original Quick Sort and both student prototypes so that all variants run on identical datasets). Every random
-generator is seeded (42), so all operation counts are exactly reproducible; times vary with machine load.
-
-**Tests:** Q1 17/17, Q2 14/14, Q3 15/15, Q4 13/13, Q5 19/19, Q6 27/27, Q7 20/20 — **125/125 passed**.
-
-## Contributions
-
-Both students took part in every question. The per-question split (Student A / Student B / shared) is in the
-*Contribution* sub-section of every answer in the report and in `Final_Report/Student_Contribution_Record.docx`; it is
-a proposed record that both students must confirm. In Q7 each student first produced an independent design
-(`Student_A_Initial_Design/`, `Student_B_Initial_Design/`) before the joint final design (`Joint_Final_Design/`).
+- `Pseudocode/` holds the pseudocode, the divide/conquer/combine description, the recurrence and the flowchart PNGs.
+- `Implementation_Code/` holds the algorithms with counters, the experiment programs, the tests, and the graph and
+  flowchart scripts. CSV files and graphs go to `results/`.
+- `Output_Screenshots/` holds screenshots of the main algorithm code, screenshots of every real execution, and the
+  captured `.txt` output.

@@ -1,8 +1,0 @@
-Q7 - Student A prototype: median-of-three + Hoare partition + smaller-part recursion (n = 2,000)
-     input | comparisons / n lg n |   moves | depth | correct
-    random |      33,803     1.54 |  11,436 |     8 | True
-    sorted |      29,982     1.37 |      56 |    10 | True
-   reverse |      29,983     1.37 |   2,060 |    10 | True
-     slots |      34,069     1.55 |  15,316 |     8 | True
- all-equal |      31,723     1.45 |  21,728 |    10 | True
-Prediction: ~1.2 n lg n on random/sorted/reverse, ~1.0 n lg n on all-equal, depth <= lg n = 11.0

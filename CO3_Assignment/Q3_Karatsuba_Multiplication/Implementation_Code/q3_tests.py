@@ -93,6 +93,22 @@ def main():
         add_ok &= from_digits(karatsuba_additive(a, b, OpCounter(), 3)) == from_digits(a) * from_digits(b)
     check("additive Karatsuba variant (comparison only) correct for n = 4, 17, 64, 100", add_ok)
 
+    # per-level overhead breakdown used by q3_crossover.py (C3)
+    a, b = random_digits(64, rng), random_digits(64, rng)
+    lv = OpCounter(per_level=True)
+    plain = OpCounter()
+    same = karatsuba_multiply(a, b, lv, 1) == karatsuba_multiply(a, b, plain, 1)
+    rows = lv.levels
+    check("per-level breakdown (n = 64, t = 1): 3^d nodes at depth d, level sums = totals, same product/counts",
+          same and all(rows[d][0] == 3 ** d for d in rows)
+          and sum(r[0] for r in rows.values()) == lv.calls == plain.calls
+          and sum(r[1] for r in rows.values()) == lv.mults == plain.mults == 729
+          and sum(r[2] for r in rows.values()) == lv.adds == plain.adds)
+    ops16 = OpCounter()
+    karatsuba_multiply(random_digits(1024, rng), random_digits(1024, rng), ops16, 16)
+    check("hybrid t = 16 at n = 1,024: 3^6 = 729 leaves of 16 digits -> 729 x 256 = 186,624 mults, 1,093 calls",
+          ops16.mults == 186_624 and ops16.calls == 1_093)
+
     passed = sum(RESULTS)
     print("-" * 90)
     print(f"RESULT: {passed}/{len(RESULTS)} tests passed")

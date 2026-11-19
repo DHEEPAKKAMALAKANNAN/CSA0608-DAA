@@ -1,0 +1,7 @@
+input,n,best,start,end,brute_ops,crossing_ops,joint_ops,run_valid,equal_to_brute
+hourly cycle,4096,22626,490,3476,16781312,102399,32760,True,True
+random +-400,4096,42071,553,3997,16781312,102399,32760,True,True
+all profit,4096,831677,0,4095,16781312,102399,32760,True,True
+all loss,4096,-1,423,423,16781312,102399,32760,True,True
+alternating,4096,300,0,0,16781312,102399,32760,True,True
+ascending,4096,405933,2096,4095,16781312,102399,32760,True,True

@@ -1,7 +1,8 @@
 """Q2 graphs - decomposition diagrams and result graphs of Merge Sort vs Quick Sort.
 
-Writes to results/: q2_mergesort_tree.png, q2_quicksort_trees.png, q2_comparisons_by_input.png, q2_bars_n8000.png
-Run after q2_experiments.py:  py q2_graphs.py
+Writes to results/: q2_mergesort_tree.png, q2_quicksort_trees.png, q2_comparisons_by_input.png, q2_bars_n8000.png,
+                    q2_partition_depth.png
+Run after q2_experiments.py and q2_partition_study.py:  py q2_graphs.py
 """
 import csv
 import os
@@ -10,6 +11,8 @@ import matplotlib
 
 matplotlib.use("Agg")
 import matplotlib.pyplot as plt  # noqa: E402
+
+from q2_sorting import designed_input  # noqa: E402
 
 RESULTS = os.path.join(os.path.dirname(os.path.abspath(__file__)), "results")
 ALGS = ("Merge", "Quick-last", "Quick-random", "Quick-median3")
@@ -103,16 +106,57 @@ def quick_tree(values, rule):
 
 
 def fig_quicksort_trees():
-    sorted_export = [3, 8, 19, 53, 71, 85, 107, 125]
-    fig, (ax1, ax2) = plt.subplots(1, 2, figsize=(13, 5.2), gridspec_kw={"width_ratios": [1, 1.3]})
-    draw_tree(ax1, quick_tree(sorted_export, "last"), fontsize=7.5)
-    ax1.set_title("pivot = last element on the sorted export:\nevery split is (n-1) | 0, depth n - 1 = 7, "
-                  "28 comparisons", fontsize=10)
-    draw_tree(ax2, quick_tree(sorted_export, "median3"), fontsize=7.5)
-    ax2.set_title("pivot = median of three on the same data:\nbalanced splits, depth 3", fontsize=10)
-    fig.suptitle("Quick Sort recursion trees (labels: sub-array, pivot, left | right sizes)", fontsize=11)
+    """Pivot = last element: Student A's designed balanced input versus the already sorted export."""
+    values = [3, 8, 19, 53, 71, 85, 107]                    # 7 deadlines (minutes after 06:00)
+    balanced = [values[i] for i in designed_input(len(values), 0.5)]
+    fig, (ax1, ax2) = plt.subplots(1, 2, figsize=(13, 5.4), gridspec_kw={"width_ratios": [1.3, 1]})
+    draw_tree(ax1, quick_tree(balanced, "last"), fontsize=7.5)
+    ax1.set_title(f"designed BALANCED input {balanced}:\nevery last element is the median -> splits 3|3, 1|1, "
+                  "depth 2, 10 comparisons", fontsize=10)
+    draw_tree(ax2, quick_tree(values, "last"), fontsize=7.5)
+    ax2.set_title(f"SORTED export {values}:\nevery split is (m-1) | 0, depth n - 1 = 6, 21 comparisons",
+                  fontsize=10)
+    fig.suptitle("Quick Sort recursion trees, pivot = last element (labels: sub-array, pivot, left | right sizes)",
+                 fontsize=11)
     fig.tight_layout()
     fig.savefig(os.path.join(RESULTS, "q2_quicksort_trees.png"), dpi=150)
+    plt.close(fig)
+
+
+def fig_partition_depth():
+    """Largest sub-array per depth (n = 8,191) and maximum recursion depth against n (q2_partition_study.py)."""
+    with open(os.path.join(RESULTS, "q2_largest_by_depth.csv"), encoding="utf-8") as f:
+        big = list(csv.DictReader(f))
+    with open(os.path.join(RESULTS, "q2_depth_sweep.csv"), encoding="utf-8") as f:
+        sweep = list(csv.DictReader(f))
+    style = {"balanced": ("#1f77b4", "o"), "90:10": ("#ff7f0e", "D"), "random": ("#2ca02c", "^"),
+             "sorted": ("#d62728", "s"), "reversed": ("#9467bd", "x")}
+    fig, (ax1, ax2) = plt.subplots(1, 2, figsize=(14, 5.2))
+    for kind in ("balanced", "90:10", "random", "sorted"):
+        pts = [(int(r["depth"]), int(r["largest_subarray"])) for r in big if r["input"] == kind]
+        ax1.plot([p[0] for p in pts], [p[1] for p in pts], color=style[kind][0], lw=1.6, label=kind)
+    ax1.set_yscale("log")
+    ax1.set_xscale("symlog", linthresh=10)
+    ax1.set_xlim(0, 9000)
+    ax1.set_xlabel("recursion depth d (symlog scale)")
+    ax1.set_ylabel("largest sub-array at depth d (keys, log scale)")
+    ax1.set_title("How fast the problem shrinks, n = 8,191, pivot = last element")
+    ax1.grid(True, which="both", alpha=0.3)
+    ax1.legend(title="input")
+    ns = [int(r["n"]) for r in sweep]
+    for key, col, label in (("balanced", "balanced", "balanced (designed)"), ("90:10", "90:10", "90:10 (designed)"),
+                            ("random", "random", "random"), ("sorted", "sorted", "sorted export")):
+        ax2.loglog(ns, [int(r[col]) for r in sweep], style[key][1] + "-", color=style[key][0], label=label, ms=6)
+    ax2.loglog(ns, [int(r["merge"]) for r in sweep], "o--", color="black", mfc="none", label="Merge Sort (any input)")
+    ax2.loglog(ns, [float(r["theory_90_10"]) for r in sweep], ":", color=style["90:10"][0], label="log10/9 n")
+    ax2.loglog(ns, [int(r["theory_sorted"]) for r in sweep], ":", color=style["sorted"][0], label="n - 1")
+    ax2.set_xlabel("number of orders n (log scale)")
+    ax2.set_ylabel("maximum recursion depth (log scale)")
+    ax2.set_title("Recursion-tree height against n")
+    ax2.grid(True, which="both", alpha=0.3)
+    ax2.legend(fontsize=8)
+    fig.tight_layout()
+    fig.savefig(os.path.join(RESULTS, "q2_partition_depth.png"), dpi=150)
     plt.close(fig)
 
 
@@ -172,6 +216,7 @@ def main():
     fig_quicksort_trees()
     fig_comparisons_by_input(rows)
     fig_bars(rows)
+    fig_partition_depth()
     print("Q2 graphs written to", RESULTS)
 
 

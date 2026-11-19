@@ -1,0 +1,9 @@
+n,method,cutoff,peak_bytes,one_matrix_bytes,peak_over_matrix,peak_over_conventional,temp_matrices,calls
+32,conventional,,52992,8448,6.27,1.0,2,1
+32,Strassen c=1,1,142700,8448,16.89,2.69,92434,19608
+32,Strassen c=8,8,141568,8448,16.76,2.67,265,57
+32,Strassen c=16,16,142072,8448,16.82,2.68,34,8
+64,conventional,,201576,33280,6.06,1.0,2,1
+64,Strassen c=1,1,538604,33280,16.18,2.67,647065,137257
+64,Strassen c=8,8,538400,33280,16.18,2.67,1882,400
+64,Strassen c=16,16,538368,33280,16.18,2.67,265,57

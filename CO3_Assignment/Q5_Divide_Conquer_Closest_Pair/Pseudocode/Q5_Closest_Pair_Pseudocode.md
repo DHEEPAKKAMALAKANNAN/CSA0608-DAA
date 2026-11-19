@@ -66,4 +66,17 @@ Master Theorem: a = 2, b = 2, f(n) = Θ(n), n^(log_b a) = n¹ → f(n) = Θ(n^(l
 Recursion tree: level i has 2ⁱ sub-problems of size n/2ⁱ, each with Θ(n/2ⁱ) combine work → Θ(n) per level × log₂ n levels.
 (If the strip were re-sorted by y in every call, f(n) = Θ(n log n) and T(n) = Θ(n log² n) — the merge avoids this.)
 
-Decomposition diagram: `../Implementation_Code/results/q5_decomposition.png`.
+## Flowcharts and diagrams
+
+- Flowchart of the brute-force baseline (CO2): `q5_flowchart_brute_force.png`
+- Flowchart of the Divide-and-Conquer algorithm: `q5_flowchart_dc_closest_pair.png`
+  (both drawn by `../Implementation_Code/q5_flowcharts.py`)
+- Decomposition (dividing lines + recursion tree): `../Implementation_Code/results/q5_decomposition.png`
+- Boundary case and the δ × 2δ packing box: `../Implementation_Code/results/q5_strip_boundary.png`
+
+## When is D&C worth it? (small-n crossover, `q5_crossover.py`)
+
+Brute force has no overhead, D&C pays for the presort, slicing, merging and strips. On the same uniform fleets
+(5 seeds per size) D&C makes fewer distance computations from n = 4 on average (always from n = 6), fewer total basic
+operations (distances + sort/merge comparisons) from n = 16, and is faster in measured time from about n = 96.
+For fleets below about 64 drones the brute-force scan is the practical choice (a hybrid base case could use it).

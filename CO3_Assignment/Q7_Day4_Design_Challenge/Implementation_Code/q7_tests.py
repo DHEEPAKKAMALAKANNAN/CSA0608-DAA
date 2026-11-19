@@ -1,111 +1,120 @@
-"""Q7 tests - correctness of the original, both proposals and the joint designs; adversary consistency; guarantees.
+"""Q7 Stage 4 (Student B) - correctness tests of the joint D&C design (and of the baseline and the variants).
 
-Run:  py q7_tests.py      (prints PASS/FAIL per test and a final RESULT line)
+References: brute force over all runs and an independent Kadane scan. The two Stage-1 proposals are imported
+to confirm (as tests) the defects that the Stage-2 comparison identified.
+Run:  py -3 q7_tests.py
 """
 import math
 import os
 import random
 import sys
 
+from q7_max_subarray import Counter, brute_force_max_subarray, dc_crossing, dc_joint, hourly_profits, kadane
+
 HERE = os.path.dirname(os.path.abspath(__file__))
-Q7 = os.path.dirname(HERE)
-sys.path.insert(0, os.path.join(Q7, "Student_A_Initial_Design"))
-sys.path.insert(0, os.path.join(Q7, "Student_B_Initial_Design"))
-sys.path.insert(0, os.path.join(os.path.dirname(Q7), "Q2_MergeSort_QuickSort", "Implementation_Code"))
+sys.path.insert(0, os.path.join(HERE, "..", "Student_A_Initial_Design"))
+sys.path.insert(0, os.path.join(HERE, "..", "Student_B_Initial_Design"))
+from proposal_a_midpoint_split import proposal_a  # noqa: E402
+from proposal_b_four_tuple import proposal_b  # noqa: E402
 
-from proposal_a_median3_hoare import quick_sort_a  # noqa: E402
-from proposal_b_threeway_cutoff import quick_sort_b  # noqa: E402
-from q2_sorting import quick_sort  # noqa: E402
-from q7_adversary import make_killer  # noqa: E402
-from q7_introsort_hybrid import hybrid_sort, hybrid_sort_unguarded, hybrid_sort_v1  # noqa: E402
-
-sys.setrecursionlimit(200_000)
-results = []
-VARIANTS = {"Baseline": lambda a: quick_sort(a, "last"), "A": quick_sort_a, "B": quick_sort_b,
-            "Joint-v1": hybrid_sort_v1, "Joint": hybrid_sort, "Joint-unguarded": hybrid_sort_unguarded}
+RESULTS = []
 
 
 def check(name, condition):
-    """Record and print one test outcome."""
-    results.append(bool(condition))
+    RESULTS.append(bool(condition))
     print(f"{'PASS' if condition else 'FAIL'}  {name}")
 
 
-def natural_inputs(n, rng):
-    base = [rng.randrange(57_600) for _ in range(n)]
-    return [base, sorted(base), sorted(base, reverse=True), [rng.randrange(64) * 900 for _ in range(n)], [8100] * n]
+def valid(p, r):
+    """The reported hours i..j really have the reported sum."""
+    best, i, j = r
+    return 0 <= i <= j < len(p) and sum(p[i:j + 1]) == best
 
 
 def main():
+    print("Q7 TESTS - Maximum Subarray Sum: joint D&C design, crossing-scan variant, brute-force baseline")
+    print("-" * 100)
+    demo = [-120, 340, -60, 410, -380, 150, 220, -90]
+    check("demo hours: all three methods find Rs 690 on hours 1..3",
+          brute_force_max_subarray(demo) == dc_crossing(demo) == dc_joint(demo) == (690, 1, 3))
+    check("single hour: n = 1 returns that hour (positive and negative)",
+          dc_joint([250]) == (250, 0, 0) and dc_joint([-80]) == (-80, 0, 0))
+    storm = [-40, -15, -90, -25]
+    check("all-loss day: best run is the least-bad single hour (-15 at hour 1), never an empty run",
+          dc_joint(storm) == (-15, 1, 1) and dc_crossing(storm)[0] == -15)
+    check("all-profit day: best run is the whole day", dc_joint([5, 1, 7, 3]) == (16, 0, 3))
+    check("zeros: best sum 0 with a valid run", dc_joint([0, 0, 0])[0] == 0 and valid([0, 0, 0], dc_joint([0, 0, 0])))
+    check("best run crossing the top-level split (hours 3..4 of 8)",
+          dc_joint([-5, -5, -5, 9, 9, -5, -5, -5]) == (18, 3, 4))
+    check("best run at the very start and at the very end",
+          dc_joint([9, 9, -50, 1, 2])[1:] == (0, 1) and dc_joint([1, -50, 2, 8, 9])[1:] == (2, 4))
+    check("empty input is rejected with ValueError", raises_value_error())
     rng = random.Random(42)
-    print("Q7 TESTS - original quick sort, proposals A and B, joint designs, adversary")
-    print("-" * 100)
-    cases = []
-    for n in range(0, 151):
-        cases += natural_inputs(n, rng) + [[rng.randrange(3) for _ in range(n)]]
-    cases.append([-3.5, 2, 2, -7, 0.25, 99, -7])
-    for name, fn in VARIANTS.items():
-        ok = True
-        for data in cases:
-            a = list(data)
-            fn(a)
-            ok &= a == sorted(data)
-        check(f"{name:<15} sorts {len(cases)} lists (n = 0..150: random/sorted/reverse/slots/all-equal/3 values)", ok)
-
-    ok = all(quick_sort_a(list(d)).max_depth <= math.log2(n) for n in (100, 1000, 3000)
-             for d in natural_inputs(n, rng))
-    check("A: recursion depth <= log2 n on all five natural inputs (n = 100, 1,000, 3,000)", ok)
-    ok = all(quick_sort_b([5] * n).comparisons == 2 * n for n in range(17, 3000, 97))
-    check("B: an all-equal list costs exactly 2n comparisons (one 3-way partition)", ok)
-    ok = all(hybrid_sort([5] * n).comparisons == 2 * n + 3 for n in range(17, 3000, 97))
-    check("Joint: an all-equal list costs exactly 2n + 3 comparisons (median-of-3 + one fat partition)", ok)
+    ok_b = ok_x = ok_valid = ok_k = True
+    for _ in range(2000):
+        n = rng.randint(1, 60)
+        p = [rng.randint(-50, 50) for _ in range(n)]
+        bf = brute_force_max_subarray(p)
+        j, x = dc_joint(p), dc_crossing(p)
+        ok_b &= j[0] == bf[0]
+        ok_x &= x[0] == bf[0]
+        ok_valid &= valid(p, j) and valid(p, x)
+        ok_k &= kadane(p) == bf[0]
+    check("2,000 random instances (n = 1..60, many ties): joint D&C sum = brute force", ok_b)
+    check("2,000 random instances: crossing-scan D&C sum = brute force", ok_x)
+    check("2,000 random instances: reported hours i..j really add up to the reported best", ok_valid)
+    check("2,000 random instances: independent Kadane reference agrees with brute force", ok_k)
+    big = hourly_profits(20000)
+    check("n = 20,000 hourly data: joint = crossing = Kadane and the run is valid",
+          dc_joint(big)[0] == dc_crossing(big)[0] == kadane(big) and valid(big, dc_joint(big)))
     ok = True
-    for n in (100, 1000, 5000):
-        for d in natural_inputs(n, rng):
-            st = hybrid_sort(list(d))
-            ok &= st.max_depth <= math.log2(n) and st.heapsort_fallbacks == 0
-    check("Joint: depth <= log2 n and no heapsort fallback on the natural inputs (n = 100, 1,000, 5,000)", ok)
-    ok = all(hybrid_sort(list(range(n))).moves <= n // 2 for n in (1000, 4000))
-    check("Joint: an already sorted list is left almost untouched (moves <= n/2)", ok)
-    v1 = hybrid_sort_v1(list(range(4000)))
-    check(f"Joint-v1 (rejected): sorted input triggers heapsort fallbacks ({v1.heapsort_fallbacks}) - the reason for "
-          f"rejecting it", v1.heapsort_fallbacks > 0)
-
-    print("-" * 100)
-    ok_perm, ok_replay = True, True
-    for fn in (quick_sort_a, quick_sort_b, hybrid_sort_unguarded):
-        for n in (50, 300, 1000):
-            killer, attacked = make_killer(fn, n)
-            ok_perm &= sorted(killer) == list(range(n))
-            ok_replay &= fn(list(killer)).comparisons == attacked
-    check("Adversary: every killer input is a permutation of 0..n-1 (A, B seed 42, Joint unguarded)", ok_perm)
-    check("Adversary: replaying the sort on its killer repeats exactly the comparisons made under attack", ok_replay)
-    ok_quad, ok_guard, ok_fb = True, True, True
-    for n in (500, 1000, 2000):
-        killer = make_killer(hybrid_sort_unguarded, n)[0]
-        ok_quad &= hybrid_sort_unguarded(list(killer)).comparisons >= n * n / 8
-        st = hybrid_sort(list(killer))
-        ok_guard &= st.comparisons <= 6 * n * math.log2(n)
-        ok_fb &= st.heapsort_fallbacks >= 1
-    check("Killer-J forces the unguarded joint design to >= n^2/8 comparisons (quadratic)", ok_quad)
-    check("With the depth budget the same killers cost <= 6 n log2 n comparisons (O(n log n) guarantee)", ok_guard)
-    check("The guard is what saves it: at least one heapsort fallback on every killer-J input", ok_fb)
+    for n in list(range(1, 130)) + [1000, 4097]:
+        c = Counter()
+        dc_joint(hourly_profits(n), c)
+        ok &= c.additions == 4 * (n - 1) and c.comparisons == 4 * (n - 1) and c.calls == 2 * n - 1
+        ok &= c.max_depth == (math.ceil(math.log2(n)) if n > 1 else 0)
+    check("joint design: exactly 4(n-1) additions, 4(n-1) comparisons, 2n-1 calls, depth ceil(log2 n) (131 sizes)", ok)
     ok = True
-    for n in (500, 1000):
-        killer = make_killer(quick_sort_a, n)[0]
-        ok &= quick_sort_a(list(killer)).comparisons >= n * n / 8
-    check("Killer-A forces proposal A to >= n^2/8 comparisons (median-of-3 is deterministic)", ok)
-    killer = make_killer(quick_sort_b, 1000)[0]
-    check("Killer-B hurts B only with the attacked seed: seed 42 quadratic, seed 7 below 2 n log2 n",
-          quick_sort_b(list(killer)).comparisons >= 1000 ** 2 / 8 and
-          quick_sort_b(list(killer), seed=7).comparisons < 2 * 1000 * math.log2(1000))
-    data = natural_inputs(2000, rng)[0]
-    s1, s2 = hybrid_sort(list(data)), hybrid_sort(list(data))
-    check("Joint is deterministic: the same batch always costs the same work",
-          (s1.comparisons, s1.moves, s1.max_depth) == (s2.comparisons, s2.moves, s2.max_depth))
-
+    for k in range(0, 13):
+        n = 2 ** k
+        c = Counter()
+        dc_crossing(hourly_profits(n), c)
+        ok &= c.comparisons == n * k and c.additions == n * k + n - 1
+    check("crossing variant: exactly n log2 n comparisons and n log2 n + n - 1 additions (n = 2^k, k = 0..12)", ok)
+    ok = True
+    for n in (1, 2, 7, 50, 300):
+        c = Counter()
+        brute_force_max_subarray(hourly_profits(n), c)
+        ok &= c.additions == c.comparisons == n * (n + 1) // 2
+    check("brute force: exactly n(n+1)/2 additions and n(n+1)/2 comparisons (n = 1, 2, 7, 50, 300)", ok)
+    check("counts are data-independent: same joint/crossing counts for random, sorted and all-loss data (n = 777)",
+          len({count_pair(p) for p in (hourly_profits(777), sorted(hourly_profits(777)), [-1] * 777)}) == 1)
     print("-" * 100)
-    print(f"RESULT: {sum(results)}/{len(results)} tests passed")
+    check("Stage 2 evidence: Student A's proposal misses the crossing run on the demo (410 instead of 690)",
+          proposal_a(demo)[0] == 410)
+    check("Stage 2 evidence: Student B's proposal returns 0 (empty run) on the all-loss day instead of -15",
+          proposal_b(storm)[3] == 0)
+    check("Stage 2 evidence: Student B's O(1) combine gives the right sum whenever some hour is profitable",
+          all(proposal_b(p)[3] == brute_force_max_subarray(p)[0]
+              for p in ([rng.randint(-50, 50) for _ in range(rng.randint(1, 40))] for _ in range(500))
+              if max(p) > 0))
+    print("-" * 100)
+    print(f"RESULT: {sum(RESULTS)}/{len(RESULTS)} tests passed")
+
+
+def raises_value_error():
+    try:
+        dc_joint([])
+    except ValueError:
+        return True
+    return False
+
+
+def count_pair(p):
+    cj, cx = Counter(), Counter()
+    dc_joint(p, cj)
+    dc_crossing(p, cx)
+    return cj.additions, cj.comparisons, cx.additions, cx.comparisons
 
 
 if __name__ == "__main__":

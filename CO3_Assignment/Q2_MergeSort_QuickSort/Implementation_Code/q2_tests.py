@@ -5,7 +5,8 @@ Run:  py q2_tests.py      (prints PASS/FAIL per test and a final RESULT line)
 import math
 import random
 
-from q2_sorting import ALGORITHMS, merge_sort, quick_sort
+from q2_partition_study import predicted_depth
+from q2_sorting import ALGORITHMS, designed_input, merge_sort, quick_sort
 
 results = []
 
@@ -89,6 +90,43 @@ def main():
         for rule in ("random", "median3"):
             ok &= quick_sort([rng.random() for _ in range(n)], rule).comparisons < bound
     check("Quick-random/median3 on random data stay below 2 n log2 n comparisons (n = 1,000 and 3,000)", ok)
+
+    # ---- partition study (pivot = last element): Student A's designed inputs
+    ok = all(sorted(designed_input(n, f)) == list(range(n)) for n in range(0, 200) for f in (0.5, 0.9))
+    check("Designed inputs (balanced and 90:10) are permutations of 0..n-1 (n = 0..199)", ok)
+    ok = True
+    for k in range(2, 12):
+        n = 2 ** k - 1
+        rec = []
+        st = quick_sort(designed_input(n, 0.5), "last", record=rec)
+        ok &= all(l == r for _, l, r in rec) and st.max_depth == k - 1
+        ok &= st.comparisons == (n + 1) * k - 2 * n
+    check("Balanced input, n = 2^k - 1: every partition L = R, depth log2(n+1) - 1, (n+1)log2(n+1) - 2n comps", ok)
+    ok = True
+    for n in range(2, 300):
+        rec = []
+        quick_sort(designed_input(n, 0.5), "last", record=rec)
+        ok &= all(abs(l - r) <= 1 for _, l, r in rec)
+    check("Balanced input, every n = 2..299: every pivot is a median (|L - R| <= 1 in every partition)", ok)
+    ok = True
+    for n in list(range(2, 300)) + [1023, 4095]:
+        rec = []
+        st = quick_sort(designed_input(n, 0.9), "last", record=rec)
+        ok &= all(l == int(0.9 * (l + r)) for _, l, r in rec) and st.max_depth == predicted_depth(n, 0.9)
+    check("90:10 input: every partition of m keys puts int(0.9(m-1)) on the left; depth = predicted (n <= 4,095)", ok)
+    ok = True
+    for n in range(2, 400, 9):
+        rec = []
+        st = quick_sort(list(range(n)), "last", record=rec)
+        ok &= all(r == 0 for _, l, r in rec) and len(rec) == n - 1 and st.max_depth == n - 1
+    check("Sorted input: all n - 1 partitions are (m-1) | 0 and the recursion depth is n - 1 (severely unbalanced)", ok)
+    ok = True
+    for n in range(2, 600, 11):
+        rec = []
+        st = merge_sort([rng.random() for _ in range(n)], record=rec)
+        ok &= all(l - r in (0, 1) for _, l, r in rec) and len(rec) == n - 1
+        ok &= st.max_depth == math.ceil(math.log2(n))
+    check("Merge Sort: every division is ceil(m/2) | floor(m/2), n - 1 divisions, depth ceil(log2 n), any data", ok)
 
     print("-" * 92)
     print(f"RESULT: {sum(results)}/{len(results)} tests passed")

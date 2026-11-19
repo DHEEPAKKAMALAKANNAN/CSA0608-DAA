@@ -6,6 +6,8 @@ Reads the CSVs written by q6_median_of_medians.py and q6_meet_in_the_middle.py a
   ../Median_of_Medians/results/q6_mom_decomposition.png  groups-of-5 diagram + recursion tree of sizes
   ../Meet_in_the_Middle/results/q6_mitm_growth.png       operations and time against n with the 2-second limit
   ../Meet_in_the_Middle/results/q6_mitm_decomposition.png  split into halves, sorted sum lists, matching
+  ../Median_of_Medians/results/q6_pivot_quality.png      distribution over 300 runs + kept fraction per round
+  ../Meet_in_the_Middle/results/q6_mitm_memory.png       peak memory against n + time-memory trade-off (n = 26)
 Run:  py -3 q6_graphs.py
 """
 import csv
@@ -266,7 +268,82 @@ def mitm_decomposition_figure():
     plt.close(fig)
 
 
+def pivot_quality_figure():
+    """Histogram of comparisons/n over 300 runs and of the kept fraction per round (q6_pivot_quality.py data)."""
+    runs = load(os.path.join(MOM, "q6_pivot_quality_runs.csv"))
+    keeps = load(os.path.join(MOM, "q6_pivot_quality_keeps.csv"))
+    srt = {r["method"]: r for r in load(os.path.join(MOM, "q6_pivot_quality_sorted.csv"))}
+    fig, (ax1, ax2) = plt.subplots(1, 2, figsize=(13, 5.0))
+    bins = [x / 4 for x in range(8, 46)]
+    for key, lab, col in (("qs_random_cpn", "randomised QuickSelect (300 seeds, one batch)", "#1f77b4"),
+                          ("qs_first_shuffled_cpn", "first-element pivot (300 shuffled batches)", "#d62728"),
+                          ("mom_g5_shuffled_cpn", "Median of Medians g = 5 (300 shuffled batches)", "#ff7f0e")):
+        ax1.hist([float(r[key]) for r in runs], bins=bins, alpha=0.55, color=col, label=lab, edgecolor="white")
+    ax1.set_xlabel("element comparisons / n  (n = 10,001, median)")
+    ax1.set_ylabel("number of runs")
+    first = float(srt["QuickSelect first pivot"]["comparisons_per_n"])
+    ax1.set_title("Cost of one selection over 300 runs\n"
+                  f"(first pivot on the SORTED batch: {first:,.0f} n - off the scale)")
+    ax1.grid(alpha=0.3)
+    ax1.legend(fontsize=8.5)
+    kb = [x / 20 for x in range(0, 21)]
+    ax2.hist([float(r["kept_fraction"]) for r in keeps if r["method"] == "qs_random"], bins=kb, density=True,
+             alpha=0.6, color="#1f77b4", label="randomised QuickSelect", edgecolor="white")
+    ax2.hist([float(r["kept_fraction"]) for r in keeps if r["method"] == "mom_g5"], bins=kb, density=True,
+             alpha=0.6, color="#ff7f0e", label="Median of Medians g = 5", edgecolor="white")
+    ax2.axvline(0.7, color="black", ls="--", lw=1.2)
+    ax2.text(0.71, ax2.get_ylim()[1] * 0.9, "MoM bound 7n/10 + 6", fontsize=9)
+    ax2.axvspan(0.9, 1.0, color="red", alpha=0.08)
+    ax2.text(0.905, ax2.get_ylim()[1] * 0.6, "poor\n(> 90 %)", fontsize=9, color="darkred")
+    ax2.set_xlabel("fraction of the round kept for the next round (rounds with n >= 100)")
+    ax2.set_ylabel("density")
+    ax2.set_title("Partition quality per round")
+    ax2.grid(alpha=0.3)
+    ax2.legend(fontsize=8.5, loc="upper left")
+    fig.tight_layout()
+    fig.savefig(os.path.join(MOM, "q6_pivot_quality.png"), dpi=150)
+    plt.close(fig)
+
+
+def mitm_memory_figure():
+    """Peak memory of MitM vs brute force against n, and the k / n - k trade-off at n = 26."""
+    mem = load(os.path.join(MITM, "q6_mitm_memory.csv"))
+    trade = load(os.path.join(MITM, "q6_mitm_tradeoff.csv"))
+    fig, (ax1, ax2) = plt.subplots(1, 2, figsize=(13, 5.0))
+    mi = [r for r in mem if r["method"].startswith("MitM")]
+    bf = [r for r in mem if r["method"].startswith("brute")]
+    ax1.semilogy([int(r["n"]) for r in mi], [int(r["peak_bytes"]) / 1024 for r in mi], "o-", color="#2ca02c",
+                 label="Meet-in-the-Middle (measured peak)")
+    ax1.semilogy([int(r["n"]) for r in bf], [max(int(r["peak_bytes"]), 1) / 1024 for r in bf], "s-",
+                 color="#d62728", label="brute force (measured peak)")
+    per = float(mi[-1]["bytes_per_stored_sum"])
+    xs = list(range(16, 41, 2))
+    ax1.semilogy(xs, [2 * 2 ** (n // 2) * per / 1024 for n in xs], "--", color="gray",
+                 label=f"model 2·2^(n/2) sums × {per:.0f} B")
+    ax1.set_xlabel("number of parcels n")
+    ax1.set_ylabel("peak memory (KiB, log scale)")
+    ax1.set_title("Extra memory of Meet-in-the-Middle")
+    ax1.grid(alpha=0.3, which="both")
+    ax1.legend(fontsize=8.5)
+    one = [r for r in trade if r["variant"].startswith("store")]
+    ks = [int(r["k"]) for r in one]
+    ax2.semilogy(ks, [int(r["operations"]) for r in one], "o-", color="#1f77b4", label="operations (time)")
+    ax2.semilogy(ks, [int(r["stored_sums"]) for r in one], "s-", color="#9467bd", label="stored sums (memory)")
+    ax2.axvline(13, color="black", ls=":", lw=1)
+    ax2.text(13.2, 3e2, "balanced k = n/2", fontsize=9)
+    ax2.set_xlabel("k = parcels whose subset sums are stored (n = 26)")
+    ax2.set_ylabel("count (log scale)")
+    ax2.set_title("Time–memory trade-off at n = 26 (store 2^k, enumerate 2^(n−k))")
+    ax2.grid(alpha=0.3, which="both")
+    ax2.legend(fontsize=8.5)
+    fig.tight_layout()
+    fig.savefig(os.path.join(MITM, "q6_mitm_memory.png"), dpi=150)
+    plt.close(fig)
+
+
 def main():
+    pivot_quality_figure()
+    mitm_memory_figure()
     rows = load(os.path.join(MOM, "q6_mom_comparisons.csv"))
     worst = load(os.path.join(MOM, "q6_mom_worstcase.csv"))
     mom_comparisons_figure(rows)
@@ -278,7 +355,8 @@ def main():
     mitm_decomposition_figure()
     for f in ("Median_of_Medians/results/q6_mom_comparisons.png", "Median_of_Medians/results/q6_mom_inputs.png",
               "Median_of_Medians/results/q6_mom_decomposition.png", "Meet_in_the_Middle/results/q6_mitm_growth.png",
-              "Meet_in_the_Middle/results/q6_mitm_decomposition.png"):
+              "Meet_in_the_Middle/results/q6_mitm_decomposition.png", "Median_of_Medians/results/q6_pivot_quality.png",
+              "Meet_in_the_Middle/results/q6_mitm_memory.png"):
         print("wrote ../" + f)
 
 

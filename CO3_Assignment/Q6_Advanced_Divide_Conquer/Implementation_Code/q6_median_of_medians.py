@@ -98,7 +98,13 @@ def sort_then_pick(a, k, counter):
     return merge_sort_count(a, counter)[k]
 
 
-def quickselect_random(a, k, counter, rng):
+def record_keep(keeps, n, kept):
+    """Optional instrumentation: remember (size of this round, size kept for the next round)."""
+    if keeps is not None:
+        keeps.append((n, kept))
+
+
+def quickselect_random(a, k, counter, rng, keeps=None):
     """k-th smallest with a uniformly random pivot (expected linear, no worst-case guarantee)."""
     while True:
         if len(a) == 1:
@@ -108,15 +114,18 @@ def quickselect_random(a, k, counter, rng):
         counter.comparisons += comps
         counter.rounds += 1
         if k < len(less):
+            record_keep(keeps, len(a), len(less))
             a = less
         elif k < len(less) + len(equal):
+            record_keep(keeps, len(a), 0)
             return pivot
         else:
+            record_keep(keeps, len(a), len(greater))
             k -= len(less) + len(equal)
             a = greater
 
 
-def quickselect_first(a, k, counter):
+def quickselect_first(a, k, counter, keeps=None):
     """k-th smallest with the FIRST element as pivot (deterministic; quadratic on sorted input)."""
     while True:
         if len(a) == 1:
@@ -125,15 +134,18 @@ def quickselect_first(a, k, counter):
         counter.comparisons += comps
         counter.rounds += 1
         if k < len(less):
+            record_keep(keeps, len(a), len(less))
             a = less
         elif k < len(less) + len(equal):
+            record_keep(keeps, len(a), 0)
             return equal[0]                              # equal always holds the pivot
         else:
+            record_keep(keeps, len(a), len(greater))
             k -= len(less) + len(equal)
             a = greater
 
 
-def mom_select(a, k, counter, group=5):
+def mom_select(a, k, counter, group=5, keeps=None):
     """k-th smallest (0-based) of list a by the Median-of-Medians algorithm with groups of `group` elements."""
     while True:
         n = len(a)
@@ -149,7 +161,7 @@ def mom_select(a, k, counter, group=5):
             medians.append(grp[(len(grp) - 1) // 2])
         counter.comparisons += comps
         # CONQUER (1): the pivot is the median of the medians, found by the same algorithm
-        pivot = mom_select(medians, (len(medians) - 1) // 2, counter, group)
+        pivot = mom_select(medians, (len(medians) - 1) // 2, counter, group)   # (no keeps: inner recursion)
         # COMBINE: three-way partition around the pivot
         less, equal, greater, comps = partition3(a, pivot)
         counter.comparisons += comps
@@ -158,10 +170,12 @@ def mom_select(a, k, counter, group=5):
         if k < len(less):
             kept = less
         elif k < len(less) + len(equal):
+            record_keep(keeps, n, 0)
             return pivot
         else:
             k -= len(less) + len(equal)
             kept = greater
+        record_keep(keeps, n, len(kept))
         if n >= 100:
             counter.max_keep = max(counter.max_keep, len(kept) / n)
         a = kept

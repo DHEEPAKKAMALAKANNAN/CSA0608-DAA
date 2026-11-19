@@ -1,5 +1,0 @@
-n,unguarded_comparisons,unguarded_depth,unguarded_ms,guarded_comparisons,guarded_depth,heapsort_fallbacks,guarded_ms
-1000,253395,1,15.38,34608,1,1,4.54
-2000,1006895,1,59.66,78103,1,1,10.25
-4000,4013895,1,242.29,173327,1,1,22.84
-8000,16027895,1,982.91,379797,1,1,51.23

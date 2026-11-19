@@ -1,4 +1,7 @@
-# Q6 – Advanced Divide-and-Conquer: Pseudocode (prepared before implementation)
+# Q6 – Advanced Divide-and-Conquer Mini-Investigations: Pseudocode and Flowcharts
+
+Student A is the primary contributor for (a) Median of Medians, Student B for (b) Meet-in-the-Middle.
+The flowcharts are drawn by `../Implementation_Code/q6_flowcharts.py`.
 
 ## (a) Median of Medians – deterministic selection (SLA reporting)
 
@@ -34,6 +37,10 @@ Algorithm Partition3(A, p)
 6. return (L, E, R)
 ```
 
+![Flowchart – Median of Medians](q6_flowchart_median_of_medians.png)
+
+![Flowchart – QuickSelect with random or first-element pivot](q6_flowchart_quickselect.png)
+
 Baselines: **SortThenPick** (merge sort, then A[k]: Θ(n log n)), **RandomisedQuickselect** (lines 2–6 replaced by
 `p = A[random index]`: expected Θ(n), worst case Θ(n²)), **FirstPivotQuickselect** (`p = A[0]`: Θ(n²) on sorted input).
 
@@ -42,7 +49,9 @@ T(n) ≤ d(n/5 + 1) + d(7n/10 + 6) + cn = (9/10)dn + 7d + cn ≤ dn whenever dn/
 Group size 3: T(n) ≤ T(n/3) + T(2n/3) + cn — the fractions add to 1, every level of the recursion tree costs cn, Θ(n log n).
 Group size 7: T(n) ≤ T(n/7) + T(5n/7 + 8) + cn — fractions add to 6/7 < 1, Θ(n).
 
-Decomposition diagram: `../Median_of_Medians/results/q6_mom_decomposition.png`.
+Decomposition diagram: `../Median_of_Medians/results/q6_mom_decomposition.png`. Pivot-quality evidence
+(300 seeds of randomised QuickSelect, first-element pivot on sorted input, MoM kept fraction ≤ 7n/10 + 6):
+`../Implementation_Code/q6_pivot_quality.py`.
 
 ## (b) Meet-in-the-Middle – payload packing
 
@@ -82,10 +91,27 @@ Algorithm BestFillBruteForce(w, n, W)                              // reference:
 7. return best
 ```
 
+![Flowchart – Meet-in-the-Middle](q6_flowchart_meet_in_the_middle.png)
+
 Improvement (also implemented): replace lines 4–7 by a **two-pointer** scan (i over A ascending, j over B descending:
 if A[i] + B[j] ≤ W record it and i = i + 1, else j = j − 1) → combine step Θ(2^(n/2)).
 
 **Complexity.** Brute force: 2ⁿ subsets, Θ(2ⁿ) time, Θ(n) memory. MITM: generation Σ 2ⁱ = Θ(2^(n/2)) additions and
 merge comparisons per half; combine 2^(n/2) binary searches of ≈ n/2 probes → Θ(n · 2^(n/2)) time, Θ(2^(n/2)) memory.
+
+**Time–memory trade-off variant** (`best_fill_mitm_split`, also implemented):
+
+```
+Algorithm BestFillSplit(w, n, W, k)                                // store k parcels, enumerate n - k
+1. A = SortedSubsetSums(w[0 .. k-1])                               // memory: 2^k sums
+2. best = largest A[j] <= W
+3. for every subset S of w[k .. n-1] in Gray-code order do          // 2^(n-k) subsets, 1 addition each
+4.     t = total(S)
+5.     if t <= W then best = max(best, t + largest A[j] <= W - t)  // binary search, ~k probes
+6. return best
+```
+
+Time ≈ 3·2ᵏ + k·2ⁿ⁻ᵏ operations, memory 2ᵏ sums (k = 0: brute force; k = n/2: balanced split).
+Memory evidence: `../Implementation_Code/q6_mitm_memory.py`.
 
 Decomposition diagram: `../Meet_in_the_Middle/results/q6_mitm_decomposition.png`.

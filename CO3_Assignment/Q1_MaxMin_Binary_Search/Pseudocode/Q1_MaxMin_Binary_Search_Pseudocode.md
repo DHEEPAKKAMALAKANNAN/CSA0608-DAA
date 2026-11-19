@@ -1,4 +1,6 @@
-# Q1 – Max–Min and Binary Search: pseudocode (written before implementation)
+# Q1 – Decomposition and Elimination in Ordered Data: pseudocode and flowcharts
+
+Part A = Finding Maximum and Minimum (D&C / tournament strategy); Part B = Binary Search (elimination).
 
 **Scenario.** A drone's controller reports the highest and lowest battery-cell temperature of the n readings of a
 flight (Max–Min). Hub scanners look up parcel IDs in a sorted manifest (Binary Search).
@@ -69,5 +71,17 @@ Algorithm BinarySearch(A, key, lo, hi)         // A sorted ascending; returns in
 
 **Recurrence:** C(n) = C(⌊n/2⌋) + 1, C(1) = 1 ⇒ C_worst(n) = ⌊log₂ n⌋ + 1 (Master Theorem case 2 with a = 1, b = 2,
 f(n) = 1 = Θ(n^log₂1)) ⇒ Θ(log n).
+
+## 4. Flowcharts (drawn by `../Implementation_Code/q1_flowcharts.py`)
+
+![Flowchart of MaxMinDC](q1_flowchart_maxmin_dc.png)
+
+![Flowchart of recursive BinarySearch](q1_flowchart_binary_search.png)
+
+## 5. Elimination rule of Binary Search (Part B)
+
+If key < A[mid], every element of A[mid..hi] is ≥ A[mid] > key (A is sorted), so the key cannot be there and the
+search continues in A[lo..mid − 1]; symmetrically for key > A[mid]. Each probe removes at least ⌈n/2⌉ candidates; the
+range strictly shrinks, so after at most ⌊log₂ n⌋ + 1 probes it is found or the range is empty (lo > hi).
 
 Decomposition diagrams: `../Implementation_Code/results/q1_maxmin_tree.png`, `q1_split_rules.png`, `q1_bsearch_tree.png`.

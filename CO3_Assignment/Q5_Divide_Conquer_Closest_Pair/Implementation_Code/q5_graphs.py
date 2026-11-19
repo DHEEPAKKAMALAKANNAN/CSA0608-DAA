@@ -5,6 +5,8 @@ Reads results/q5_scaling.csv and results/q5_strip_histogram.csv (written by q5_e
   results/q5_time.png            running time against n with the 1-second update cycle
   results/q5_strip_histogram.png neighbours examined per strip point at n = 20,000 (bound 7)
   results/q5_decomposition.png   geometric decomposition of 32 drones + recursion tree of sub-problem sizes
+  results/q5_crossover.png       small-n crossover: distances, total operations and time (from q5_crossover.csv)
+  results/q5_strip_boundary.png  why the dividing line needs special treatment + the delta x 2delta packing box
 Run:  py -3 q5_graphs.py
 """
 import csv
@@ -198,6 +200,109 @@ def decomposition_figure():
     plt.close(fig)
 
 
+def crossover_figure(rows):
+    """Small-n crossover: operation counts (left) and median time (right), brute force vs D&C."""
+    ns = [int(r["n"]) for r in rows]
+    fig, (ax1, ax2) = plt.subplots(1, 2, figsize=(13, 5.0))
+    ax1.plot(ns, [float(r["bf_distances"]) for r in rows], "k-o", ms=4, label="brute force: n(n−1)/2 distances")
+    ax1.plot(ns, [float(r["dc_distances"]) for r in rows], "-s", color="#1f77b4", ms=4, label="D&C: distances")
+    ax1.plot(ns, [float(r["dc_total_ops"]) for r in rows], "--^", color="#ff7f0e", ms=4,
+             label="D&C: distances + sort/merge comparisons")
+    ax1.set_xscale("log", base=2)
+    ax1.set_yscale("log")
+    ax1.set_xlabel("number of drones n")
+    ax1.set_ylabel("basic operations (mean of 5 fleets)")
+    def first_below(kb, kd):
+        """Smallest n from which D&C stays below brute force."""
+        ans = None
+        for r in reversed(rows):
+            if float(r[kd]) < float(r[kb]):
+                ans = int(r["n"])
+            else:
+                break
+        return ans
+    ax1.set_title(f"Operation counts: D&C cheaper from n = {first_below('bf_distances', 'dc_distances')} "
+                  f"(distances), n = {first_below('bf_total_ops', 'dc_total_ops')} (total)")
+    ax1.grid(True, which="both", alpha=0.3)
+    ax1.legend(fontsize=8)
+    ax2.plot(ns, [float(r["bf_time_us"]) for r in rows], "k-o", ms=4, label="brute force")
+    ax2.plot(ns, [float(r["dc_time_us"]) for r in rows], "-s", color="#1f77b4", ms=4, label="Divide-and-Conquer")
+    cross = None
+    for r in reversed(rows):
+        if float(r["dc_time_us"]) < float(r["bf_time_us"]):
+            cross = int(r["n"])
+        else:
+            break
+    if cross:
+        ax2.axvline(cross, color="red", ls="--", lw=1.2, label=f"time crossover ≈ n = {cross}")
+    ax2.set_xscale("log", base=2)
+    ax2.set_yscale("log")
+    ax2.set_xlabel("number of drones n")
+    ax2.set_ylabel("time per call (µs, median of 7 loops)")
+    ax2.set_title("Measured time: overhead dominates below ≈ 64–96 drones")
+    ax2.grid(True, which="both", alpha=0.3)
+    ax2.legend(fontsize=8)
+    fig.tight_layout()
+    fig.savefig(os.path.join(RES, "q5_crossover.png"), dpi=150)
+    plt.close(fig)
+
+
+def strip_boundary_figure():
+    """Left: a pair that straddles the dividing line is closer than the best pair of either half.
+    Right: the delta x 2delta box above a strip point holds at most 8 points -> at most 7 neighbours."""
+    from matplotlib.patches import Rectangle
+    fig, (ax, ab) = plt.subplots(1, 2, figsize=(13, 5.6))
+    left = [(1.0, 1.0), (1.0, 4.0), (2.4, 6.5), (3.6, 2.6), (2.0, 8.5)]
+    right = [(6.4, 1.2), (6.4, 4.5), (8.5, 7.0), (5.6, 8.2), (7.8, 3.0)]
+    cross = [(4.55, 5.3), (5.25, 5.55)]          # one point on each side of x = 5
+    lp, rp = left + [cross[0]], right + [cross[1]]
+    mid, delta = 5.0, 2.1
+    ax.axvspan(mid - delta, mid + delta, color="gold", alpha=0.3, label="strip |x − mid| < δ")
+    ax.axvline(mid, color="red", lw=2.2, label="dividing line x = mid (median x)")
+    ax.scatter(*zip(*lp), s=40, color="#1f77b4", zorder=3, label="left half")
+    ax.scatter(*zip(*rp), s=40, color="#2ca02c", marker="s", zorder=3, label="right half")
+    ax.plot([1.0, 1.0], [1.0, 4.0], color="#1f77b4", lw=2, ls=":")
+    ax.text(0.6, 2.5, "δ_L", fontsize=10, color="#1f77b4")
+    ax.plot([7.8, 6.4], [3.0, 1.2], color="#2ca02c", lw=2, ls=":")
+    ax.text(7.25, 1.85, "δ_R", fontsize=10, color="#2ca02c")
+    ax.plot(*zip(*cross), color="crimson", lw=3, zorder=4, label="true closest pair (crosses the line)")
+    ax.annotate("found only by the\ncombine (strip) step", xy=(4.9, 5.45), xytext=(5.6, 9.3), fontsize=9,
+                arrowprops=dict(arrowstyle="->", color="crimson"))
+    ax.set_xlim(0, 10)
+    ax.set_ylim(0, 10)
+    ax.set_xlabel("x (km)")
+    ax.set_ylabel("y (km)")
+    ax.set_title("Why the boundary needs special treatment")
+    ax.legend(fontsize=7.5, loc="lower center", ncol=2, framealpha=0.95)
+    ax.grid(alpha=0.2)
+
+    d = 1.0
+    ab.add_patch(Rectangle((-d, 0), 2 * d, d, fill=False, lw=2, ec="black"))
+    for i in range(4):
+        for j in range(2):
+            ab.add_patch(Rectangle((-d + i * d / 2, j * d / 2), d / 2, d / 2, fill=True,
+                                   fc="#dbe8f6" if i < 2 else "#d9ead3", ec="grey", lw=0.8, ls="--"))
+    ab.plot([0, 0], [-0.04, 1.04], color="red", lw=2)
+    pts = [(-0.98, 0.02), (-0.02, 0.0), (-0.98, 0.98), (-0.02, 0.98),
+           (0.02, 0.04), (0.98, 0.03), (0.02, 0.97), (0.98, 0.98)]
+    ab.scatter(*zip(*pts), s=45, color="#1f3864", zorder=3)
+    ab.scatter([-0.02], [0.0], s=120, facecolor="none", edgecolor="crimson", lw=2, zorder=4)
+    ab.text(-0.3, -0.12, "strip point p", color="crimson", fontsize=9)
+    ab.text(-0.5, 1.08, "left δ × δ square:\n≤ 4 points (pairwise ≥ δ)", ha="center", fontsize=9)
+    ab.text(0.5, 1.08, "right δ × δ square:\n≤ 4 points (pairwise ≥ δ)", ha="center", fontsize=9)
+    ab.text(0, -0.32, "8 cells of size δ/2 × δ/2, diagonal δ/√2 < δ ⇒ at most one point per cell\n"
+            "⇒ box above p holds ≤ 8 points ⇒ p is compared with at most 7 following strip points",
+            ha="center", fontsize=9.5, weight="bold")
+    ab.set_xlim(-1.4, 1.4)
+    ab.set_ylim(-0.5, 1.4)
+    ab.set_aspect("equal")
+    ab.axis("off")
+    ab.set_title("Packing argument: the δ × 2δ box above a strip point")
+    fig.tight_layout()
+    fig.savefig(os.path.join(RES, "q5_strip_boundary.png"), dpi=150)
+    plt.close(fig)
+
+
 def main():
     rows = load("q5_scaling.csv")
     hist = load("q5_strip_histogram.csv")
@@ -205,7 +310,10 @@ def main():
     time_figure(rows)
     histogram_figure(hist)
     decomposition_figure()
-    for f in ("q5_operations.png", "q5_time.png", "q5_strip_histogram.png", "q5_decomposition.png"):
+    crossover_figure(load("q5_crossover.csv"))
+    strip_boundary_figure()
+    for f in ("q5_operations.png", "q5_time.png", "q5_strip_histogram.png", "q5_decomposition.png",
+              "q5_crossover.png", "q5_strip_boundary.png"):
         print("wrote results/" + f)
 
 

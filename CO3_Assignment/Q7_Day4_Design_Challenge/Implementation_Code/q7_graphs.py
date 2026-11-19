@@ -1,189 +1,166 @@
-"""Q7 graphs - design diagram of the joint design and the comparison graphs of all variants.
+"""Q7 graphs and diagrams - Maximum Subarray Sum (reads results/*.csv written by q7_experiments.py).
 
-Writes to results/: q7_design_diagram.png, q7_ratio_n8000.png, q7_growth.png, q7_guard_seed.png, q7_depth_moves.png
-Run after q7_experiments.py:  py q7_graphs.py
+Writes to results/:
+  q7_growth.png          counted operations and median time against n (log-log) with theoretical curves
+  q7_small_n.png         time per call for small n: where the D&C design overtakes the O(n^2) baseline
+  q7_three_cases.png     the decomposition: best run in the left half, in the right half, or crossing the split
+  q7_recursion_tree.png  recursion tree of the 8-hour demo with the 4-tuple returned by every node
+Run:  py -3 q7_graphs.py
 """
 import csv
 import math
 import os
 
 import matplotlib
-
 matplotlib.use("Agg")
 import matplotlib.pyplot as plt  # noqa: E402
-from matplotlib.patches import FancyBboxPatch, Rectangle  # noqa: E402
+from matplotlib.patches import FancyBboxPatch  # noqa: E402
+
+from q7_max_subarray import Counter, dc_joint  # noqa: E402
 
 RESULTS = os.path.join(os.path.dirname(os.path.abspath(__file__)), "results")
-VARIANTS = ("Baseline", "A", "B", "Joint-v1", "Joint")
-COLORS = {"Baseline": "#d62728", "A": "#1f77b4", "B": "#2ca02c", "Joint-v1": "#9467bd", "Joint": "#ff7f0e"}
-MARKS = {"Baseline": "s", "A": "o", "B": "^", "Joint-v1": "v", "Joint": "D"}
-DATASETS = ("random", "sorted", "reverse", "slots", "all-equal", "killer-A", "killer-B", "killer-J")
+DEMO = [-120, 340, -60, 410, -380, 150, 220, -90]
 
 
-def read(name):
+def load(name):
     with open(os.path.join(RESULTS, name), encoding="utf-8") as f:
         return list(csv.DictReader(f))
 
 
-def get(rows, variant, dataset, n, key):
-    r = next(r for r in rows if r["variant"] == variant and r["dataset"] == dataset and int(r["n"]) == n)
-    return float(r[key])
-
-
-def fig_design():
-    fig, (ax1, ax2) = plt.subplots(1, 2, figsize=(14, 5.4), gridspec_kw={"width_ratios": [1.1, 1]})
-    # left: the fat partition of one sub-array
-    stages = [("during the scan", [("= v", 1.2, "#ffe699"), ("< v", 2.6, "#c6e0b4"), ("unscanned", 2.4, "#ededed"),
-                                   ("> v", 2.6, "#f8cbad"), ("= v", 1.2, "#ffe699")]),
-              ("after the scan", [("= v", 1.4, "#ffe699"), ("< v", 3.6, "#c6e0b4"), ("> v", 3.6, "#f8cbad"),
-                                  ("= v", 1.4, "#ffe699")]),
-              ("equal blocks swapped to the middle", [("< v  -> recurse", 3.6, "#c6e0b4"),
-                                                     ("= v  DONE", 2.8, "#ffe699"),
-                                                     ("> v  -> recurse/loop", 3.6, "#f8cbad")])]
-    for row, (label, parts) in enumerate(stages):
-        x, y = 0, -row * 1.6
-        for text, w, color in parts:
-            ax1.add_patch(Rectangle((x, y), w, 0.9, fc=color, ec="#1f3864"))
-            ax1.text(x + w / 2, y + 0.45, text, ha="center", va="center", fontsize=8.5)
-            x += w
-        ax1.text(-0.2, y + 0.45, label, ha="right", va="center", fontsize=9)
-    ax1.annotate("", xy=(3.8, 0.95), xytext=(3.8, 1.5), arrowprops=dict(arrowstyle="->"))
-    ax1.text(3.8, 1.55, "left pointer pb (A's Hoare scan)", ha="center", fontsize=8)
-    ax1.annotate("", xy=(6.2, 0.95), xytext=(6.2, 1.5), arrowprops=dict(arrowstyle="->"))
-    ax1.text(7.0, 1.55, "right pointer pc", ha="center", fontsize=8)
-    ax1.set_xlim(-4.6, 10.4)
-    ax1.set_ylim(-3.6, 2.1)
-    ax1.axis("off")
-    ax1.set_title("Divide: fat partition around v = median of three\n(keys equal to v are finished: B's 3-way idea)",
-                  fontsize=10)
-    # right: control flow of one call
-    boxes = [(0.5, 4.6, "sort(lo, hi, budget)", "#eef3fb"),
-             (0.5, 3.6, "size <= 16 ?  -> insertion sort (B)", "#e2efda"),
-             (0.5, 2.6, "budget = 0 ?  -> heapsort (joint guard)", "#fde9d9"),
-             (0.5, 1.6, "v = median of three (A);  fat partition", "#eef3fb"),
-             (0.5, 0.6, "recurse on smaller part (A), loop on larger", "#eef3fb")]
-    for x, y, text, color in boxes:
-        ax2.add_patch(FancyBboxPatch((x, y), 9, 0.7, boxstyle="round,pad=0.08", fc=color, ec="#1f3864"))
-        ax2.text(x + 4.5, y + 0.35, text, ha="center", va="center", fontsize=9)
-    for y in (4.6, 3.6, 2.6, 1.6):
-        ax2.annotate("", xy=(5, y - 0.28), xytext=(5, y - 0.02), arrowprops=dict(arrowstyle="->"))
-    ax2.annotate("", xy=(9.7, 4.95), xytext=(9.7, 0.95),
-                 arrowprops=dict(arrowstyle="->", connectionstyle="arc3,rad=0.5", color="#555555"))
-    ax2.text(10.9, 2.9, "loop:\nbudget - 1\nper level", fontsize=8, ha="left")
-    ax2.set_xlim(0, 12.2)
-    ax2.set_ylim(0.2, 5.6)
-    ax2.axis("off")
-    ax2.set_title("Conquer / combine: one call of the joint design\n(budget = 2 floor(log2 n) partition levels)",
-                  fontsize=10)
+def save(fig, name):
+    path = os.path.join(RESULTS, name)
     fig.tight_layout()
-    fig.savefig(os.path.join(RESULTS, "q7_design_diagram.png"), dpi=150)
+    fig.savefig(path, dpi=150)
     plt.close(fig)
+    print(path)
 
 
-def fig_ratio(rows):
-    n = 8000
-    fig, ax = plt.subplots(figsize=(13, 5))
-    width = 0.16
-    for k, v in enumerate(VARIANTS):
-        vals = [get(rows, v, d, n, "comparisons_per_nlog2n") for d in DATASETS]
-        ax.bar([i + (k - 2) * width for i in range(len(DATASETS))], vals, width, color=COLORS[v], label=v)
-    ax.axhline(1.5, color="black", ls="--", lw=1, label="objective O1: 1.5 (natural inputs)")
-    ax.axhline(6, color="black", ls=":", lw=1.2, label="objective O2: 6 (adversarial inputs)")
-    ax.set_yscale("log")
-    ax.set_xticks(range(len(DATASETS)))
-    ax.set_xticklabels(DATASETS)
-    ax.set_xlabel("dataset (identical for every variant)")
-    ax.set_ylabel("comparisons / (n log2 n)  (log scale)")
-    ax.set_title("Comparisons per n log2 n at n = 8,000: only the joint design stays within both objectives on every dataset")
-    ax.grid(True, axis="y", which="both", alpha=0.3)
-    ax.legend(fontsize=8, ncol=4, loc="upper left")
-    fig.tight_layout()
-    fig.savefig(os.path.join(RESULTS, "q7_ratio_n8000.png"), dpi=150)
-    plt.close(fig)
+def growth_figure():
+    rows = sorted(load("q7_growth.csv"), key=lambda r: int(r["n"]))
+    n = [int(r["n"]) for r in rows]
+    fig, (a1, a2) = plt.subplots(1, 2, figsize=(12, 4.8))
+    nb = [int(r["n"]) for r in rows if r["brute_ops"]]
+    a1.loglog(nb, [int(r["brute_ops"]) for r in rows if r["brute_ops"]], "o-", color="#c0392b",
+              label="brute force (counted)")
+    a1.loglog(n, [int(r["brute_formula"]) for r in rows], ":", color="#c0392b", label="n(n+1) (formula)")
+    a1.loglog(n, [int(r["crossing_ops"]) for r in rows], "s-", color="#2e86c1", label="D&C crossing scan (counted)")
+    a1.loglog(n, [2 * x * math.log2(x) for x in n], ":", color="#2e86c1", label="2 n log2 n")
+    a1.loglog(n, [int(r["joint_ops"]) for r in rows], "^-", color="#1e8449", label="joint D&C 4-tuple (counted)")
+    a1.set_title("Counted additions + comparisons")
+    a1.set_xlabel("hours n")
+    a1.set_ylabel("basic operations")
+    a1.grid(True, which="both", alpha=0.3)
+    a1.legend(fontsize=8)
+    a2.loglog(nb, [float(r["brute_ms"]) for r in rows if r["brute_ms"]], "o-", color="#c0392b", label="brute force")
+    a2.loglog(n, [float(r["crossing_ms"]) for r in rows], "s-", color="#2e86c1", label="D&C crossing scan")
+    a2.loglog(n, [float(r["joint_ms"]) for r in rows], "^-", color="#1e8449", label="joint D&C 4-tuple")
+    big = rows[-1]
+    scale = float(big["joint_ms"]) / int(big["n"])
+    a2.loglog(n, [scale * x for x in n], "--", color="#7f8c8d", label="c·n (scaled to largest n)")
+    a2.set_title("Median wall-clock time (noisy, supporting evidence)")
+    a2.set_xlabel("hours n")
+    a2.set_ylabel("time (ms)")
+    a2.grid(True, which="both", alpha=0.3)
+    a2.legend(fontsize=8)
+    save(fig, "q7_growth.png")
 
 
-def fig_growth(rows):
-    sizes = sorted({int(r["n"]) for r in rows})
-    fig, axes = plt.subplots(2, 4, figsize=(16, 8))
-    for ax, d in zip(axes.flat, DATASETS):
-        for v in VARIANTS:
-            ax.loglog(sizes, [get(rows, v, d, s, "comparisons") for s in sizes], MARKS[v] + "-", color=COLORS[v],
-                      label=v, ms=5)
-        ax.loglog(sizes, [s * math.log2(s) for s in sizes], "k--", lw=1, label="n log2 n")
-        ax.loglog(sizes, [s * (s - 1) / 2 for s in sizes], "k:", lw=1.2, label="n(n-1)/2")
-        ax.set_title(d)
-        ax.set_xlabel("orders n")
-        ax.set_ylabel("comparisons")
-        ax.grid(True, which="both", alpha=0.3)
-    axes.flat[0].legend(fontsize=7)
-    fig.suptitle("Growth of the comparisons on each dataset (log-log): slope 2 = quadratic, slope ~1 = n log n",
-                 fontsize=12)
-    fig.tight_layout()
-    fig.savefig(os.path.join(RESULTS, "q7_growth.png"), dpi=150)
-    plt.close(fig)
+def small_n_figure():
+    rows = load("q7_small_n.csv")
+    n = [int(r["n"]) for r in rows]
+    fig, (a1, a2) = plt.subplots(1, 2, figsize=(12, 4.5))
+    a1.plot(n, [float(r["brute_us"]) for r in rows], "o-", color="#c0392b", label="brute force O(n²)")
+    a1.plot(n, [float(r["crossing_us"]) for r in rows], "s-", color="#2e86c1", label="D&C crossing scan")
+    a1.plot(n, [float(r["joint_us"]) for r in rows], "^-", color="#1e8449", label="joint D&C 4-tuple")
+    a1.set_xscale("log", base=2)
+    a1.set_yscale("log")
+    a1.set_title("Median time per call for small n")
+    a1.set_xlabel("hours n")
+    a1.set_ylabel("time per call (µs)")
+    a1.grid(True, which="both", alpha=0.3)
+    a1.legend(fontsize=8)
+    a2.plot(n, [float(r["joint_over_brute"]) for r in rows], "^-", color="#1e8449", label="time ratio joint / brute")
+    a2.plot(n, [int(r["joint_ops"]) / int(r["brute_ops"]) for r in rows], "o--", color="#8e44ad",
+            label="operation ratio joint / brute")
+    a2.axhline(1, color="black", lw=1)
+    a2.set_xscale("log", base=2)
+    a2.set_yscale("log")
+    a2.set_title("Ratio < 1: the D&C design is cheaper")
+    a2.set_xlabel("hours n")
+    a2.set_ylabel("ratio (log scale)")
+    a2.grid(True, which="both", alpha=0.3)
+    a2.legend(fontsize=8)
+    save(fig, "q7_small_n.png")
 
 
-def fig_guard_seed():
-    guard, seed = read("q7_guard.csv"), read("q7_seed.csv")
-    n = [int(r["n"]) for r in guard]
-    fig, (ax1, ax2) = plt.subplots(1, 2, figsize=(13, 4.8))
-    ax1.loglog(n, [int(r["unguarded_comparisons"]) for r in guard], "s-", color="#d62728", label="joint WITHOUT guard")
-    ax1.loglog(n, [int(r["guarded_comparisons"]) for r in guard], "D-", color="#ff7f0e", label="joint WITH guard")
-    ax1.loglog(n, [x * x / 4 for x in n], "k:", lw=1.2, label="n^2/4")
-    ax1.loglog(n, [6 * x * math.log2(x) for x in n], "k--", lw=1, label="6 n log2 n (objective O2)")
-    ax1.set_title("killer-J: the depth budget turns n^2/4 into O(n log n)")
-    ax1.set_xlabel("orders n")
-    ax1.set_ylabel("comparisons")
-    ax1.grid(True, which="both", alpha=0.3)
-    ax1.legend(fontsize=8)
-    ns = [int(r["n"]) for r in seed]
-    ax2.loglog(ns, [int(r["B_seed42_comparisons"]) for r in seed], "^-", color="#2ca02c",
-               label="B, seed 42 (known to the attacker)")
-    ax2.loglog(ns, [int(r["B_seed7_comparisons"]) for r in seed], "^--", color="#2ca02c", mfc="none",
-               label="B, seed 7 (unknown)")
-    ax2.loglog(ns, [x * x / 2 for x in ns], "k:", lw=1.2, label="n^2/2")
-    ax2.loglog(ns, [x * math.log2(x) for x in ns], "k--", lw=1, label="n log2 n")
-    ax2.set_title("killer-B: a random pivot protects only with a secret seed")
-    ax2.set_xlabel("orders n")
-    ax2.set_ylabel("comparisons")
-    ax2.grid(True, which="both", alpha=0.3)
-    ax2.legend(fontsize=8)
-    fig.tight_layout()
-    fig.savefig(os.path.join(RESULTS, "q7_guard_seed.png"), dpi=150)
-    plt.close(fig)
+def three_cases_figure():
+    fig, ax = plt.subplots(figsize=(11, 4.6))
+    hours = range(len(DEMO))
+    ax.bar(hours, DEMO, color=["#1e8449" if v > 0 else "#c0392b" for v in DEMO], alpha=0.8)
+    for h, v in zip(hours, DEMO):
+        ax.text(h, v + (25 if v > 0 else -55), f"{v}", ha="center", fontsize=9)
+    ax.axvline(3.5, color="black", lw=2, ls="--")
+    ax.text(2.6, -440, "split: mid = 3", fontsize=9)
+    ax.axhline(0, color="black", lw=0.8)
+    spans = [(1, 3, 660, "#1e8449", "best run in LEFT half [0..3]: hours 1..3 = 690 (crosses ITS split 1|2)"),
+             (5, 6, 330, "#2e86c1", "best run in RIGHT half [4..7]: hours 5..6 = 370"),
+             (1, 6, 530, "#8e44ad", "CROSSING run = best suffix of left (1..3 = 690) + best prefix of right "
+                                     "(4..6 = -10) = 680")]
+    for i, j, y, col, txt in spans:
+        ax.annotate("", xy=(j + 0.4, y), xytext=(i - 0.4, y),
+                    arrowprops=dict(arrowstyle="<->", color=col, lw=2))
+        ax.text(i - 0.4, y + 22, txt, fontsize=8.5, color=col)
+    ax.set_ylim(-470, 740)
+    ax.set_xticks(list(hours))
+    ax.set_xlabel("operating hour")
+    ax.set_ylabel("net profit (Rs)")
+    ax.set_title("Decomposition: the best run lies in the left half, in the right half, or crosses the split "
+                 "(answer = max of the three = 690)", fontsize=10)
+    save(fig, "q7_three_cases.png")
 
 
-def fig_depth_moves(rows):
-    n = 8000
-    fig, (ax1, ax2) = plt.subplots(1, 2, figsize=(15, 4.8))
-    width = 0.16
-    for k, v in enumerate(VARIANTS):
-        xs = [i + (k - 2) * width for i in range(len(DATASETS))]
-        ax1.bar(xs, [max(get(rows, v, d, n, "max_depth"), 1) for d in DATASETS], width, color=COLORS[v], label=v)
-        ax2.bar(xs, [max(get(rows, v, d, n, "moves"), 1) for d in DATASETS], width, color=COLORS[v], label=v)
-    ax1.axhline(math.log2(n), color="black", ls="--", lw=1, label="log2 n = 13 (objective O3)")
-    for ax, title, ylabel in ((ax1, "Maximum recursion depth, n = 8,000", "depth (log scale)"),
-                              (ax2, "Moves (element writes), n = 8,000", "moves (log scale; 0 drawn as 1)")):
-        ax.set_yscale("log")
-        ax.set_xticks(range(len(DATASETS)))
-        ax.set_xticklabels(DATASETS, rotation=20)
-        ax.set_title(title)
-        ax.set_ylabel(ylabel)
-        ax.grid(True, axis="y", which="both", alpha=0.3)
-    ax1.legend(fontsize=7, ncol=2)
-    fig.tight_layout()
-    fig.savefig(os.path.join(RESULTS, "q7_depth_moves.png"), dpi=150)
-    plt.close(fig)
+def recursion_tree_figure():
+    trace = []
+    dc_joint(DEMO, Counter(), trace)
+    fig, ax = plt.subplots(figsize=(14, 6.4))
+    ax.axis("off")
+    ax.set_xlim(-0.6, 7.6)
+    ax.set_ylim(-0.7, 3.75)
+    pos = {}
+    for depth, lo, hi, s in trace:
+        x = (lo + hi) / 2
+        y = 3.2 - depth
+        pos[(lo, hi)] = (x, y)
+        best_path = lo <= 1 and hi >= 3
+        face = "#d5f5e3" if best_path else "#eaf2f8"
+        w = min(1.75, 0.9 * (hi - lo + 1)) if depth < 3 else 0.92
+        ax.add_patch(FancyBboxPatch((x - w / 2, y - 0.33), w, 0.66, boxstyle="round,pad=0.02",
+                                    facecolor=face, edgecolor="#2c3e50", lw=1.1))
+        if depth < 3:
+            txt = (f"[{lo}..{hi}]\nT={s.total} P={s.pre} S={s.suf}\nbest={s.best} ({s.bi}..{s.bj})")
+        else:
+            txt = f"h{lo}: {DEMO[lo]}\n(base case)"
+        ax.text(x, y, txt, ha="center", va="center", fontsize=7.6 if depth < 3 else 7.2)
+    for depth, lo, hi, s in trace:
+        if lo < hi:
+            mid = (lo + hi) // 2
+            x, y = pos[(lo, hi)]
+            for child in ((lo, mid), (mid + 1, hi)):
+                cx, cy = pos[child]
+                ax.plot([x, cx], [y - 0.33, cy + 0.33], color="#7f8c8d", lw=1)
+    ax.text(3.5, -0.62, "T = total, P = best prefix, S = best suffix; combine: T = TL + TR, P = max(PL, TL + PR), "
+            "S = max(SR, TR + SL), best = max(bestL, bestR, SL + PR).  Green: nodes containing the answer "
+            "(hours 1..3).", ha="center", fontsize=8.2, style="italic")
+    ax.set_title("Joint design - recursion tree of the 8-hour demo: every node returns (T, P, S, best) to its parent "
+                 "(15 calls = 2n - 1, depth 3)", fontsize=10.5)
+    save(fig, "q7_recursion_tree.png")
 
 
 def main():
-    rows = read("q7_results.csv")
-    fig_design()
-    fig_ratio(rows)
-    fig_growth(rows)
-    fig_guard_seed()
-    fig_depth_moves(rows)
-    print("Q7 graphs written to", RESULTS)
+    growth_figure()
+    small_n_figure()
+    three_cases_figure()
+    recursion_tree_figure()
 
 
 if __name__ == "__main__":

@@ -10,7 +10,7 @@ import random
 from q6_median_of_medians import (Counter, mom_select, quickselect_random, quickselect_first, sort_then_pick,
                                   merge_sort_count, insertion_sort_count, partition3, make_input)
 from q6_meet_in_the_middle import (PackCounter, best_fill_brute_force, best_fill_mitm, best_fill_dp,
-                                   sorted_subset_sums, mask_total)
+                                   sorted_subset_sums, mask_total, best_fill_mitm_split)
 
 results = []
 
@@ -72,6 +72,20 @@ def main():
           c.max_keep <= 0.7 + 6 / 100)
     check(f"MoM g=5 uses fewer than 20n comparisons at n = 50,000 ({c.comparisons / 50_000:.2f} n)",
           c.comparisons < 20 * 50_000)
+    ok = True
+    for kind in ("random", "sorted", "duplicates"):
+        keeps = []
+        mom_select(make_input(kind, 20_000), 9_999, Counter(), 5, keeps)
+        ok &= all(kept <= 7 * n / 10 + 6 for n, kept in keeps if n >= 100)
+    check("MoM g=5 worst-case guarantee: EVERY recorded round keeps <= 7n/10 + 6 (random, sorted, duplicates)", ok)
+    keeps = []
+    quickselect_first(list(range(500)), 249, Counter(), keeps)
+    check("first-pivot Quickselect on sorted input: every round keeps n - 1 elements (250 rounds)",
+          len(keeps) == 250 and all(kept == n - 1 for n, kept in keeps[:-1]))
+    keeps = []
+    v = quickselect_random(make_input("random", 5000), 2499, Counter(), random.Random(3), keeps)
+    check("randomised Quickselect with instrumentation still returns sorted(a)[k] and records every round",
+          v == sorted(make_input("random", 5000))[2499] and len(keeps) > 0 and keeps[0][0] == 5000)
     # ---------------------------------------------------------------- (b) payload packing
     w = [2300, 1700, 4100, 900, 3600, 2800, 1250, 600, 3350, 1900]
     best, mask = best_fill_mitm(w, 9000, PackCounter())
@@ -105,6 +119,17 @@ def main():
     best_fill_mitm([rng.randint(200, 5000) for _ in range(20)], 20_000, c)
     check(f"MITM n = 20 stores 2 x 2^10 = 2,048 sums and makes <= 10 x 2^10 + 2^10 probes ({c.probes:,})",
           c.stored_sums == 2048 and c.probes <= 11 * 1024)
+    ok = True
+    for trial in range(150):
+        n = rng.randint(1, 12)
+        ws = [rng.randint(1, 60) for _ in range(n)]
+        W = rng.randint(0, sum(ws))
+        ok &= all(best_fill_mitm_split(ws, W, k, PackCounter()) == best_fill_dp(ws, W) for k in range(n + 1))
+    check("time-memory split variant: correct for EVERY k = 0..n on 150 random instances (= DP)", ok)
+    c = PackCounter()
+    best_fill_mitm_split([rng.randint(200, 5000) for _ in range(18)], 20_000, 6, c)
+    check("split variant n = 18, k = 6 stores 2^6 = 64 sums and enumerates 2^12 = 4,096 subsets",
+          c.stored_sums == 64 and c.subsets == 4096)
     print("-" * 96)
     print(f"RESULT: {sum(results)}/{len(results)} tests passed")
 

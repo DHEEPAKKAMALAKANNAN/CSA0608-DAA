@@ -1,187 +1,191 @@
-"""Q7 experiments - the original quick sort, both independent proposals and the joint designs on IDENTICAL datasets.
+"""Q7 Stage 4 (Student B) - experimental validation of the joint D&C design against the O(n^2) baseline.
 
-Variants
-  Baseline   Q2's textbook quick sort (Lomuto, last-element pivot)          - imported from Q2
-  A          Student A: median-of-3 + Hoare partition + smaller-part recursion - Student_A_Initial_Design
-  B          Student B: random pivot (seed 42) + Dijkstra 3-way + insertion <= 16 - Student_B_Initial_Design
-  Joint-v1   first joint attempt: A's pivot + B's Dijkstra partition (+ cutoff, guard) - rejected
-  Joint      final joint design: median-of-3 + fat partition + insertion <= 16 + depth budget/heapsort
-Datasets (n = 1,000 / 2,000 / 4,000 / 8,000; deadlines in seconds after 06:00, seed 42)
-  random, sorted, reverse, slots (64 distinct 15-minute slots), all-equal,
-  killer-A / killer-B / killer-J: adversarial inputs built by McIlroy's adversary against A, B (seed 42)
-  and the Joint design without its guard (q7_adversary.py).
-Writes results/q7_results.csv, q7_guard.csv, q7_seed.csv, q7_large.csv.
-Run:  py q7_experiments.py      (about 3-5 minutes)
+Experiments (seed 42, synthetic hourly profit/loss of a delivery hub, see q7_max_subarray.hourly_profits):
+  E1  growth: counted additions + comparisons and median time of brute force (n <= 4,096), the D&C crossing-scan
+      variant and the joint 4-tuple design (n up to 1,048,576), against the closed forms
+  E2  data conditions at n = 4,096: counts must not depend on the data; all methods must agree
+  E3  small n: median time per call (many repeats) -> from which n is D&C faster than brute force?
+  E4  recursion overhead of the joint design: calls, depth, time per hour compared with a plain linear loop
+CSV files: results/q7_growth.csv, q7_conditions.csv, q7_small_n.csv, q7_overhead.csv
+Run:  py -3 q7_experiments.py   (about 1-2 minutes)
 """
 import csv
 import math
 import os
 import random
+import statistics
 import sys
 import time
 
-HERE = os.path.dirname(os.path.abspath(__file__))
-Q7 = os.path.dirname(HERE)
-sys.path.insert(0, os.path.join(Q7, "Student_A_Initial_Design"))
-sys.path.insert(0, os.path.join(Q7, "Student_B_Initial_Design"))
-sys.path.insert(0, os.path.join(os.path.dirname(Q7), "Q2_MergeSort_QuickSort", "Implementation_Code"))
+from q7_max_subarray import Counter, brute_force_max_subarray, dc_crossing, dc_joint, hourly_profits, kadane
 
-from proposal_a_median3_hoare import quick_sort_a  # noqa: E402
-from proposal_b_threeway_cutoff import quick_sort_b  # noqa: E402
-from q2_sorting import quick_sort  # noqa: E402
-from q7_adversary import make_killer  # noqa: E402
-from q7_introsort_hybrid import hybrid_sort, hybrid_sort_unguarded, hybrid_sort_v1  # noqa: E402
-
-sys.setrecursionlimit(200_000)
-RESULTS = os.path.join(HERE, "results")
-SIZES = (1000, 2000, 4000, 8000)
-DAY, SLOT = 16 * 3600, 900
-VARIANTS = {"Baseline": lambda a: quick_sort(a, "last"), "A": quick_sort_a, "B": quick_sort_b,
-            "Joint-v1": hybrid_sort_v1, "Joint": hybrid_sort}
-NATURAL = ("random", "sorted", "reverse", "slots", "all-equal")
-DATASETS = NATURAL + ("killer-A", "killer-B", "killer-J")
+sys.setrecursionlimit(10_000)
+RESULTS = os.path.join(os.path.dirname(os.path.abspath(__file__)), "results")
 
 
-def make_datasets(n, rng):
-    base = [rng.randrange(DAY) for _ in range(n)]
-    data = {"random": base, "sorted": sorted(base), "reverse": sorted(base, reverse=True),
-            "slots": [rng.randrange(DAY // SLOT) * SLOT for _ in range(n)], "all-equal": [9 * SLOT] * n}
-    data["killer-A"] = make_killer(quick_sort_a, n)[0]
-    data["killer-B"] = make_killer(quick_sort_b, n)[0]
-    data["killer-J"] = make_killer(hybrid_sort_unguarded, n)[0]
-    return data
-
-
-def run(fn, data):
-    """Sort a copy, verify against sorted(), return (stats, ms); fast runs repeated 3 times (minimum)."""
-    best, stats = float("inf"), None
-    for _ in range(3):
-        a = list(data)
+def timed(fn, p, repeats):
+    """Median and minimum wall-clock seconds of `repeats` runs of fn(p); also returns the last result."""
+    times, res = [], None
+    for _ in range(repeats):
         t0 = time.perf_counter()
-        st = fn(a)
-        t = (time.perf_counter() - t0) * 1000
-        assert a == sorted(data)
-        stats, best = st, min(best, t)
-        if t > 200:
-            break
-    return stats, best
+        res = fn(p)
+        times.append(time.perf_counter() - t0)
+    return res, statistics.median(times), min(times)
 
 
-def table(title, rows_by_ds, fmt, width=11):
-    print(f"\n{title}")
-    print(f"{'dataset':>10} | " + " ".join(f"{v:>{width}}" for v in VARIANTS))
-    for ds in DATASETS:
-        print(f"{ds:>10} | " + " ".join(format(x, fmt) for x in rows_by_ds[ds]))
+def write_csv(name, rows):
+    os.makedirs(RESULTS, exist_ok=True)
+    with open(os.path.join(RESULTS, name), "w", newline="", encoding="utf-8") as f:
+        w = csv.DictWriter(f, fieldnames=list(rows[0]))
+        w.writeheader()
+        w.writerows(rows)
+
+
+def fmt_big(x):
+    """Width-13 number: thousands separators, scientific notation when too wide."""
+    return f"{x:>13,}" if x < 10 ** 12 else f"{x:>13.3e}"
+
+
+def counts(fn, p):
+    c = Counter()
+    r = fn(p, c)
+    return r, c
+
+
+def experiment_growth():
+    print("E1  GROWTH - additions + comparisons (counted) vs closed forms; median time of repeats")
+    print(f"{'n':>9} | {'brute ops':>13} {'n(n+1)':>13} | {'crossing ops':>12} {'formula':>11} | "
+          f"{'joint ops':>9} {'8(n-1)':>9} | {'brute ms':>9} {'cross ms':>9} {'joint ms':>9} | same")
+    print("-" * 122)
+    rows = []
+    for n in (16, 64, 256, 1024, 4096, 16384, 65536, 262144, 1048576, 1000, 100000):
+        p = hourly_profits(n)
+        reps = 5 if n <= 65536 else 3
+        rx, cx = counts(dc_crossing, p)
+        rj, cj = counts(dc_joint, p)
+        _, tx, _ = timed(dc_crossing, p, reps)
+        _, tj, _ = timed(dc_joint, p, reps)
+        lg = math.log2(n)
+        cross_formula = 2 * n * lg + n - 1 if lg.is_integer() else float("nan")
+        if n <= 4096:
+            rb, cb = counts(brute_force_max_subarray, p)
+            _, tb, _ = timed(brute_force_max_subarray, p, 3 if n == 4096 else 5)
+            same = rb[0] == rx[0] == rj[0] == kadane(p)
+            b_ops, b_txt, tb_txt = cb.total, f"{cb.total:>13,}", f"{tb * 1e3:>9.1f}"
+        else:
+            same = rx[0] == rj[0] == kadane(p)
+            b_ops, b_txt, tb_txt, tb = None, f"{'-':>13}", f"{'-':>9}", None
+        cf_txt = f"{int(cross_formula):>11,}" if lg.is_integer() else f"{'(not 2^k)':>11}"
+        print(f"{n:>9,} | {b_txt} {fmt_big(n * (n + 1))} | {cx.total:>12,} {cf_txt} | {cj.total:>9,} {8 * (n - 1):>9,} | "
+              f"{tb_txt} {tx * 1e3:>9.1f} {tj * 1e3:>9.1f} | {'yes' if same else 'NO'}")
+        rows.append(dict(n=n, brute_ops=b_ops, brute_formula=n * (n + 1), crossing_ops=cx.total,
+                         crossing_additions=cx.additions, crossing_comparisons=cx.comparisons,
+                         joint_ops=cj.total, joint_formula=8 * (n - 1), joint_calls=cj.calls, joint_depth=cj.max_depth,
+                         brute_ms=None if tb is None else round(tb * 1e3, 3), crossing_ms=round(tx * 1e3, 3),
+                         joint_ms=round(tj * 1e3, 3), best=rj[0], same=same))
+    print("   formulas: brute n(n+1)/2 additions + n(n+1)/2 comparisons; joint 4(n-1) + 4(n-1) for EVERY n;")
+    print("             crossing (n = 2^k) n log2 n + n - 1 additions + n log2 n comparisons")
+    write_csv("q7_growth.csv", rows)
+    return rows
+
+
+def experiment_conditions():
+    n = 4096
+    rng = random.Random(42)
+    data = {
+        "hourly cycle": hourly_profits(n),
+        "random +-400": [rng.randint(-400, 400) for _ in range(n)],
+        "all profit": [rng.randint(1, 400) for _ in range(n)],
+        "all loss": [rng.randint(-400, -1) for _ in range(n)],
+        "alternating": [300 if i % 2 == 0 else -301 for i in range(n)],
+        "ascending": sorted(rng.randint(-400, 400) for _ in range(n)),
+    }
+    print(f"\nE2  DATA CONDITIONS at n = {n:,} - counts are data-independent; answers checked against brute force")
+    print(f"{'input':>13} | {'best (Rs)':>10} {'hours':>11} | {'brute ops':>11} {'crossing ops':>12} {'joint ops':>9} |"
+          f" {'run valid':>9} {'= brute':>7}")
+    print("-" * 96)
+    rows = []
+    for name, p in data.items():
+        rb, cb = counts(brute_force_max_subarray, p)
+        rx, cx = counts(dc_crossing, p)
+        rj, cj = counts(dc_joint, p)
+        valid = sum(p[rj[1]:rj[2] + 1]) == rj[0]
+        ok = rb[0] == rx[0] == rj[0]
+        print(f"{name:>13} | {rj[0]:>10,} {f'{rj[1]}..{rj[2]}':>11} | {cb.total:>11,} {cx.total:>12,} {cj.total:>9,} |"
+              f" {str(valid):>9} {str(ok):>7}")
+        rows.append(dict(input=name, n=n, best=rj[0], start=rj[1], end=rj[2], brute_ops=cb.total,
+                         crossing_ops=cx.total, joint_ops=cj.total, run_valid=valid, equal_to_brute=ok))
+    write_csv("q7_conditions.csv", rows)
+
+
+def experiment_small_n():
+    print("\nE3  SMALL n - median time per call (us) over many repeats: when does D&C beat the O(n^2) baseline?")
+    print(f"{'n':>6} | {'brute ops':>9} {'joint ops':>9} | {'brute us':>9} {'cross us':>9} {'joint us':>9} |"
+          f" {'joint/brute time':>16}")
+    print("-" * 80)
+    rows = []
+    for n in (2, 4, 8, 12, 16, 24, 32, 48, 64, 96, 128):
+        p = hourly_profits(n, seed=7)
+        loops = max(20, 20000 // n)
+
+        def per_call(fn):
+            samples = []
+            for _ in range(7):
+                t0 = time.perf_counter()
+                for _ in range(loops):
+                    fn(p)
+                samples.append((time.perf_counter() - t0) / loops)
+            return statistics.median(samples) * 1e6
+
+        tb, tx, tj = per_call(brute_force_max_subarray), per_call(dc_crossing), per_call(dc_joint)
+        _, cb = counts(brute_force_max_subarray, p)
+        _, cj = counts(dc_joint, p)
+        print(f"{n:>6} | {cb.total:>9,} {cj.total:>9,} | {tb:>9.1f} {tx:>9.1f} {tj:>9.1f} | {tj / tb:>16.2f}")
+        rows.append(dict(n=n, brute_ops=cb.total, joint_ops=cj.total, brute_us=round(tb, 2),
+                         crossing_us=round(tx, 2), joint_us=round(tj, 2), joint_over_brute=round(tj / tb, 3)))
+    ops_x = next(r["n"] for r in rows if r["joint_ops"] < r["brute_ops"])
+    time_x = next((r["n"] for r in rows if r["joint_us"] < r["brute_us"]), None)
+    print(f"   joint design needs fewer operations from n = {ops_x}; it is faster in time from n = {time_x}")
+    write_csv("q7_small_n.csv", rows)
+
+
+def linear_loop(p):
+    """A plain loop touching every hour once (one addition each): the cost floor any method must pay."""
+    s = 0
+    for x in p:
+        s += x
+    return s
+
+
+def experiment_overhead():
+    print("\nE4  RECURSION OVERHEAD of the joint design (median of 3 runs)")
+    print(f"{'n':>9} | {'calls':>9} {'2n-1':>9} {'depth':>5} {'ceil lg n':>9} | {'joint ns/hour':>13} "
+          f"{'loop ns/hour':>12} {'Kadane ns/hour':>14} | {'joint/loop':>10}")
+    print("-" * 104)
+    rows = []
+    for n in (1024, 16384, 262144, 1048576):
+        p = hourly_profits(n)
+        _, cj = counts(dc_joint, p)
+        _, tj, _ = timed(dc_joint, p, 3)
+        _, tl, _ = timed(linear_loop, p, 3)
+        _, tk, _ = timed(kadane, p, 3)
+        print(f"{n:>9,} | {cj.calls:>9,} {2 * n - 1:>9,} {cj.max_depth:>5} {math.ceil(math.log2(n)):>9} | "
+              f"{tj / n * 1e9:>13.0f} {tl / n * 1e9:>12.1f} {tk / n * 1e9:>14.1f} | {tj / tl:>10.1f}")
+        rows.append(dict(n=n, calls=cj.calls, depth=cj.max_depth, joint_ns_per_hour=round(tj / n * 1e9, 1),
+                         loop_ns_per_hour=round(tl / n * 1e9, 1), kadane_ns_per_hour=round(tk / n * 1e9, 1)))
+    print("   the recursion costs ~2n calls and one Summary object per call: same Theta(n) as a loop, larger constant")
+    write_csv("q7_overhead.csv", rows)
 
 
 def main():
-    rng = random.Random(42)
-    t_start = time.perf_counter()
-    print("=" * 104)
-    print("Q7 EXPERIMENTS - original quick sort vs proposal A vs proposal B vs joint designs (identical datasets)")
-    print("=" * 104)
-    rows, res = [], {}
-    for n in SIZES:
-        data = make_datasets(n, rng)
-        for ds in DATASETS:
-            for name, fn in VARIANTS.items():
-                st, t = run(fn, data[ds])
-                hs = getattr(st, "heapsort_fallbacks", 0)
-                res[(name, ds, n)] = (st, t)
-                rows.append([name, ds, n, st.comparisons, st.moves, st.max_depth, hs, round(t, 2),
-                             round(n * math.log2(n)), round(st.comparisons / (n * math.log2(n)), 3)])
-    n = SIZES[-1]
-    nlg = n * math.log2(n)
-    table(f"[1] Comparisons at n = {n:,} (n log2 n = {nlg:,.0f}; n(n-1)/2 = {n * (n - 1) // 2:,})",
-          {ds: [res[(v, ds, n)][0].comparisons for v in VARIANTS] for ds in DATASETS}, ">11,")
-    table(f"[2] Comparisons / (n log2 n) at n = {n:,}",
-          {ds: [res[(v, ds, n)][0].comparisons / nlg for v in VARIANTS] for ds in DATASETS}, ">11.2f")
-    table(f"[3] Moves (element writes; a swap = 2) at n = {n:,}",
-          {ds: [res[(v, ds, n)][0].moves for v in VARIANTS] for ds in DATASETS}, ">11,")
-    table(f"[4] Maximum recursion depth at n = {n:,} (log2 n = {math.log2(n):.1f})",
-          {ds: [res[(v, ds, n)][0].max_depth for v in VARIANTS] for ds in DATASETS}, ">11,")
-    table(f"[5] Time in ms at n = {n:,} (minimum of 3 runs; single run if > 200 ms)",
-          {ds: [res[(v, ds, n)][1] for v in VARIANTS] for ds in DATASETS}, ">11.1f")
-
-    print("\n[6] Joint design: comparisons / (n log2 n) and heapsort fallbacks at every size")
-    print(f"{'dataset':>10} | " + " ".join(f"{f'n={s:,}':>13}" for s in SIZES))
-    for ds in DATASETS:
-        cells = [f"{res[('Joint', ds, s)][0].comparisons / (s * math.log2(s)):>7.2f} ({res[('Joint', ds, s)][0].heapsort_fallbacks})"
-                 for s in SIZES]
-        print(f"{ds:>10} | " + " ".join(f"{c:>13}" for c in cells))
-
-    print("\n[7] Why the depth budget is needed: Joint without and with the guard on its own adversarial input")
-    print(f"{'n':>6} | {'unguarded comps':>15} {'/ n lg n':>8} {'time ms':>8} | {'guarded comps':>13} {'/ n lg n':>8} "
-          f"{'time ms':>8} {'fallbacks':>9}")
-    guard_rows = []
-    for s in SIZES:
-        killer = make_killer(hybrid_sort_unguarded, s)[0]
-        su, tu = run(hybrid_sort_unguarded, killer)
-        sg, tg = run(hybrid_sort, killer)
-        sl = s * math.log2(s)
-        print(f"{s:>6,} | {su.comparisons:>15,} {su.comparisons / sl:>8.2f} {tu:>8.1f} | {sg.comparisons:>13,} "
-              f"{sg.comparisons / sl:>8.2f} {tg:>8.1f} {sg.heapsort_fallbacks:>9}")
-        guard_rows.append([s, su.comparisons, su.max_depth, round(tu, 2), sg.comparisons, sg.max_depth,
-                           sg.heapsort_fallbacks, round(tg, 2)])
-
-    print("\n[8] Proposal B on its adversarial input: the random pivot protects only while the seed is secret")
-    print(f"{'n':>6} | {'B seed 42 (attacked)':>21} {'depth':>6} | {'B seed 7':>9} {'depth':>6}")
-    seed_rows = []
-    for s in SIZES:
-        killer = make_killer(quick_sort_b, s)[0]
-        s42, _ = run(quick_sort_b, killer)
-        s7, _ = run(lambda a: quick_sort_b(a, seed=7), killer)
-        print(f"{s:>6,} | {s42.comparisons:>21,} {s42.max_depth:>6,} | {s7.comparisons:>9,} {s7.max_depth:>6}")
-        seed_rows.append([s, s42.comparisons, s42.max_depth, s7.comparisons, s7.max_depth])
-
-    print("\n[9] Large batch, n = 100,000 (natural inputs only): comparisons / (n log2 n) | time ms")
-    big_rng = random.Random(4242)
-    base = [big_rng.randrange(DAY) for _ in range(100_000)]
-    big = {"random": base, "sorted": sorted(base), "reverse": sorted(base, reverse=True),
-           "slots": [big_rng.randrange(64) * SLOT for _ in range(100_000)], "all-equal": [9 * SLOT] * 100_000}
-    large_rows = []
-    lgb = 100_000 * math.log2(100_000)
-    names = [v for v in VARIANTS if v != "Baseline"]
-    print(f"{'dataset':>10} | " + " ".join(f"{v:>17}" for v in names))
-    for ds, data in big.items():
-        cells = []
-        for v in names:
-            st, t = run(VARIANTS[v], data)
-            cells.append(f"{st.comparisons / lgb:>6.2f} | {t:>8.1f}")
-            large_rows.append([v, ds, 100_000, st.comparisons, round(st.comparisons / lgb, 3), st.moves,
-                               st.max_depth, getattr(st, "heapsort_fallbacks", 0), round(t, 1)])
-        print(f"{ds:>10} | " + " ".join(f"{c:>17}" for c in cells))
-
-    print("\n[10] Design objectives of the joint design (all sizes, all datasets above)")
-    joint = [r for r in rows if r[0] == "Joint"]
-    nat = max(r[9] for r in joint if r[1] in NATURAL)
-    adv = max(r[9] for r in joint if r[1] not in NATURAL)
-    depth_ok = all(r[5] <= math.log2(r[2]) for r in joint)
-    eq = max(r[3] - 2 * r[2] for r in joint if r[1] == "all-equal")
-    slots_ok = all(res[("Joint", "slots", s)][0].comparisons <= res[("Joint", "random", s)][0].comparisons for s in SIZES)
-    print(f"   O1 natural inputs <= 1.5 n lg n          : max {nat:.2f} n lg n  -> {'met' if nat <= 1.5 else 'NOT met'}")
-    print(f"   O2 adversarial inputs <= 6 n lg n        : max {adv:.2f} n lg n  -> {'met' if adv <= 6 else 'NOT met'}")
-    print(f"   O3 recursion depth <= log2 n             : {'met' if depth_ok else 'NOT met'}")
-    print(f"   O4 all-equal <= 2n + 3, slots <= random  : all-equal 2n{eq:+d}, slots <= random: "
-          f"{'met' if eq <= 3 and slots_ok else 'NOT met'}")
-    print(f"   O5 every output equal to sorted()        : met ({len(rows) + 2 * len(SIZES) * 2 + len(large_rows)} runs "
-          f"checked)")
-    print(f"\nTotal run time {time.perf_counter() - t_start:.0f} s. CSV files written to results/.")
-
-    os.makedirs(RESULTS, exist_ok=True)
-    for name, header, data in (
-            ("q7_results.csv", ["variant", "dataset", "n", "comparisons", "moves", "max_depth", "heapsort_fallbacks",
-                                "time_ms", "n_log2_n", "comparisons_per_nlog2n"], rows),
-            ("q7_guard.csv", ["n", "unguarded_comparisons", "unguarded_depth", "unguarded_ms", "guarded_comparisons",
-                              "guarded_depth", "heapsort_fallbacks", "guarded_ms"], guard_rows),
-            ("q7_seed.csv", ["n", "B_seed42_comparisons", "B_seed42_depth", "B_seed7_comparisons", "B_seed7_depth"],
-             seed_rows),
-            ("q7_large.csv", ["variant", "dataset", "n", "comparisons", "comparisons_per_nlog2n", "moves", "max_depth",
-                              "heapsort_fallbacks", "time_ms"], large_rows)):
-        with open(os.path.join(RESULTS, name), "w", newline="", encoding="utf-8") as f:
-            w = csv.writer(f)
-            w.writerow(header)
-            w.writerows(data)
+    print("=" * 122)
+    print("Q7 EXPERIMENTS - Maximum Subarray Sum: brute force O(n^2) vs D&C crossing scan vs joint D&C 4-tuple design")
+    print("=" * 122)
+    experiment_growth()
+    experiment_conditions()
+    experiment_small_n()
+    experiment_overhead()
+    print("\nCSV written to results/: q7_growth.csv, q7_conditions.csv, q7_small_n.csv, q7_overhead.csv")
 
 
 if __name__ == "__main__":
