@@ -1,0 +1,8 @@
+line,words,word_count,unused,penalty
+1,The engine must,3,6,36
+2,place long words like,4,0,0
+3,documentation and,2,4,16
+4,optimisation without,2,1,1
+5,leaving large gaps,3,3,9
+6,at the end of short,5,2,4
+7,lines,1,16,0

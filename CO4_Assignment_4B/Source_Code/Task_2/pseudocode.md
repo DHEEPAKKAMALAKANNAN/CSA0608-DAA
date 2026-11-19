@@ -1,65 +1,37 @@
-# Task 2 – Pseudocode: Greedy Knapsack and Coin Change
-
-Written before the implementation (`knapsack_coin_change.py`).
-
-## (a) Fractional knapsack – divisible relief supplies
+# Task 2 – Greedy (fractional) vs DP (0/1) knapsack: pseudocode
 
 ```
-Algorithm FractionalKnapsack(I, n, W)             // I[i] = (w_i, v_i), capacity W
-1. sort I by density v_i / w_i, largest first                // Theta(n log n)
-2. room = W;  value = 0
-3. for i = 1 to n while room > 0 do
-4.     x = min(1, room / I[i].w)                              // greedy choice: densest item first
-5.     value = value + x * I[i].v;  room = room - x * I[i].w
-6. return value                                               // at most one item is taken fractionally
-
-Algorithm FractionalKnapsackHeap(I, n, W)         // optimisation when only k << n items fit
-1. build a max-heap H of I keyed by density (bottom-up)       // <= 2n comparisons
-2. room = W;  value = 0
-3. while room > 0 and H not empty do
-4.     it = ExtractMax(H)                                     // O(log n) each, only k times
-5.     x = min(1, room / it.w);  value = value + x * it.v;  room = room - x * it.w
-6. return value                                               // Theta(n + k log n)
+Algorithm FractionalKnapsack(items, W)            // Solution A - greedy
+1.  sort items by v/w in decreasing order          // merge sort, ~ n log₂ n comparisons
+2.  room = W;  total = 0
+3.  for each item k in that order while room > 0 do
+4.      if w_k <= room then take k whole:  room = room - w_k;  total = total + v_k
+5.      else take fraction f = room / w_k:  total = total + f·v_k;  room = 0
+6.      record (k, decision, fraction, room, total)
+7.  return total and the items / fractions taken
 ```
 
-## (b) 0/1 knapsack – indivisible equipment
-
 ```
-Algorithm Greedy01(I, n, W, rule)                 // rule = density | value | lightest
-1. sort I by the rule
-2. room = W;  value = 0
-3. for i = 1 to n do
-4.     if I[i].w <= room then take I[i];  room = room - I[i].w;  value = value + I[i].v
-5. return value                                               // NOT optimal in general
-
-Algorithm Knapsack01DP(I, n, W)                   // exact reference, Theta(nW)
-1. B[0][c] = 0 for c = 0..W
-2. for i = 1 to n do
-3.     for c = 0 to W do
-4.         B[i][c] = B[i-1][c]
-5.         if I[i].w <= c then B[i][c] = max(B[i][c], B[i-1][c - I[i].w] + I[i].v)
-6. return B[n][W]
+Algorithm Knapsack01DP(items, W)                   // Solution B - dynamic programming
+1.  for c = 0 to W do best[0][c] = 0
+2.  for i = 1 to n do
+3.      for c = 0 to W do
+4.          best[i][c] = best[i-1][c]                          // leave item i
+5.          if w_i <= c and best[i-1][c-w_i] + v_i > best[i][c] then
+6.              best[i][c] = best[i-1][c-w_i] + v_i            // take item i
+7.  c = W;  chosen = {}                                        // trace back
+8.  for i = n downto 1 do
+9.      if best[i][c] ≠ best[i-1][c] then chosen = chosen ∪ {i};  c = c - w_i
+10. return best[n][W], chosen
 ```
 
-## (c) Coin change
-
 ```
-Algorithm GreedyChange(C, m, A)                   // coins C[1..m], amount A
-1. sort C in decreasing order;  used = empty
-2. for j = 1 to m do
-3.     k = floor(A / C[j]);  add k coins C[j] to used;  A = A - k * C[j]
-4. if A > 0 then return FAILURE                                // greedy got stuck
-5. return used
-
-Algorithm DPChange(C, m, A)                       // exact minimum, Theta(A m)
-1. best[0] = 0;  best[a] = infinity for a = 1..A
-2. for a = 1 to A do
-3.     for each coin c in C with c <= a do
-4.         best[a] = min(best[a], best[a - c] + 1)
-5. return best[A]
-
-Algorithm SmallestCounterExample(C, m)            // C sorted increasing
-1. for a = 1 to C[m-1] + C[m] do                              // bound of Kozen & Zaks (1994)
-2.     if |GreedyChange(C, m, a)| > DPChange(C, m, a) then return a
-3. return none                                                // the system is canonical
+Algorithm FirstBlockingCommitment(items, W)        // diagnosis used in 2.2
+1.  OPT = Knapsack01DP(items, W);  order = items sorted by v/w;  room = W;  committed = 0
+2.  for step = 1 to n do
+3.      k = order[step]
+4.      if w_k <= room then commit k: room = room - w_k; committed = committed + v_k
+5.      reachable = committed + Knapsack01DP(order[step+1..n], room)
+6.      if k was committed and reachable < OPT then return step   // optimum no longer reachable
+7.  return none                                     // greedy was optimal
 ```

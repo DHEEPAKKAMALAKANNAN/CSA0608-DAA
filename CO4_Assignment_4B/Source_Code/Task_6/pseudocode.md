@@ -1,46 +1,40 @@
-# Task 6 – Pseudocode: Final Design of the Ambulance Route Service
+# Task 6 – Pseudocode: TSP by Dynamic Programming (Held–Karp)
 
-Written after the defects of the given code were isolated and before `fixed_route_service.py` was written.
-The comments name the defect (D1–D5) that each line removes.
-
-## Nightly rebuild and validated feed
+Vertex 0 is the distribution hub, vertices 1..n are the delivery locations, c(i, j) ≥ 0 is the travel cost
+(∞ = no road). S ⊆ {1..n} is stored as a bitmask (bit j−1 ⇔ location j ∈ S).
 
 ```
-Algorithm Build(n, R)                             // R = roads (u, v, t), t >= 0
-1. adj[v] = empty list for v = 0..n-1;  index = empty map
-2. for each (u, v, t) in R do
-3.     if u or v not in 0..n-1 or t < 0 then error             // D5: validate input
-4.     e = [v, t];  append e to adj[u];  index[(u, v)] = e      // D4: O(1) access, no list scans
-5. calibrate()                                                 // s/km lower bound for A*
-
-Algorithm ApplyFeed(U)                            // U = [(u, v, t)], t = -1 means "closed"
-1. for each (u, v, t) in U do                                 // D5: validate the whole feed first (atomic)
-2.     if (u, v) not in index or (t < 0 and t != -1) then error
-3. for each (u, v, t) in U do
-4.     if t = -1 then index[(u, v)].t = infinity              // closed: never relaxed, can be reopened
-5.     else index[(u, v)].t = t                                // D4: O(1) per record
-6. calibrate()
+Algorithm HeldKarp(c, n)
+// DP[S][j] = cheapest path that starts at the hub, visits exactly the locations of S and ends at j (j ∈ S)
+1.  ValidateCostMatrix(c)                         // square, n ≥ 1, c ≥ 0, diagonal 0, else reject
+2.  for j = 1 to n do                             // base states: one location visited
+3.      DP[{j}][j] = c(0, j);  PARENT[{j}][j] = 0
+4.  for S = 1 to 2^n − 1 in increasing bitmask order with |S| ≥ 2 do
+5.      for every j ∈ S do
+6.          DP[S][j] = ∞
+7.          for every k ∈ S − {j} do              // one transition
+8.              if DP[S − {j}][k] + c(k, j) < DP[S][j] then
+9.                  DP[S][j] = DP[S − {j}][k] + c(k, j);  PARENT[S][j] = k
+10. OPT = min over j of DP[ALL][j] + c(j, 0);  last = the minimising j     // return to the hub
+11. if OPT = ∞ then return "no feasible tour"
+12. route = [0];  S = ALL;  j = last
+13. while j ≠ 0 do                                // walk the PARENT pointers backwards
+14.     append j to route;  (S, j) = (S − {j}, PARENT[S][j])
+15. append 0 to route;  reverse(route)
+16. return OPT, route
 ```
 
-## Route query (Dijkstra, or A* when coordinates are known)
+States evaluated: n·2ⁿ⁻¹. Transitions: Σₛ C(n, s)·s·(s − 1) = n(n − 1)·2ⁿ⁻² (+ n closing edges).
+Time Θ(n²·2ⁿ), memory Θ(n·2ⁿ).
 
 ```
-Algorithm Route(src, dst, method)
-1. if src or dst unknown then error                           // D5
-2. h(v) = 0 for Dijkstra;  h(v) = straightKm(v, dst) * minSecPerKm for A*   // never overestimates
-3. dist = {src: 0};  prev = {};  H = min-heap {(h(src), 0, src)}
-4. while H not empty do
-5.     (f, g, u) = ExtractMin(H)
-6.     if g > dist[u] then continue                           // D2: skip stale heap entries
-7.     if u = dst then return g, Path(prev, src, dst)          // D1: stop when dst is SETTLED
-8.     for each [v, t] in adj[u] do                           // D4: only u's own roads
-9.         if g + t < dist.get(v, infinity) then
-10.            dist[v] = g + t;  prev[v] = u;  Insert(H, (g + t + h(v), g + t, v))
-11. return infinity, none                                      // D3: unreachable is an answer, not a crash
-
-Algorithm Path(prev, src, dst)
-1. P = [dst];  while last(P) != src do append prev[last(P)] to P   // D3: include src
-2. return reverse(P)                                           // D3: travel order
+Algorithm ExhaustiveTSP(c, n)                    // independent reference for Task 6.4
+1.  best = ∞;  bestRoutes = []
+2.  for every permutation p of (1, 2, ..., n) do  // n! routes
+3.      cost = c(0, p1) + c(p1, p2) + ... + c(pn, 0)
+4.      if cost < best then best = cost;  bestRoutes = [p]
+5.      else if cost = best then append p to bestRoutes
+6.  return best, bestRoutes
 ```
-Cost per day: Build + ApplyFeed = O(V + E + |U|); each query O((V' + E') log V') where V', E' are the
-junctions and roads actually reached before dst is settled (A* reduces V').
+
+Time Θ(n·n!), memory Θ(n).

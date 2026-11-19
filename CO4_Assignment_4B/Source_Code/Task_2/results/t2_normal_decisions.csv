@@ -1,0 +1,7 @@
+step,item,ratio,decision,fraction,room_after,value_after
+1,N1,8.0,take whole,1,37.0,64.0
+2,N2,7.0,take whole,1,25.0,148.0
+3,N3,6.0,take whole,1,20.0,178.0
+4,N4,5.0,take whole,1,5.0,253.0
+5,N5,4.0,take fraction,1/2,0.0,273.0
+6,N6,3.0,not needed (vehicle full),0,0.0,273.0

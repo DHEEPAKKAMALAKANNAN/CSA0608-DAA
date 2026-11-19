@@ -1,0 +1,9 @@
+mst,tie1,tie2,tie3,cost,returned_by
+1,HQ-WH,DC-PT,FA-FB,38,Boruvka
+2,HQ-WH,DC-PT,FB-LB,38,
+3,HQ-WH,LB-SC,FA-FB,38,Prim
+4,HQ-WH,LB-SC,FB-LB,38,
+5,WH-FA,DC-PT,FA-FB,38,
+6,WH-FA,DC-PT,FB-LB,38,
+7,WH-FA,LB-SC,FA-FB,38,
+8,WH-FA,LB-SC,FB-LB,38,Kruskal

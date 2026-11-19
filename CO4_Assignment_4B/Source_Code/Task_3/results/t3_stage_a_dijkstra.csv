@@ -1,0 +1,11 @@
+depot,name,distance,predecessor,path,finalised_step
+H,Central Hub,0,-,H,1
+A,Airport Cargo,3,B,H -> B -> A,3
+B,Bayside Depot,2,H,H -> B,2
+C,City Centre,8,A,H -> B -> A -> C,4
+D,Dockyard,10,C,H -> B -> A -> C -> D,5
+E,East Market,12,D,H -> B -> A -> C -> D -> E,6
+F,Factory Park,15,E,H -> B -> A -> C -> D -> E -> F,8
+G,Garden Estate,16,F,H -> B -> A -> C -> D -> E -> F -> G,9
+P,Port Terminal,13,H,H -> P,7
+R,Retail Park,19,G,H -> B -> A -> C -> D -> E -> F -> G -> R,10

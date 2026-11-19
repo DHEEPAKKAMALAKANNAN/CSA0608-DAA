@@ -1,0 +1,3 @@
+{"name": "C1 - student-designed 0/1 counter-example (indivisible pallets)", "capacity": 40, "unit": "kg",
+ "design": "one slightly denser 21 kg pallet (ratio 5.0) leaves 19 kg, so neither 20 kg pallet (ratio 4.8) fits; two 20 kg pallets fill the vehicle exactly",
+ "items": [["C1", 21, 105], ["C2", 20, 96], ["C3", 20, 96], ["C4", 9, 36], ["C5", 4, 12]]}

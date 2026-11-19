@@ -1,0 +1,11 @@
+code,name,role
+H,Central Hub,distribution hub (route source)
+A,Airport Cargo,air-freight depot
+B,Bayside Depot,cross-dock
+C,City Centre,urban micro-depot
+D,Dockyard,container yard
+E,East Market,wholesale market
+F,Factory Park,industrial customers
+G,Garden Estate,residential drop zone
+P,Port Terminal,sea-freight terminal
+R,Retail Park,final retail customer (receives only)

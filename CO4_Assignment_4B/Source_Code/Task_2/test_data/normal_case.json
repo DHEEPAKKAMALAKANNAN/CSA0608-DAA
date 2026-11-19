@@ -1,0 +1,2 @@
+{"name": "N1 - mixed parcel load (divisible goods, e.g. bulk consignments)", "capacity": 45, "unit": "kg",
+ "items": [["N1", 8, 64], ["N2", 12, 84], ["N3", 5, 30], ["N4", 15, 75], ["N5", 10, 40], ["N6", 20, 60]]}

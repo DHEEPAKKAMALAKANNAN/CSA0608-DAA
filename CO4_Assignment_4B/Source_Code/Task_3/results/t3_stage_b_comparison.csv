@@ -1,0 +1,11 @@
+depot,dijkstra,bellman_ford,floyd,dijkstra_path,bellman_ford_path,dijkstra_wrong
+H,0,0,0,H,H,no
+A,3,3,3,H-B-A,H-B-A,no
+B,2,2,2,H-B,H-B,no
+C,8,8,8,H-B-A-C,H-B-A-C,no
+D,10,8,8,H-B-A-C-D,H-P-D,yes
+E,12,10,10,H-B-A-C-D-E,H-P-D-E,yes
+F,15,13,13,H-B-A-C-D-E-F,H-P-D-E-F,yes
+G,16,14,14,H-B-A-C-D-E-F-G,H-P-D-E-F-G,yes
+P,13,13,13,H-P,H-P,no
+R,19,17,17,H-B-A-C-D-E-F-G-R,H-P-D-E-F-G-R,yes

@@ -1,0 +1,5 @@
+from,Hub,A,B,C
+Hub,0,10,12,8
+A,10,0,6,inf
+B,12,6,0,inf
+C,8,inf,inf,0

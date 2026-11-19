@@ -1,0 +1,18 @@
+{
+  "base_width": 21,
+  "note": "Predictions written BEFORE word_wrap_width_change.py was first run, using only the W = 21 layout of word_wrap_demo.py; the program prints them before each result.",
+  "cases": [
+    {"width": 18,
+     "arrangement_changes": "YES - 'place long words like' (21) and 'optimisation without' (20) no longer fit, so lines must split",
+     "first_change": "line 2 - line 1 'The engine must' (15) still fits, but line 2 (21 characters) must lose 'like'",
+     "penalty": "INCREASE - the long words now sit on short lines with large slack, e.g. 'documentation' alone leaves 5"},
+    {"width": 26,
+     "arrangement_changes": "YES - 5 extra characters let lines absorb another short word",
+     "first_change": "line 1 - 'The engine must place long' is exactly 26 characters, so line 1 can be filled with s = 0",
+     "penalty": "DECREASE - more feasible line endings let the DP balance the slack better"},
+    {"width": 30,
+     "arrangement_changes": "YES - fewer lines are needed (about 5 instead of 7)",
+     "first_change": "line 1 - it can now hold 'The engine must place long' (26) or more",
+     "penalty": "DECREASE - fewer non-final lines, and 'documentation and optimisation' (30) fits exactly with s = 0"}
+  ]
+}

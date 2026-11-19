@@ -1,0 +1,13 @@
+{"note": "Written BEFORE assembly_line_changes.py was first run, using only the baseline output of assembly_line_demo.py (optimum 32, route L1 S1-S2 -> L2 S3-S4 -> L1 S5-S6; second-best route 35).",
+ "task_4_3": {"change": {"t1": {"2": 12}},
+   "description": "transfer time line 1 -> line 2 after station 2 raised from 2 to 12 min (the first transfer of the optimal route)",
+   "route_changes": "YES - the old route now costs 32 + 10 = 42, more than the second-best route (35)",
+   "affected_decision": "station 3, 'reach line 2': transfer from line 1 (11 + 12 + 4 = 27) should lose to staying on line 2 (16 + 4 = 20)",
+   "total_increases": "YES - but by at most 3 (to <= 35), because a route avoiding this transfer already costs 35"},
+ "task_4_4": {"change": {"a2": {"4": 12}},
+   "description": "machine at line 2, station 4 slows down: processing time 3 -> 12 min (it is on the optimal route)",
+   "route_changes": "YES - the route through L2 S4 now costs 32 + 9 = 41",
+   "moves_to_other_line": "YES - production should move to line 1 for station 4",
+   "change_station": "station 4",
+   "time_effect": "INCREASE - but by less than 9 because the line-1 detour costs less than the slowdown"}
+}

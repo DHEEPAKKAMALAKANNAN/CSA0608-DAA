@@ -1,0 +1,11 @@
+depot,bellman_ford,affected_by_cycle,dijkstra_misleading
+H,0,no,0
+A,-inf,yes,3
+B,-inf,yes,2
+C,-inf,yes,8
+D,-inf,yes,10
+E,-inf,yes,12
+F,-inf,yes,15
+G,-inf,yes,16
+P,13,no,13
+R,-inf,yes,19

@@ -1,0 +1,4 @@
+algorithm,construction_order,total_cost,edges,partial_solution,valid_tree,cut_property
+Kruskal,RS-SC DC-FA FA-LB HQ-DC PT-RS WH-FA DC-PT FA-FB,38,8,forest of merging trees,True,True
+Prim(root=HQ),HQ-DC DC-FA FA-LB WH-FA DC-PT PT-RS RS-SC FA-FB,38,8,one tree grows from HQ,True,True
+Boruvka,RS-SC DC-FA FA-LB HQ-DC PT-RS WH-FA FA-FB DC-PT,38,8,all components merge per round,True,True

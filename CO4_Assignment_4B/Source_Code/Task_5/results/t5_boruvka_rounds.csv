@@ -1,0 +1,11 @@
+family,V,round,components_before,independent_searches,edges_added,components_after,edges_scanned,shrink_factor
+sparse,8000,1,8000,8000,6006,1994,32000,4.01
+sparse,8000,2,1994,1994,1584,410,32000,4.86
+sparse,8000,3,410,410,337,73,32000,5.62
+sparse,8000,4,73,73,63,10,32000,7.3
+sparse,8000,5,10,10,8,2,32000,5.0
+sparse,8000,6,2,2,1,1,32000,2.0
+dense,400,1,400,400,302,98,79800,4.08
+dense,400,2,98,98,79,19,79800,5.16
+dense,400,3,19,19,14,5,79800,3.8
+dense,400,4,5,5,4,1,79800,5.0

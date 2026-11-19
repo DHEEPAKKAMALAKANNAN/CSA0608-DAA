@@ -1,102 +1,102 @@
-id,category,description,expected,actual,status
-T1-G1,given,11 requests of one day,"{'count': 4, 'selected': ['R2', 'R5', 'R10', 'R7']}","4 ['R2', 'R5', 'R10', 'R7']",PASS
-T1-G2,given,touching sessions are compatible,"{'count': 3, 'selected': ['P1', 'P2', 'P3']}","3 ['P1', 'P2', 'P3']",PASS
-T1-S1,student,all-day exercise blocks earliest-start rule,"{'rule_count': 1, 'eft_count': 3, 'optimum': 3}","rule 1, EFT 3, opt 3",PASS
-T1-S2,student,short session straddling two long ones,"{'rule_count': 1, 'eft_count': 2, 'optimum': 2}","rule 1, EFT 2, opt 2",PASS
-T1-S3,student,13-request trap for the fewest-conflicts rule,"{'rule_count': 3, 'eft_count': 4, 'optimum': 4}","rule 3, EFT 4, opt 4",PASS
-T1-S4,student,EFT = brute-force optimum on 500 random days,{'all_equal': True},500/500 equal,PASS
-T1-S5,student,naive re-scan EFT = sort-once EFT = DP on 200 random days,{'all_equal': True},200/200 equal,PASS
-T1-S6,student,mirror rule (latest start) is also optimal on G1,{'count': 4},4,PASS
-T1-B1,boundary,no requests,{'count': 0},0 [],PASS
-T1-B2,boundary,a single request,{'count': 1},1 ['B1'],PASS
-T1-B3,boundary,three identical requests,{'count': 1},1 ['I1'],PASS
-T1-B4,boundary,all requests disjoint,{'count': 5},"5 ['D1', 'D2', 'D3', 'D4', 'D5']",PASS
-T1-B5,boundary,all-day request with four requests inside,{'count': 4},"4 ['a', 'b', 'c', 'd']",PASS
-T1-B6,boundary,"equal finish times, unsorted input",{'count': 2},"2 ['E3', 'E4']",PASS
-T1-B7,boundary,"100,000 requests: EFT = DP optimum",{'all_equal': True},"EFT 25,304 = DP 25,304",PASS
-T1-F1,failure,finish before start,ValueError,ValueError,PASS
-T1-F2,failure,zero-length request,ValueError,ValueError,PASS
-T1-F3,failure,duplicate request id,ValueError,ValueError,PASS
-T2-G1,given,"divisible supplies, W = 1000 kg (sort and heap versions)",5670,"sort 5670, heap 5670",PASS
-T2-G2,given,textbook 0/1 instance: greedy fails,"{'greedy_density': 160, 'optimum': 220, 'fractional': 240}","{'greedy_density': 160, 'optimum': 220, 'fractional': 240.0}",PASS
-T2-G3,given,indivisible equipment: greedy leaves the generator behind,"{'greedy_density': 1975, 'greedy_value': 3300, 'optimum': 3475}","{'greedy_density': 1975, 'greedy_value': 3300, 'optimum': 3475}",PASS
-T2-G4,given,"Indian rupee system, Rs 289","{'greedy': 7, 'optimum': 7}","greedy 7, optimum 7",PASS
-T2-G5,given,"non-canonical system {1, 3, 4}","{'greedy': 3, 'optimum': 2}","greedy 3, optimum 2",PASS
-T2-S1,student,sort = heap value; fractional >= 0/1 optimum (upper bound),{'all_ok': True},200/200 ok,PASS
-T2-S2,student,0/1 DP = brute force on 200 random instances,{'all_ok': True},200/200 equal,PASS
-T2-S3,student,"max(greedy, best single) >= OPT/2; pathological case fixed","{'pathological': 100, 'all_ok': True}","pathological 100, 500/500 >= OPT/2",PASS
-T2-S4,student,smallest counter-example of five coin systems,"{'1 10 25': 30, '1 7 10': 14, '1 3 6 12 24 30': 48, '1 2 5 10 20 50 100 200 500': None, '1 5 10 25': None}","{'1 10 25': 30, '1 7 10': 14, '1 3 6 12 24 30': 48, '1 2 5 10 20 50 100 200 500': None, '1 5 10 25': None}",PASS
-T2-B1,boundary,zero capacity,0,"sort 0, heap 0",PASS
-T2-B2,boundary,no items,0,"sort 0, heap 0",PASS
-T2-B3,boundary,everything fits,80,"sort 80, heap 80",PASS
-T2-B4,boundary,single item larger than the truck,250,"sort 250, heap 250",PASS
-T2-B5,boundary,amount 0,"{'greedy': 0, 'optimum': 0}","greedy 0, optimum 0",PASS
-T2-B6,boundary,all densities equal (ties),100,"sort 100, heap 100",PASS
-T2-F1,failure,greedy gets stuck although 2+2+2 exists,"{'greedy': None, 'optimum': 3}","greedy None, optimum 3",PASS
-T2-F2,failure,amount that cannot be paid at all,"{'greedy': None, 'optimum': None}","greedy None, optimum None",PASS
-T2-F3,failure,negative weight,ValueError,ValueError,PASS
-T2-F4,failure,negative capacity,ValueError,ValueError,PASS
-T2-F5,failure,coin of value 0,ValueError,ValueError,PASS
-T3-G1,given,SOC event frequencies (thousands),"{'total_bits': 224, 'lengths': {'L': 1, 'W': 3, 'F': 3, 'D': 3, 'M': 4, 'S': 4}}","bits 224, lengths {'L': 1, 'W': 3, 'F': 3, 'M': 4, 'S': 4, 'D': 3}",PASS
-T3-G2,given,"ties: fifo and lifo give different trees, same cost","{'fifo_cost': 12, 'lifo_cost': 12, 'fifo_max_len': 2, 'lifo_max_len': 3}","{'fifo_cost': 12, 'fifo_max_len': 2, 'lifo_cost': 12, 'lifo_max_len': 3}",PASS
-T3-S1,student,encode then decode a message,{'bits': 26},"26 bits, decoded LLFDLWLMSLDL",PASS
-T3-S2,student,heap = naive O(m^2) = two-queue cost; prefix-free; round trip,{'all_ok': True},200/200 ok,PASS
-T3-S3,student,Kraft sum = 1 and H <= L < H + 1,{'all_ok': True},200/200 ok,PASS
-T3-S4,student,"synthetic SOC stream: beats 4-bit fixed code, round trip exact",{'all_ok': True},"3.045 bits/event < 4, round trip ok",PASS
-T3-B1,boundary,single symbol gets the 1-bit code 0,"{'total_bits': 7, 'lengths': {'L': 1}}","bits 7, lengths {'L': 1}",PASS
-T3-B2,boundary,two symbols,"{'total_bits': 100, 'lengths': {'L': 1, 'M': 1}}","bits 100, lengths {'M': 1, 'L': 1}",PASS
-T3-B3,boundary,8 equal frequencies = fixed 3-bit code,{'total_bits': 240},"bits 240, lengths {'A': 3, 'B': 3, 'C': 3, 'D': 3, 'E': 3, 'F': 3, 'G': 3, 'H': 3}",PASS
-T3-B4,boundary,Fibonacci frequencies: depth m - 1,{'max_length': 7},"bits 132, lengths {'H': 1, 'G': 2, 'F': 3, 'E': 4, 'D': 5, 'C': 6, 'A': 7, 'B': 7}",PASS
-T3-F1,failure,empty alphabet,ValueError,ValueError,PASS
-T3-F2,failure,truncated bitstream,ValueError,ValueError,PASS
-T3-F3,failure,symbol not in the code table,ValueError,ValueError,PASS
-T3-F4,failure,zero frequency,ValueError,ValueError,PASS
-T3-F5,failure,invalid character in bitstream,ValueError,ValueError,PASS
-T4-G1,given,"9 sites, 14 candidate routes","{'weight': 37, 'edges': 8, 'distinct_msts': 2}","Prim 37/37, Kruskal 37, 8 edges",PASS
-T4-S1,student,Prim(heap) = Prim(array) = Kruskal = brute force,{'all_ok': True},150/150 equal,PASS
-T4-S2,student,naive / rank / rank+compress union-find give the same MST weight,{'all_ok': True},100/100 equal,PASS
-T4-S3,student,every tree edge is a lightest edge across its cut,{'all_ok': True},True,PASS
-T4-S4,student,"3,000 sites: Prim(heap) = Prim(array) = Kruskal",{'all_ok': True},"weights (10633, 10633, 10633)",PASS
-T4-B1,boundary,one site,"{'weight': 0, 'edges': 0}","Prim 0/0, Kruskal 0, 0 edges",PASS
-T4-B2,boundary,"two sites, one route","{'weight': 7, 'edges': 1}","Prim 7/7, Kruskal 7, 1 edges",PASS
-T4-B3,boundary,parallel routes and a self-loop,"{'weight': 9, 'edges': 2}","Prim 9/9, Kruskal 9, 2 edges",PASS
-T4-B4,boundary,all weights equal,"{'weight': 9, 'edges': 3}","Prim 9/9, Kruskal 9, 3 edges",PASS
-T4-B5,boundary,negative (subsidised) route,"{'weight': 6, 'edges': 3}","Prim 6/6, Kruskal 6, 3 edges",PASS
-T4-F1,failure,"two components: Prim partial, Kruskal forest, spanning_tree() refuses","{'prim_reached': 4, 'forest_edges': 5, 'components': 2, 'forest_weight': 18, 'error': 'ValueError'}","{'prim_reached': 4, 'forest_edges': 5, 'components': 2, 'forest_weight': 18, 'error': 'ValueError'}",PASS
-T4-F2,failure,route to an unknown site,ValueError,ValueError,PASS
-T4-F3,failure,network without sites,ValueError,ValueError,PASS
-T5-G1,given,8 junctions: distances from H (array and heap),"{'H': 0, 'A': 3, 'B': 2, 'C': 8, 'D': 11, 'E': 10, 'F': 17, 'G': 19}","{'H': 0, 'A': 3, 'B': 2, 'C': 8, 'D': 11, 'E': 10, 'F': 17, 'G': 19}",PASS
-T5-G2,given,route H -> G,"{'time': 19, 'path': ['H', 'B', 'A', 'C', 'D', 'F', 'G']}",19 H-B-A-C-D-F-G,PASS
-T5-S1,student,"array = heap = Bellman-Ford, routes consistent",{'all_ok': True},300/300 equal,PASS
-T5-S2,student,early exit at target = full run for that target,{'all_ok': True},100/100 equal,PASS
-T5-S3,student,pops = pushes = settled + stale on G1,{'all_ok': True},"pushes 13, settled 8, stale 5",PASS
-T5-B1,boundary,single junction,{'dist': [0]},dist [0],PASS
-T5-B2,boundary,unreachable junction,"{'dist': [0, 4, 'inf'], 'path': None}","dist [0, 4, inf]",PASS
-T5-B3,boundary,zero-time roads,"{'dist': [0, 0, 0], 'path': [0, 1, 2]}","dist [0, 0, 0]",PASS
-T5-B4,boundary,"parallel roads, self-loop, source = target","{'dist': [0, 4], 'path': [0]}","dist [0, 4]",PASS
-T5-F1,failure,"negative edge: safe mode refuses, unsafe mode is wrong, Bellman-Ford right","{'error': 'ValueError', 'unsafe': {'A': 2, 'C': 5}, 'bellman_ford': {'A': 1, 'C': 4}}","{'error': 'ValueError', 'unsafe': {'A': 2, 'C': 5}, 'bellman_ford': {'A': 1, 'C': 4}}",PASS
-T5-F2,failure,negative cycle detected by Bellman-Ford,{'negative_cycle': True},negative cycle True,PASS
-T5-F3,failure,road to an unknown junction,ValueError,ValueError,PASS
-T6-G1,given,fastest route H -> G,"19, H-B-A-C-D-F-G","19, H-B-A-C-D-F-G",PASS
-T6-G2,given,direct road H-A (4) is slower than H-B-A (3),"3, H-B-A","3, H-B-A",PASS
-T6-G3,given,feed closes C-D in both directions (-1 = closed),"12, H-B-D","12, H-B-D",PASS
-T6-G4,given,feed re-times C-E to 9 min,"17, H-B-A-C-E","17, H-B-A-C-E",PASS
-T6-S1,student,"unreachable target, every junction must be expanded at most once (7 reachable)","inf, None","inf, None; exp 7",PASS
-T6-S2,student,source = destination,"0, H","0, H",PASS
-T6-S3,student,zero-time roads are legal,"0, P-Q-R","0, P-Q-R",PASS
-T6-S4,student,a road closed and re-opened in the same feed,"11, H-B-A-C-D","11, H-B-A-C-D",PASS
-T6-S5,student,"work bounds on 900 junctions: expansions <= V, road scans <= E",986 (reference),"986, path of 59 junctions; exp 900; scans 3,328",PASS
-T6-S6,student,A* after a daily feed returns the reference (Dijkstra) time,1000 (reference),"1000, path of 59 junctions",PASS
-T6-B1,boundary,one-junction network,"0, H","0, H",PASS
-T6-B2,boundary,junction with no incoming road,"inf, None","inf, None",PASS
-T6-B3,boundary,query for a junction that does not exist,ValueError,ValueError: unknown junction 15,PASS
-T6-B4,boundary,feed record for a road that does not exist,ValueError,"ValueError: update for unknown road (0, 7)",PASS
-T6-F1,failure,negative travel time that is not the closure code,ValueError,"ValueError: invalid travel time -5 for road (2, 4)",PASS
-T6-F2,failure,every road into D closed,"inf, None","inf, None",PASS
-T6-F3,failure,network with a negative initial travel time,ValueError,"ValueError: road (0, 1) has negative travel time -2",PASS
-T6-L1,scale,"100,000 junctions + nightly feed: Dijkstra and A* equal the reference",10249 (reference),"10249, path of 657 junctions",PASS
-T6-D1,debug,"defect D1: V1 fails G2, FINAL passes","FAIL before fix, PASS after","V1: FAIL, FINAL: PASS",PASS
-T6-D2,debug,"defect D2: V3 fails S1, FINAL passes","FAIL before fix, PASS after","V3: FAIL, FINAL: PASS",PASS
-T6-D3,debug,"defect D3: V0 given fails G1, FINAL passes","FAIL before fix, PASS after","V0 given: FAIL, FINAL: PASS",PASS
-T6-D4,debug,"defect D4: V4 fails S5, FINAL passes","FAIL before fix, PASS after","V4: FAIL, FINAL: PASS",PASS
-T6-D5,debug,"defect D5: V2 fails G3, FINAL passes","FAIL before fix, PASS after","V2: FAIL, FINAL: PASS",PASS
+task,id,category,description,expected,actual,status
+1,T1-N1,normal,"layout text, W = 21: optimum 66, 7 lines, = exhaustive","{'penalty': 66, 'lines': 7}","penalty 66, 7 lines",PASS
+1,T1-N2,normal,"every line <= W, words in order, penalties re-sum to total",{'valid': True},"valid layout, total 66",PASS
+1,T1-S1,student,DP beats greedy first-fit at W = 21 (66 < 78),"{'dp': 66, 'greedy': 78}","DP 66, greedy 78",PASS
+1,T1-V1,validate,300 random texts: DP = exhaustive 2^(n-1) optimum,{'all_equal': True},300/300 equal,PASS
+1,T1-R1,change,requirement change W = 18 -> penalty 27,"{'penalty': 27, 'lines': 7}","penalty 27, 7 lines",PASS
+1,T1-R2,change,requirement change W = 26 -> penalty 9,"{'penalty': 9, 'lines': 5}","penalty 9, 5 lines",PASS
+1,T1-R3,change,requirement change W = 30 -> penalty 24,"{'penalty': 24, 'lines': 5}","penalty 24, 5 lines",PASS
+1,T1-B1,boundary,word of exactly W characters fits with s = 0,"{'penalty': 100, 'lines': 3}","penalty 100, 3 lines",PASS
+1,T1-B2,boundary,"empty text -> 0 lines, penalty 0","{'penalty': 0, 'lines': 0}","penalty 0, 0 lines",PASS
+1,T1-B3,boundary,"single word -> final line only, penalty 0","{'penalty': 0, 'lines': 1}","penalty 0, 1 lines",PASS
+1,T1-B4,boundary,everything on the final line is free,"{'penalty': 0, 'lines': 1}","penalty 0, 1 lines",PASS
+1,T1-B5,boundary,W = longest word: one word per line,"{'penalty': 0, 'lines': 4}","penalty 0, 4 lines",PASS
+1,T1-F1,failure,word longer than W is rejected,LayoutError,LayoutError,PASS
+1,T1-F2,failure,W = 0 is rejected,ValueError,ValueError,PASS
+1,T1-F3,failure,non-integer width is rejected,ValueError,ValueError,PASS
+2,T2-N1,normal,normal case: fractional greedy 273 = unit-split DP reference,{'value': 273},"greedy 273, reference 273",PASS
+2,T2-N2,normal,normal case: 0/1 DP optimum 263 (N1+N2+N4+N5) = brute force,"{'value': 263, 'items': ['N1', 'N2', 'N4', 'N5']}","263 ['N1', 'N2', 'N4', 'N5']",PASS
+2,T2-S1,student,counter-example: GreedyResult 153 != DPOptimum 192,"{'greedy': 153, 'dp': 192}","greedy 153, DP 192",PASS
+2,T2-S2,student,first blocking commitment = step 1 (C1),"{'step': 1, 'item': 'C1'}",step 1 = C1,PASS
+2,T2-V1,validate,300 random instances: DP = 2^n brute force; chosen items re-sum,{'all_ok': True},300/300 ok,PASS
+2,T2-V2,validate,fractional >= DP >= greedy-0/1; best-of-two >= OPT/2,{'all_ok': True},300/300 ok,PASS
+2,T2-V3,validate,one-row DP value = full-table DP value,{'all_ok': True},200/200 ok,PASS
+2,T2-R1,change,adversarial: ratio greedy 2 vs OPT 1000; best-of-two recovers 1000,"{'greedy': 2, 'best_of_two': 1000}","greedy 2, best-of-two 1000",PASS
+2,T2-B1,boundary,no items -> value 0 for all solutions,"{'fractional': 0, 'dp': 0}","fractional 0, DP 0",PASS
+2,T2-B2,boundary,capacity 0 -> nothing loaded,"{'fractional': 0, 'dp': 0}","fractional 0, DP 0",PASS
+2,T2-B3,boundary,items exactly fill W (fits test uses <=),"{'fractional': 18, 'dp': 18}","fractional 18, DP 18",PASS
+2,T2-B4,boundary,single item heavier than W: fraction 10/12 vs nothing,"{'fractional': 25, 'dp': 0}","fractional 25, DP 0",PASS
+2,T2-F1,failure,zero weight rejected,ValueError,ValueError,PASS
+2,T2-F2,failure,negative capacity rejected,ValueError,ValueError,PASS
+2,T2-F3,failure,duplicate item id rejected,ValueError,ValueError,PASS
+3,T3-N1,normal,Stage A: Dijkstra distances from hub H,"{'H': 0, 'A': 3, 'B': 2, 'C': 8, 'D': 10, 'E': 12, 'F': 15, 'G': 16, 'P': 13, 'R': 19}","{'H': 0, 'A': 3, 'B': 2, 'C': 8, 'D': 10, 'E': 12, 'F': 15, 'G': 16, 'P': 13, 'R': 19}",PASS
+3,T3-N2,normal,Stage A: finalisation order of Dijkstra,HBACDEPFGR,HBACDEPFGR,PASS
+3,T3-N3,normal,Stage A: actual path H -> R and its cost,H-B-A-C-D-E-F-G-R 19,H-B-A-C-D-E-F-G-R 19,PASS
+3,T3-S1,student,Stage B (P->D = -5): depots where Dijkstra is wrong,DEFGR,DEFGR,PASS
+3,T3-S2,student,"Stage B: first refused relaxation (step, vertex, offer)",step 7: D offered 8 < final 10,step 7: D offered 8 < final 10,PASS
+3,T3-S3,student,Stage B: Bellman-Ford route H -> R and cost,H-P-D-E-F-G-R 17,H-P-D-E-F-G-R 17,PASS
+3,T3-F1,failure,"Stage C (E->C = -9): cycle, weight, affected count",CDE -5 8,CDE -5 8,PASS
+3,T3-F2,failure,"Stage C: shortest_paths() raises, no distances",NegativeCycleError,NegativeCycleError,PASS
+3,T3-F3,failure,query for unknown depot Z,ValueError,ValueError,PASS
+3,T3-F4,failure,duplicate road A->B rejected,ValueError,ValueError,PASS
+3,T3-F5,failure,road to undeclared depot rejected,ValueError,ValueError,PASS
+3,T3-F6,failure,empty network rejected,ValueError,ValueError,PASS
+3,T3-B1,boundary,"from Port P only R is reachable; others inf, no path","R reachable, 8 unreachable","R reachable, 8 unreachable",PASS
+3,T3-B2,boundary,one-depot network: all four algorithms,0 [[0]] [[0]] no cycle,0 [[0]] [[0]] no cycle,PASS
+3,T3-B3,boundary,"negative cycle unreachable from source: BF ok, Floyd flags","BF no cycle, Floyd XY","BF no cycle, Floyd XY",PASS
+3,T3-V1,validate,random w >= 0: Dijkstra = Bellman-Ford = Floyd (all sources),150/150 agree,150/150 agree,PASS
+3,T3-V2,validate,"random negative edges, no cycle: BF = Floyd = path enumeration",120/120 agree,120/120 agree,PASS
+3,T3-V3,validate,BF cycle detection = Floyd D[v][v] < 0 for some reachable v,150/150 agree,150/150 agree,PASS
+3,T3-V4,validate,Warshall closure = BFS reachability from every vertex,150/150 agree,150/150 agree,PASS
+3,T3-V5,validate,base network: every Floyd route re-sums to D[i][j],100/100 pairs consistent,100/100 pairs consistent,PASS
+3,T3-R1,change,Stage D: Floyd row H and Warshall reachable-pair count,"0,3,2,8,10,12,15,16,13,19 | 54","0,3,2,8,10,12,15,16,13,19 | 54",PASS
+3,T3-R2,change,requirement change: facade picks Bellman-Ford on Stage B,Bellman-Ford 17,Bellman-Ford 17,PASS
+4,T4-N1,normal,"factory instance: minimum 32, route L1 L1 L2 L2 L1 L1","{'time': 32, 'lines': [1, 1, 2, 2, 1, 1]}","time 32, lines [1, 1, 2, 2, 1, 1]",PASS
+4,T4-N2,normal,transfer points after S2 (L1->L2) and after S4 (L2->L1),"[[2, 1, 2, 2], [4, 2, 1, 2]]","[[2, 1, 2, 2], [4, 2, 1, 2]]",PASS
+4,T4-N3,normal,"decision table: every f = min(stay, transfer) and choice matches",{'valid': True},6 rows consistent,PASS
+4,T4-V1,validate,"400 random instances: DP = exhaustive 2^n, route re-sums",{'all_ok': True},400/400 ok,PASS
+4,T4-V2,validate,textbook instance (CLRS 15.1): minimum 38,"{'time': 38, 'lines': [1, 2, 1, 2, 2, 1]}","time 38, lines [1, 2, 1, 2, 2, 1]",PASS
+4,T4-R1,change,"4.3: transfer after S2 -> 12: time 35, station-3 decision flips","{'time': 35, 'lines': [1, 2, 2, 2, 1, 1]}","time 35, lines [1, 2, 2, 2, 1, 1]",PASS
+4,T4-R2,change,"4.4: L2-S4 slowed to 12: time 38, S4 moves to line 1","{'time': 38, 'lines': [1, 1, 2, 1, 1, 1]}","time 38, lines [1, 1, 2, 1, 1, 1]",PASS
+4,T4-R3,change,raising any one time never lowers the optimum,{'all_ok': True},200/200 ok,PASS
+4,T4-B1,boundary,"single station: min(2+5+1, 4+3+3) = 8","{'time': 8, 'lines': [1]}","time 8, lines [1]",PASS
+4,T4-B2,boundary,identical lines: tie -> no transfer,"{'time': 11, 'lines': [1, 1, 1]}","time 11, lines [1, 1, 1]",PASS
+4,T4-B3,boundary,zero transfer times: pick the faster station each time,"{'time': 3, 'lines': [1, 2, 1]}","time 3, lines [1, 2, 1]",PASS
+4,T4-F1,failure,lines of different length rejected,ValueError,ValueError,PASS
+4,T4-F2,failure,negative processing time rejected,ValueError,ValueError,PASS
+4,T4-F3,failure,no stations rejected,ValueError,ValueError,PASS
+5,T5-N1,normal,"facility network (9 sites, 15 links): all three cost 38, same edge set","{'cost': 38, 'edges': 8, 'same_edges': True}","costs [38, 38, 38], same edges True",PASS
+5,T5-N2,normal,"construction orders differ: Kruskal starts RS-SC, Prim HQ-DC, Boruvka 2 rounds","{'kruskal_first': 'RS-SC', 'prim_first': 'HQ-DC', 'boruvka_rounds': 2}","first RS-SC / HQ-DC, 2 rounds",PASS
+5,T5-V1,validate,"brute force over every spanning tree: minimum 38, unique MST","{'cost': 38, 'msts': 1}","min 38, 1 MST of 1206 trees",PASS
+5,T5-V2,validate,"120 random graphs (7 sites, 11 links, ties allowed): all = brute force",{'all_ok': True},120/120 agree,PASS
+5,T5-V3,validate,60 random graphs (30 sites): every tree spanning + cut + cycle property,{'all_ok': True},180/180 trees valid,PASS
+5,T5-S1,student,"tie network: 8 MSTs, three algorithms give 3 different sets of cost 38","{'cost': 38, 'msts': 8, 'distinct_sets': 3}","8 MSTs, 3 distinct returned, cost 38",PASS
+5,T5-S2,student,"tie network: Prim from 9 roots -> 4 different trees, all cost 38","{'distinct_trees': 4, 'cost': 38}","4 trees, costs [38]",PASS
+5,T5-B1,boundary,"one facility, no links -> empty tree, cost 0","{'cost': 0, 'edges': 0}","costs [0, 0, 0], brute 0",PASS
+5,T5-B2,boundary,"two facilities, one link -> that link","{'cost': 7, 'edges': 1}","costs [7, 7, 7], brute 7",PASS
+5,T5-B3,boundary,"parallel links + self-loop: cheaper parallel taken, loop ignored","{'cost': 9, 'edges': 2}","costs [9, 9, 9], brute 9",PASS
+5,T5-B4,boundary,"all costs equal (K4): cost 9, any spanning tree is minimal","{'cost': 9, 'edges': 3}","costs [9, 9, 9], brute 9",PASS
+5,T5-B5,boundary,negative-cost subsidised link is handled (greedy MST is sign-independent),"{'cost': 6, 'edges': 3}","costs [6, 6, 6], brute 6",PASS
+5,T5-F1,failure,"disconnected network: Kruskal/Boruvka forest of 3 components, policy raises","{'components': 3, 'forest_cost': 14, 'error': 'ValueError'}","3 comps, forest 14, policy ValueError",PASS
+5,T5-F2,failure,link to an unknown facility is rejected,{'error': 'ValueError'},ValueError,PASS
+5,T5-F3,failure,NaN cost is rejected,{'error': 'ValueError'},ValueError,PASS
+5,T5-F4,failure,network with no facilities is rejected,{'error': 'ValueError'},ValueError,PASS
+5,T5-R1,change,"large sparse network (5,000 sites, 20,000 links): three-way agreement",{'all_equal': True},"all = 755,962,807",PASS
+5,T5-R2,change,dense complete network (300 sites): Kruskal = Prim = Prim-array = Boruvka,{'all_equal': True},"all = 1,190,974",PASS
+6,T6-N1,normal,hub + 6 locations: minimum travel cost,123,"DP 123, exhaustive 123",PASS
+6,T6-N2,normal,route is a Hamiltonian tour; re-added cost = reported,"['Hub', 'E', 'D', 'B', 'F', 'A', 'C', 'Hub']",Hub-E-D-B-F-A-C-Hub = 123,PASS
+6,T6-V1,validate,hub + 4 locations: DP = exhaustive over 24 routes,"{'cost': 97, 'routes': 24}",DP 97 = exh. 97 (24 routes),PASS
+6,T6-V2,validate,random symmetric instances n=1..7: DP = brute force,{'all_ok': True},105/105 instances agree,PASS
+6,T6-V3,validate,random asymmetric instances n=1..8: DP = brute force,{'all_ok': True},32/32 instances agree,PASS
+6,T6-S1,student,one-way streets (asymmetric): unique optimum found,"{'cost': 116, 'routes': 120}",DP 116 = exh. 116 (120 routes),PASS
+6,T6-S2,student,"states = n*2^(n-1), transitions = n(n-1)2^(n-2)+n",{'all_ok': True},"formula holds for n=[1, 2, 3, 4, 6, 8, 10]",PASS
+6,T6-S3,student,renumbering the locations does not change the optimum,123,"relabelled DP 123, exhaustive 123",PASS
+6,T6-B1,boundary,single delivery location: Hub -> 1 -> Hub,"{'cost': 16, 'route': [0, 1, 0]}","cost 16, route [0, 1, 0]",PASS
+6,T6-B2,boundary,"two locations, asymmetric: picks cheaper direction","{'cost': 13, 'route': [0, 2, 1, 0]}","cost 13, route [0, 2, 1, 0]",PASS
+6,T6-B3,boundary,all costs equal (every tour ties): cost 4*5,{'cost': 20},"cost 20, route [0, 3, 2, 1, 0]",PASS
+6,T6-B4,boundary,location without return road: no feasible tour (inf),inf,"DP inf, exhaustive inf",PASS
+6,T6-F1,failure,non-square matrix rejected,InvalidCostMatrix,"InvalidCostMatrix: matrix is not square: row 0 has 3 entries, expected 2",PASS
+6,T6-F2,failure,negative travel cost rejected,InvalidCostMatrix,InvalidCostMatrix: cost[0][1] = -3 is negative (travel cost must be >= 0),PASS
+6,T6-F3,failure,non-zero diagonal rejected,InvalidCostMatrix,InvalidCostMatrix: cost[0][0] = 5: diagonal must be 0,PASS
+6,T6-F4,failure,hub only (no delivery location) rejected,InvalidCostMatrix,InvalidCostMatrix: need the hub and at least 1 delivery location (matrix of size >= 2),PASS
+6,T6-R1,change,"new location G: 448 states, DP = brute force (5040 routes)",{'states': 448},"448 states, DP 135 = exh. 135 (5040)",PASS

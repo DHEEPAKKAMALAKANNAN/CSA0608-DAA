@@ -1,50 +1,59 @@
-# Task 5 – Pseudocode: Dijkstra's Algorithm for Ambulance Routing
+# Task 5 – Pseudocode: Kruskal, Prim and Borůvka
 
-Written before the implementation (`dijkstra_routing.py`). Directed roads, w(u, v) >= 0 = minutes.
-
-## Array version, O(V² + E)
-
-```
-Algorithm DijkstraArray(G, s)
-1. for each v in V do dist[v] = infinity;  prev[v] = nil;  done[v] = false
-2. dist[s] = 0
-3. repeat |V| times
-4.     u = the vertex with done[u] = false and the smallest dist (linear scan)   // greedy choice
-5.     if dist[u] = infinity then stop                         // the rest is unreachable
-6.     done[u] = true                                          // dist[u] is now final
-7.     for each road (u, v, w) do
-8.         if not done[v] and dist[u] + w < dist[v] then dist[v] = dist[u] + w;  prev[v] = u   // relax
-9. return dist, prev
-```
-
-## Binary-heap version with lazy deletion, O((V + E) log V)
+All three algorithms add only **safe edges**: a lightest edge crossing a cut that no chosen edge crosses
+(cut property). They differ in which cut they look at and in the data structure that finds the edge.
+Flowcharts: `Report/Screenshots/t5_flowchart_kruskal.png`, `t5_flowchart_prim.png`, `t5_flowchart_boruvka.png`.
 
 ```
-Algorithm DijkstraHeap(G, s, target = none)
-1. if some w(u, v) < 0 then error "Dijkstra requires non-negative weights"
-2. dist[v] = infinity for all v;  dist[s] = 0;  H = min-heap {(0, s)}
-3. while H not empty do
-4.     (d, u) = ExtractMin(H)
-5.     if done[u] or d > dist[u] then continue                 // stale entry: skip
-6.     done[u] = true
-7.     if u = target then stop                                 // early exit once the target is settled
-8.     for each road (u, v, w) do
-9.         if not done[v] and d + w < dist[v] then
-10.            dist[v] = d + w;  prev[v] = u;  Insert(H, (dist[v], v))
-11. return dist, prev
+Algorithm Kruskal(V, E)
+1.  sort E by cost (stable: equal costs keep input order)
+2.  for each v in V do MakeSet(v)                       // union-find: parent[v] = v, rank[v] = 0
+3.  T = {}
+4.  for each (u, v, w) in sorted E do
+5.      if |T| = |V| - 1 then break                      // tree complete: stop early
+6.      ru = Find(u);  rv = Find(v)                      // path compression
+7.      if ru != rv then                                 // ends in different components -> safe edge
+8.          T = T ∪ {(u, v, w)};  Union(ru, rv)          // union by rank: forest merges
+9.      else reject (u, v, w)                            // would close a cycle
+10. if |T| < |V| - 1 then report "disconnected: T is a minimum spanning forest"
+11. return T, Σ w(T)
 ```
 
-## Route reconstruction and the reference algorithm
+```
+Algorithm Prim(V, E, r)
+1.  for each v in V do key[v] = ∞;  via[v] = none;  inTree[v] = false
+2.  key[r] = 0;  H = indexed min-heap containing r
+3.  T = {}
+4.  while H is not empty do
+5.      u = ExtractMin(H);  inTree[u] = true             // lightest edge leaving the tree
+6.      if via[u] != none then T = T ∪ {via[u]}
+7.      for each link (u, v, w) do
+8.          if not inTree[v] and w < key[v] then         // strict <: first-found edge kept on a tie
+9.              key[v] = w;  via[v] = (u, v, w)
+10.             if v in H then DecreaseKey(H, v, w) else Insert(H, v, w)
+11. if |T| < |V| - 1 then report "disconnected: only r's component was reached"
+12. return T, Σ w(T)
+```
 
 ```
-Algorithm PathTo(prev, s, t)
-1. if dist[t] = infinity then return none
-2. P = [t];  while last(P) != s do append prev[last(P)] to P
-3. return reverse(P)
-
-Algorithm BellmanFord(G, s)                      // correct with negative weights, O(VE)
-1. dist[v] = infinity for all v;  dist[s] = 0
-2. repeat |V| - 1 times: for each road (u, v, w) do if dist[u] + w < dist[v] then dist[v] = dist[u] + w
-3. if some road can still be relaxed then report "negative cycle"
-4. return dist
+Algorithm Boruvka(V, E)
+1.  for each v in V do MakeSet(v)                        // |V| components
+2.  T = {}
+3.  while number of components > 1 do
+4.      cheapest[c] = none for every component c
+5.      for each (u, v, w) in E do                       // one pass over all links per round
+6.          cu = Find(u);  cv = Find(v)
+7.          if cu != cv then
+8.              for c in {cu, cv} do
+9.                  if cheapest[c] = none or (w, u, v) < key(cheapest[c]) then
+10.                     cheapest[c] = (u, v, w)           // total order (cost, u, v) breaks ties
+11.     if no cheapest edge exists then
+12.         report "disconnected: T is a minimum spanning forest";  break
+13.     for each component c with cheapest[c] = (u, v, w) do
+14.         if Union(u, v) then T = T ∪ {(u, v, w)}       // edge chosen by both ends is added once
+15. return T, Σ w(T)                                     // ≤ ⌈log₂ |V|⌉ rounds (components at least halve)
 ```
+
+Complexities (V facilities, E links): Kruskal O(E log E) for the sort + O(E α(V)) union-find;
+Prim O((V + E) log V) with a binary heap (O(V² + E) with a plain key array); Borůvka O(E log V)
+(≤ ⌈log₂ V⌉ rounds × one O(E) scan), with the per-component searches of a round independent of each other.

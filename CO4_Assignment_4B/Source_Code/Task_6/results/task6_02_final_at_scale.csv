@@ -1,5 +1,0 @@
-V,E,feed_records,build_ms,feed_ms,dijkstra_expansions_median,dijkstra_ms_median,astar_expansions_median,astar_ms_median,astar_saving_pct,full_sssp_ms_median,queries,valid
-10000,37548,2074,49.4,18.8,4846.0,30.7,2394.5,15.5,31.2,65.3,10,10
-25600,96566,5276,109.3,28.3,17009.0,128.4,7554.5,69.2,45.2,195.7,10,10
-50000,189274,10334,251.1,67.2,21576.0,166.4,11705.5,91.5,47.9,424.7,10,10
-100000,378786,20754,506.3,117.2,59188.0,562.7,23149.5,210.5,44.7,933.3,10,10

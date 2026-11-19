@@ -1,0 +1,11 @@
+{
+  "selected_boundary": {"text": "an optimisation step", "width": 12,
+    "why": "'optimisation' has EXACTLY W = 12 characters: it fits only with s = 0, so an off-by-one fit test (unused > 0, or counting a trailing space) wrongly rejects it"},
+  "extra": [
+    {"name": "empty text", "text": "", "width": 10},
+    {"name": "single word", "text": "routing", "width": 10},
+    {"name": "everything fits on one line (final line is free)", "text": "a b c", "width": 10},
+    {"name": "word longer than W (no valid layout)", "text": "tiny enormousword ok", "width": 8},
+    {"name": "invalid width W = 0", "text": "a b", "width": 0}
+  ]
+}

@@ -1,53 +1,68 @@
-# Task 3 – Pseudocode: Huffman Coding of SOC Event Logs
+# Task 3 – Pseudocode of the routing engine
 
-Written before the implementation (`huffman_coding.py`).
-
-## Greedy construction with a binary min-heap
+Notation: G = (V, E, w) directed, n = |V|, m = |E|; `inf` = unreachable. Implemented in `routing_engine.py`.
 
 ```
-Algorithm Huffman(F, m)                           // F = {symbol: frequency}, m symbols
-1. if m = 0 or some frequency <= 0 then error
-2. Q = empty min-heap ordered by (frequency, tie key)
-3. for each symbol s do Insert(Q, leaf(s, F[s]))
-4. while |Q| > 1 do                                           // m - 1 merges
-5.     x = ExtractMin(Q);  y = ExtractMin(Q)                  // greedy choice: two least frequent trees
-6.     z = new node(freq = x.freq + y.freq, left = x, right = y)
-7.     Insert(Q, z)
-8. return ExtractMin(Q)                                       // root; Theta(m log m)
-// tie key: 'fifo' = creation order (older first, minimum variance); 'lifo' = newest first
+Algorithm Dijkstra(G, s)                         // requires w(u, v) >= 0 for every edge
+1. for each v in V do dist[v] = inf;  pred[v] = nil;  final[v] = false
+2. dist[s] = 0;  H = min-heap;  push(H, (0, s));  order = []
+3. while H is not empty do
+4.     (d, u) = extract-min(H)
+5.     if final[u] or d > dist[u] then continue          // stale heap entry
+6.     final[u] = true;  append u to order               // greedy commitment
+7.     for each edge (u, v, w) do
+8.         if not final[v] and dist[u] + w < dist[v] then
+9.             dist[v] = dist[u] + w;  pred[v] = u;  push(H, (dist[v], v))
+10. return dist, pred, order
 ```
 
-## Codes, encoding and decoding
+```
+Algorithm BellmanFord(G, s)
+1. for each v in V do dist[v] = inf;  pred[v] = nil
+2. dist[s] = 0
+3. for k = 1 to n - 1 do
+4.     updated = false
+5.     for each edge (u, v, w) in E do
+6.         if dist[u] != inf and dist[u] + w < dist[v] then
+7.             dist[v] = dist[u] + w;  pred[v] = u;  updated = true
+8.     if not updated then break                        // early exit
+9. for each edge (u, v, w) in E do                      // detection pass |V|
+10.    if dist[u] != inf and dist[u] + w < dist[v] then
+11.        pred[v] = u;  x = v
+12.        repeat n times: x = pred[x]                  // now x lies on the cycle
+13.        cycle = vertices met following pred from x until x repeats
+14.        affected = all vertices reachable from cycle;  dist[a] = -inf for a in affected
+15.        return NEGATIVE-CYCLE(cycle, weight(cycle), affected)
+16. return dist, pred
+```
 
 ```
-Algorithm MakeCodes(root)
-1. if root is a leaf then return {root.symbol: "0"}           // one-symbol alphabet
-2. walk the tree: append 0 for a left edge, 1 for a right edge; code(leaf) = path label
-
-Algorithm Decode(bits, root)
-1. node = root;  out = empty
-2. for each bit b do
-3.     if b not in {0, 1} then error
-4.     node = (b = 0) ? node.left : node.right
-5.     if node is a leaf then append node.symbol to out;  node = root
-6. if node != root then error "truncated code word"
-7. return out
+Algorithm Floyd(W[1..n, 1..n])                    // W[i][i] = 0, W[i][j] = inf if no road
+1. D = W
+2. for i = 1 to n do for j = 1 to n do nxt[i][j] = j if W[i][j] < inf else nil
+3. for k = 1 to n do
+4.     for i = 1 to n do
+5.         for j = 1 to n do
+6.             if D[i][k] + D[k][j] < D[i][j] then
+7.                 D[i][j] = D[i][k] + D[k][j];  nxt[i][j] = nxt[i][k]
+8. if D[i][i] < 0 for some i then report NEGATIVE CYCLE through i
+9. return D, nxt                     // route i -> j: i, nxt[i][j], nxt[nxt[i][j]][j], ..., j
 ```
 
-## Alternative constructions compared in the experiments
+```
+Algorithm Warshall(A[1..n, 1..n])                 // A[i][j] = 1 iff road i -> j
+1. R = A
+2. for k = 1 to n do
+3.     for i = 1 to n do
+4.         for j = 1 to n do
+5.             R[i][j] = R[i][j] or (R[i][k] and R[k][j])
+6. return R                          // R[i][j] = 1 iff j is reachable from i
+```
 
 ```
-Algorithm HuffmanNaive(F, m)                      // Theta(m^2): no priority queue
-1. P = list of frequencies;  cost = 0
-2. while |P| > 1 do
-3.     remove the two smallest values a, b of P by two linear scans
-4.     cost = cost + a + b;  append a + b to P
-5. return cost
-
-Algorithm HuffmanTwoQueues(F sorted increasing)   // Theta(m) after sorting
-1. Q1 = sorted leaves;  Q2 = empty queue;  cost = 0
-2. while |Q1| + |Q2| > 1 do
-3.     a = smaller front of Q1, Q2 (dequeue);  b = smaller front of Q1, Q2 (dequeue)
-4.     cost = cost + a + b;  enqueue a + b at the back of Q2    // merged sums arrive in sorted order
-5. return cost
+Algorithm ShortestPaths(G, s)                     // production facade
+1. if every w(u, v) >= 0 then return Dijkstra(G, s)
+2. result = BellmanFord(G, s)
+3. if result is NEGATIVE-CYCLE then raise NegativeCycleError(cycle, weight)
+4. return result
 ```

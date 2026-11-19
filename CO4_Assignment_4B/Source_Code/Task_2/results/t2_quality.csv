@@ -1,0 +1,5 @@
+data,heuristic,mean_pct,worst_pct,optimal_count,instances
+uncorrelated,ratio greedy,99.13,92.32,578,1000
+uncorrelated,best-of-two,99.13,92.32,578,1000
+strongly correlated,ratio greedy,93.08,81.66,73,1000
+strongly correlated,best-of-two,93.08,81.66,73,1000

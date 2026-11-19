@@ -1,0 +1,7 @@
+station,stay1,transfer1,choice1,f1,stay2,transfer2,choice2,f2,route_lines,min_time
+1,6,,entry,6,11,,entry,11,1 1 2 1 1 1,38
+2,11,18,stay,11,19,16,transfer,16,1 1 2 1 1 1,38
+3,20,28,stay,20,20,17,transfer,17,1 1 2 1 1 1,38
+4,30,28,transfer,28,29,35,stay,29,1 1 2 1 1 1,38
+5,31,34,stay,31,37,38,stay,37,1 1 2 1 1 1,38
+6,35,44,stay,35,44,41,transfer,41,1 1 2 1 1 1,38

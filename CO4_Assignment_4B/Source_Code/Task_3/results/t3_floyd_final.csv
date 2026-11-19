@@ -1,0 +1,11 @@
+from,H,A,B,C,D,E,F,G,P,R
+H,0,3,2,8,10,12,15,16,13,19
+A,inf,0,8,5,7,9,12,13,inf,16
+B,inf,1,0,6,8,10,13,14,inf,17
+C,inf,4,3,0,2,4,7,8,inf,11
+D,inf,inf,inf,inf,0,2,5,6,inf,9
+E,inf,inf,inf,inf,8,0,3,4,inf,7
+F,inf,inf,inf,inf,5,7,0,1,inf,4
+G,inf,inf,inf,inf,4,6,9,0,inf,3
+P,inf,inf,inf,inf,inf,inf,inf,inf,0,9
+R,inf,inf,inf,inf,inf,inf,inf,inf,inf,0

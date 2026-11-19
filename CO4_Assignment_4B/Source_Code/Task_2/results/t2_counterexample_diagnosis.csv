@@ -1,0 +1,6 @@
+step,item,decision,committed,room,best_reachable
+1,C1,COMMIT,105,19,153
+2,C2,skip,105,19,153
+3,C3,skip,105,19,153
+4,C4,COMMIT,141,10,153
+5,C5,COMMIT,153,6,153

@@ -1,0 +1,17 @@
+n_locations,costs,instances,dp_equals_exhaustive,dp_transitions,routes_n_fact,dp_ms_avg,exhaustive_ms_avg
+1,symmetric,30,30,1,1,0.0105,0.0069
+1,asymmetric,30,30,1,1,0.0097,0.0067
+2,symmetric,30,30,4,2,0.018,0.0113
+2,asymmetric,30,30,4,2,0.0178,0.0117
+3,symmetric,30,30,15,6,0.0382,0.0245
+3,asymmetric,30,30,15,6,0.0363,0.023
+4,symmetric,30,30,52,24,0.089,0.0719
+4,asymmetric,30,30,52,24,0.0871,0.0699
+5,symmetric,30,30,165,120,0.2131,0.3033
+5,asymmetric,30,30,165,120,0.2116,0.3022
+6,symmetric,30,30,486,720,0.4637,1.4756
+6,asymmetric,30,30,486,720,0.4406,1.47
+7,symmetric,8,8,1351,5040,1.5122,13.5849
+7,asymmetric,8,8,1351,5040,1.0421,10.1258
+8,symmetric,3,3,3592,40320,3.2165,92.4748
+8,asymmetric,3,3,3592,40320,2.445,79.562

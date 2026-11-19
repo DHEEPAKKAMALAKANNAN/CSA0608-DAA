@@ -1,5 +1,0 @@
-shape,m,entropy,huffman_avg,fixed,redundancy,max_length,bound_ok
-uniform,16,4.0,4.0,4,0.0,4,True
-Zipf (1/k),16,3.4032,3.4332,4,0.03,6,True
-geometric (1/2^k),16,1.9997,1.9997,4,0.0,15,True
-Fibonacci,16,2.5067,2.6113,4,0.1046,15,True

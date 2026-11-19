@@ -1,0 +1,4 @@
+algorithm,cost,tie1,tie2,tie3,spanning,minimum,cut_property,cycle_property,edges
+Kruskal,38,WH-FA,LB-SC,FB-LB,True,True,True,True,DC-FA FA-LB FB-LB HQ-DC LB-SC PT-RS RS-SC WH-FA
+Prim(root=HQ),38,HQ-WH,LB-SC,FA-FB,True,True,True,True,DC-FA FA-FB FA-LB HQ-DC HQ-WH LB-SC PT-RS RS-SC
+Boruvka,38,HQ-WH,DC-PT,FA-FB,True,True,True,True,DC-FA DC-PT FA-FB FA-LB HQ-DC HQ-WH PT-RS RS-SC

@@ -1,0 +1,7 @@
+case,solution,comparisons,items_examined,dp_cells,memory_cells,value,pct_of_01_opt,guarantee
+N1,A fractional greedy,7,6,0,6,273.0,103.8,optimal (fractional)
+N1,ratio greedy on 0/1,7,6,0,6,253,96.2,none (arbitrarily bad)
+N1,B 0/1 DP,206,0,276,322,263,100.0,optimal (0/1)
+C1,A fractional greedy,5,5,0,5,196.2,102.2,optimal (fractional)
+C1,ratio greedy on 0/1,5,5,0,5,153,79.7,none (arbitrarily bad)
+C1,B 0/1 DP,131,0,205,246,192,100.0,optimal (0/1)

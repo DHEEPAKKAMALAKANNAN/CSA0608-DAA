@@ -1,56 +1,21 @@
-# Task 4 – Pseudocode: Minimum Spanning Tree (Prim and Kruskal)
-
-Written before the implementation (`mst_prim_kruskal.py`). G = (V, E), w(u, v) = trench length.
-
-## Prim with an indexed binary heap
+# Task 4 – Assembly Line Scheduling DP: pseudocode
 
 ```
-Algorithm PrimHeap(G, r)
-1. for each v in V do key[v] = infinity;  parent[v] = nil;  inTree[v] = false
-2. key[r] = 0;  Q = indexed min-heap containing r
-3. while Q not empty do
-4.     u = ExtractMin(Q);  inTree[u] = true                   // greedy: lightest edge crossing the cut
-5.     if parent[u] != nil then add edge (parent[u], u) to T
-6.     for each (v, w) adjacent to u do
-7.         if not inTree[v] and w < key[v] then
-8.             key[v] = w;  parent[v] = u
-9.             if v in Q then DecreaseKey(Q, v, w) else Insert(Q, v, w)
-10. return T                                                  // |T| < |V| - 1  =>  graph disconnected
-// O(E log V)
+Algorithm AssemblyLine(a1, a2, t1, t2, e1, e2, x1, x2, n)
+// f_i[j] = fastest time to leave station j on line i;  pred_i[j] = line used at station j-1
+1.  f1[1] = e1 + a1[1];  f2[1] = e2 + a2[1]
+2.  for j = 2 to n do
+3.      stay1 = f1[j-1] + a1[j];   trans1 = f2[j-1] + t2[j-1] + a1[j]
+4.      if stay1 <= trans1 then f1[j] = stay1; pred1[j] = 1 else f1[j] = trans1; pred1[j] = 2
+5.      stay2 = f2[j-1] + a2[j];   trans2 = f1[j-1] + t1[j-1] + a2[j]
+6.      if stay2 <= trans2 then f2[j] = stay2; pred2[j] = 2 else f2[j] = trans2; pred2[j] = 1
+7.      record (j, stay1, trans1, choice1, stay2, trans2, choice2)      // decision table
+8.  if f1[n] + x1 <= f2[n] + x2 then f* = f1[n] + x1; line = 1 else f* = f2[n] + x2; line = 2
+9.  for j = n downto 1 do                                            // route reconstruction
+10.     route[j] = line
+11.     if j > 1 then line = pred_line[j]
+12. transfers = { j : route[j] ≠ route[j+1] }
+13. return f*, route, transfers
 ```
 
-## Prim with a plain array (dense graphs)
-
-```
-Algorithm PrimArray(G, r)
-1. key[v] = infinity for all v;  key[r] = 0
-2. repeat |V| times
-3.     u = vertex not in tree with the smallest key (linear scan)   // Theta(V) per round
-4.     if key[u] = infinity then stop                          // disconnected
-5.     add u (and edge parent[u]-u) to the tree
-6.     for each (v, w) adjacent to u do if v not in tree and w < key[v] then key[v] = w;  parent[v] = u
-// O(V^2 + E)
-```
-
-## Kruskal with union–find (union by rank + path compression)
-
-```
-Algorithm Kruskal(G)
-1. sort E by weight                                           // Theta(E log E)
-2. for each v in V do MakeSet(v)
-3. T = empty
-4. for each edge (u, v, w) in sorted order while |T| < |V| - 1 do
-5.     ru = Find(u);  rv = Find(v)
-6.     if ru != rv then add (u, v, w) to T;  Union(ru, rv)     // greedy: lightest edge, no cycle
-7.     else reject (u, v, w)                                   // it would close a cycle
-8. return T                                                   // spanning forest if disconnected
-
-Algorithm Find(x)
-1. root = x;  while parent[root] != root do root = parent[root]
-2. while parent[x] != root do next = parent[x];  parent[x] = root;  x = next   // path compression
-3. return root
-
-Algorithm Union(a, b)                              // a, b are roots
-1. if rank[a] < rank[b] then swap a, b
-2. parent[b] = a;  if rank[a] = rank[b] then rank[a] = rank[a] + 1
-```
+Work: 2 comparisons per station + 1 at the exit → Θ(n); memory Θ(n) for pred (f needs only two variables).
