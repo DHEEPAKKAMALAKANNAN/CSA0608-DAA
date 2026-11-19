@@ -1,7 +1,0 @@
-from,to,link
-A,C,Chennai -> Hyderabad
-B,A,Bengaluru -> Chennai
-C,B,Hyderabad -> Bengaluru
-C,D,Hyderabad -> Mumbai
-D,E,Mumbai -> Pune
-E,D,Pune -> Mumbai

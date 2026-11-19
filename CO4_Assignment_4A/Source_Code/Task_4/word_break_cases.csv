@@ -1,0 +1,4 @@
+case,text,dictionary
+Task 4.2 failing input,catsdog,cat dog
+Task 4.4 regression input,catdog,cat dog
+Extra regression input (FALSE case),dogcatx,cat dog
