@@ -6,19 +6,19 @@ Brute-Force String Matching, Closest Pair, Convex Hull and Exhaustive Search.
 Student: **V. Vasudevan** · Reg. No. **192425324** · SIMATS Engineering · 19 November 2026
 
 The final report is [`Final_Report/CO2_Assignment_Report.docx`](Final_Report/CO2_Assignment_Report.docx)
-(also as [PDF](Final_Report/CO2_Assignment_Report.pdf) and as the Markdown source
-[`CO2_Assignment_Report.md`](Final_Report/CO2_Assignment_Report.md)).
+(also as [PDF](Final_Report/CO2_Assignment_Report.pdf)).
 
 ## How the work is organised
 
 Every question follows the cycle **Predict → Design → Implement → Measure → Analyse → Evaluate** (Q7 adds
 **Diagnose → Redesign → Validate**):
 
-* `Pseudocode/` – the design notes, predictions and pseudocode, written **before** the code;
-* `Implementation_Code/` – the programs; `results/` holds the raw data (CSV), the captured console logs
-  (`*_log.txt`) and the datasets used (`results/datasets/`);
-* `Output_Screenshots/` – screenshots of the real program runs (`*_output*.png`), code screenshots
-  (`*_code_*.png`), graphs and visualisations.
+* `Pseudocode/` – the design notes, predictions and pseudocode, written **before** the code, plus the
+  **flowchart** of every algorithm (`q*_flowchart_*.png`, standard symbols) and explanatory diagrams (Q3 alignment
+  diagram, Q4 pair plot / comparison triangle, Q5 orientation test, Q6 subset tree, Q7 sweep window),;
+* `Implementation_Code/` – the programs; `results/` holds the raw experimental data (CSV) and the datasets used (`results/datasets/`);
+* `Output_Screenshots/` – screenshots of the real program runs (`*_output*.png`), graphs and visualisations
+  (the source-code screenshots are inside the report).
 
 Operation counts (comparisons, swaps, shifts, character comparisons, distance calculations, orientation tests,
 candidate subsets) are the **primary evidence**; wall-clock times are secondary (other programs were running on the
@@ -33,7 +33,7 @@ CO2_Assignment/
 ├── Q5_Brute_Force_Convex_Hull/         …
 ├── Q6_Exhaustive_Search/               …
 ├── Q7_Day4_Design_Challenge/           …
-├── Final_Report/                       CO2_Assignment_Report.docx / .pdf / .md
+├── Final_Report/                       CO2_Assignment_Report.docx / .pdf
 └── README.md
 ```
 
@@ -70,7 +70,7 @@ each test/demo program < 2 s, each experiment script 5–60 s.
 ## Correctness verification (summary)
 
 All seven algorithm programs print `PASS …` lines and `RESULT: k/k tests passed`; together **77/77 tests pass**
-(captured in `results/*_log.txt` and in Appendix D of the report).
+(see the output screenshots and Appendix D of the report).
 
 | Q | Reference used |
 |---|---|
