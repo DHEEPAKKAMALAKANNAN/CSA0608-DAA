@@ -33,10 +33,12 @@ CO2_Debugging_Optimisation/
 │   ├── test_harness.py             18 defect tests + 13 general tests (+6 for the optimised module), PASS/FAIL per test
 │   ├── debug_session.py            reproduce -> isolate (sys.settrace) -> fix one defect at a time -> re-test -> verify
 │   ├── experiments.py              operation counts + timings for n = 100 ... 5,000, CSV + graphs
+│   ├── diagrams.py                 flowcharts of the 4 corrected + 4 optimised functions and the debugging process
 │   └── alert_data.py               seeded SOC alert datasets (also writes them as CSV)
 ├── Report/
-│   ├── CO2_Debugging_Optimisation_Report.md / .docx / .pdf
+│   ├── CO2_Debugging_Optimisation_Report.docx / .pdf
 │   ├── screenshots/        code_*.png (source code), out_*.png and experiments_output_*.png (real execution output)
+│   ├── diagrams/           flow_*.png flowcharts (Part B) and flow_debugging_process.png (Part C)
 │   ├── graphs/             fig_sort, fig_search, fig_matching, fig_closest_pair, fig_speedup (.png + plotted data .csv)
 │   └── tables/             defect_tests.csv, diff_original_vs_corrected.csv, comparison_summary.csv
 ├── Supporting_Files/

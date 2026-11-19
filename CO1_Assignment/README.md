@@ -17,8 +17,8 @@ records, recommends one, and re-evaluates it for the **Day-4 Design Challenge** 
 1,000,000 records with a daily batch of new records).
 
 The complete answer to all 12 tasks is the report
-[`Report/Documentation/CO1_Assignment_Report.md`](Report/Documentation/CO1_Assignment_Report.md)
-(also as `.docx` and `.pdf` in the same folder, in the department's sample-report format). Every `Task_N` folder
+[`Report/Documentation/CO1_Assignment_Report.docx`](Report/Documentation/CO1_Assignment_Report.docx)
+(also as [PDF](Report/Documentation/CO1_Assignment_Report.pdf), in the department's sample-report format). Every `Task_N` folder
 contains a `README.md` with that task's complete answer.
 
 ## Algorithms implemented
@@ -69,16 +69,16 @@ CO1_Assignment/
 ├── Task_8_Implementation_Testing/    README (test procedure, 13 cases + properties), captured outputs
 │   └── Source_Code/                  student_records.py, search_algorithms.py, test_search_algorithms.py,
 │                                     run_experiments.py, design_challenge_simulation.py
-├── Task_9_Experimental_Performance/  README (tables + graphs), 10 CSV files, experiment_output.txt
+├── Task_9_Experimental_Performance/  README (tables + graphs), 10 CSV files
 ├── Task_10_Theory_vs_Experiment/     README
 ├── Task_11_Final_Recommendation/     README
-├── Task_12_Design_Challenge/         README (A–D), 4 CSV files, simulation_output.txt
+├── Task_12_Design_Challenge/         README (A–D), 4 CSV files
 ├── Report/
 │   ├── Source_Code_Screenshots/      rendered source code of all 8 programs
 │   ├── Output_Screenshots/           real execution output of the 5 programs
 │   ├── Analysis/                     complexity_derivations.md, theory_vs_experiment.md, design_challenge_analysis.md
 │   ├── Tables_and_Graphs/            8 graphs (fig1–fig8) + all 14 CSV tables
-│   └── Documentation/                CO1_Assignment_Report.md / .docx / .pdf (all 12 tasks + appendices)
+│   └── Documentation/                CO1_Assignment_Report.docx / .pdf (all 12 tasks + appendices)
 └── README.md
 ```
 

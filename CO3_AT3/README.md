@@ -35,22 +35,22 @@ CO3_AT3/
 │   ├── Pseudocode/merge_sort_pseudocode.txt          (written before implementation; baseline + Part 5 variants)
 │   ├── Source_Code/merge_sort.py                      (algorithms + counters + trace demo on the sample)
 │   │               merge_sort_experiments.py          (experiments, CSVs, graphs)
-│   └── Report/Module_1_Merge_Sort_Report.md/.docx/.pdf, screenshots/, traces/, graphs/ (+ CSV copies)
+│   └── Report/Module_1_Merge_Sort_Report.docx/.pdf, screenshots/, traces/, graphs/ (+ CSV copies)
 ├── Module_2_Quick_Sort/                               (same layout: quick_sort.py, quick_sort_experiments.py)
 ├── Module_3_Binary_Search/                            (binary_search.py, binary_search_experiments.py)
 ├── Module_4_Strassen_Matrix_Multiplication/           (strassen.py, strassen_experiments.py)
 ├── Final_Design_and_Analysis/
-│   ├── CO3_AT3_Case_Study_Report.md/.docx/.pdf        (complete case study: all six parts, all four modules)
+│   ├── CO3_AT3_Case_Study_Report.docx/.pdf        (complete case study: all six parts, all four modules)
 │   ├── Final_Algorithmic_Design.md                    (the final design at a glance)
 │   ├── graphs/  final_production_time.png, final_memory.png, final_theory_vs_experiment.png, production_workload.csv
+│   ├── diagrams/  flowcharts of the 4 modules + recursion/partition trees, search intervals, Strassen blocks
 │   └── screenshots/  production calculator, dataset generator and full test-run outputs
 ├── Supporting_Files/
 │   ├── datasets/            given samples (m1…m4) + generated/ (5,000 events, 5,000 scores, 20,000-ID index,
 │   │                        2,000 queries, 64 × 64 matrices)
 │   ├── test_cases/          JSON edge cases with expected outputs from sorted() / bisect / numpy
 │   ├── results/             all experimental results (CSV)
-│   ├── logs/                captured console output of every run
-│   ├── generate_datasets.py, run_all_tests.py, production_workload.py
+│   ├── generate_datasets.py, run_all_tests.py, production_workload.py, diagrams.py (flowcharts/diagrams)
 └── README.md
 ```
 

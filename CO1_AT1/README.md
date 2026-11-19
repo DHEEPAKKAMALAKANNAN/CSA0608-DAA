@@ -12,8 +12,8 @@ ShopSphere's catalogue grows from n = 100,000 to n = 1,000,000 products. I audit
 CO1_AT1/
 ├── README.md
 └── Question_1/
-    ├── Source_Code/         programs + their output logs (<program>_output.txt)
-    ├── Report/              CO1_AT1_Report.md / .docx / .pdf
+    ├── Source_Code/         programs (Python, standard library + matplotlib)
+    ├── Report/              CO1_AT1_Report.docx / .pdf
     │   ├── screenshots/     source-code and execution-output screenshots
     │   └── graphs/          fig1 … fig7 (PNG, 150 dpi)
     └── Supporting_Files/    raw CSV data behind every table and graph
@@ -32,6 +32,7 @@ CO1_AT1/
 | `f_bound_proof_check.py` | (f) | checks 3n² ≤ f(n) ≤ 63n² (n ≥ 1) and ≤ 4n² (n ≥ 60) for every n ≤ 10⁶; shows f(n) is not O(n) |
 | `scalability_estimates.py` | (g) | operations and time at n = 10⁵ and 10⁶, PASS/FAIL against 600 s, largest n that fits the window |
 | `make_graphs.py` | all | draws the 7 figures from the CSV files |
+| `diagrams.py` | (b)–(e), (g) | draws the flowcharts (M1, M1 hash redesign, M2, S1, S2) and the recursion-tree / substitution diagrams into `Report/diagrams/` |
 | `run_tests.py` | all | 42 automated checks, prints `PASS …` lines and `RESULT: 42/42 tests passed` |
 | `run_all.py` | all | runs every program in order (all exit with code 0) |
 
@@ -58,7 +59,7 @@ py -3 run_all.py
 
 ## Report
 
-`Question_1/Report/CO1_AT1_Report.md` (also `.docx` and `.pdf`) follows the department's sample report format: cover page and mark sheet, problem statement and test environment, parts (a)–(g) each with the question text, **Ans:**, derivations, tables, code and output screenshots and graphs, a summary of findings, appendices A–D (complete source code, graph script, raw CSV data, test results), references and the Code-of-Conduct declaration (signature left blank).
+`Question_1/Report/CO1_AT1_Report.docx` (also `.pdf`) follows the department's sample report format: cover page and mark sheet, problem statement and test environment, parts (a)–(g) each with the question text, **Ans:**, derivations, tables, code and output screenshots and graphs, a summary of findings, appendices A–D (complete source code, graph script, raw CSV data, test results), references and the Code-of-Conduct declaration (signature left blank).
 
 ## Notes
 
