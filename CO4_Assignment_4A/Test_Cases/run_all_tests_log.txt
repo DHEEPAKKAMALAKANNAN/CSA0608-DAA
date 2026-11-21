@@ -1,0 +1,90 @@
+========================================================================
+CSA06 DAA - ASSIGNMENT 4A (CO4) COMPREHENSIVE AUTOMATED VERIFICATION LOG
+Student: V. Vasudevan | Reg No: 192425324 | SIMATS Engineering
+========================================================================
+
+>>> RUNNING Task_1: test_load_vehicle.py in C:\Users\dwva\OneDrive\Desktop\DAA\design-analysis\CO4_Assignment_4A\Source_Code\Task_1
+PASS  desk-check instance: total value = 240
+PASS  desk-check instance: P1, P2 whole, P3 fraction 2/3, P4 not loaded
+PASS  capacity never exceeded
+PASS  capacity 0 -> nothing loaded, value 0
+PASS  no packages -> value 0 (loop terminates)
+PASS  everything fits -> all whole, value = sum of values
+PASS  single package heavier than C -> one fraction C/w
+PASS  greedy-by-value would be worse here (value order gives 220 < 240)
+PASS  300 random instances (n <= 6): greedy value = exhaustive optimum over all n! orders
+RESULT: 9/9 tests passed
+Exit Code: 0
+
+>>> RUNNING Task_2: test_job_sequencing.py in C:\Users\dwva\OneDrive\Desktop\DAA\design-analysis\CO4_Assignment_4A\Source_Code\Task_2
+PASS  given instance: schedule t1=C, t2=A, t3=D
+PASS  given instance: total profit 180, B and E rejected
+PASS  given instance: 180 = exhaustive optimum over 2^5 subsets
+PASS  modified (B=90): schedule t1=B, t2=A, t3=D; C displaced
+PASS  modified (B=90): profit 210 = exhaustive optimum
+PASS  no jobs -> empty schedule, profit 0
+PASS  all deadlines 1 -> only the most profitable job
+PASS  deadline larger than n is capped (no out-of-range slot)
+PASS  400 random instances (n <= 8): greedy profit = exhaustive optimum, deadlines respected
+RESULT: 9/9 tests passed
+Exit Code: 0
+
+>>> RUNNING Task_3: test_knapsack_dp.py in C:\Users\dwva\OneDrive\Desktop\DAA\design-analysis\CO4_Assignment_4A\Source_Code\Task_3
+PASS  given instance: optimum 45
+PASS  given instance: reconstruction selects Q and R
+PASS  given instance: 45 = brute-force optimum over 16 subsets
+PASS  rows are non-decreasing in w (more capacity never hurts)
+PASS  capacity 0 -> value 0, nothing selected
+PASS  no items -> value 0
+PASS  item heavier than W is never selected
+PASS  400 random instances (n <= 9): DP value = brute force, reconstructed set is feasible and worth exactly DP[n][W]
+RESULT: 8/8 tests passed
+Exit Code: 0
+
+>>> RUNNING Task_4: test_word_break.py in C:\Users\dwva\OneDrive\Desktop\DAA\design-analysis\CO4_Assignment_4A\Source_Code\Task_4
+PASS  failing input 'catsdog': faulty returns TRUE (wrong)
+PASS  failing input 'catsdog': corrected returns FALSE = reference
+PASS  regression 'catdog': faulty and corrected both TRUE
+PASS  regression 'dogcatx': faulty and corrected both FALSE
+PASS  empty text -> TRUE (DP[0] base case)
+PASS  overlapping words 'catsanddog' with {cat,cats,and,sand,dog} -> TRUE
+PASS  'catsandog' with {cat,cats,and,sand,dog} -> FALSE (faulty says TRUE)
+PASS  2000 random texts over {a,b}: corrected DP[n] = recursive reference in every case
+PASS  same 2000 texts: faulty version is wrong on 480 of them (defect is real)
+PASS  300 random texts: EVERY corrected state DP[i] equals reference(prefix of length i)
+RESULT: 10/10 tests passed
+Exit Code: 0
+
+>>> RUNNING Task_5: test_shortest_paths.py in C:\Users\dwva\OneDrive\Desktop\DAA\design-analysis\CO4_Assignment_4A\Source_Code\Task_5
+PASS  Dijkstra from A: B 4, C 6, D 7, E 10
+PASS  predecessors: B<-A, C<-B, D<-C, E<-D
+PASS  Bellman-Ford gives the same distances, no negative cycle
+PASS  Floyd row A = Dijkstra distances
+PASS  Floyd B->E = 6, C->E = 4, E->A = inf
+PASS  brute-force simple paths from A agree
+PASS  negative edge: Dijkstra B = 2 (wrong), Bellman-Ford B = 1 (correct)
+PASS  adding C->B = -4 creates cycle B->C->B of weight -2: detected
+PASS  adding C->B = -2 (cycle weight 0): NOT reported as negative cycle
+PASS  200 random non-negative graphs: Dijkstra = Bellman-Ford = Floyd row = brute force
+PASS  200 random DAGs with negative edges: Bellman-Ford = Floyd = brute force, no false cycle
+RESULT: 11/11 tests passed
+Exit Code: 0
+
+>>> RUNNING Task_6: test_energy_scheduling.py in C:\Users\dwva\OneDrive\Desktop\DAA\design-analysis\CO4_Assignment_4A\Source_Code\Task_6
+PASS  official data: p(1..8) = 0 0 1 3 2 4 5 7
+PASS  official data: OPT[0..8] = 0 20 50 50 90 110 120 160 200
+PASS  official data: selected J2, J5, J7, J8, value 200
+PASS  official data: 200 = brute force over 256 subsets
+PASS  selected jobs are pairwise compatible
+PASS  adversarial set: OPT[4] = 100 (K1 tentatively best) but final optimum 150 with K2, K3, K4, K6
+PASS  touching endpoints are compatible ([0,3) and [3,6))
+PASS  overlap by one unit is incompatible ([0,4) and [3,6))
+PASS  empty input -> value 0, no jobs
+PASS  p(j) binary search with equal finish times
+PASS  500 random instances (n <= 10): DP = brute force, reported jobs compatible and worth OPT[n]
+RESULT: 11/11 tests passed
+Exit Code: 0
+
+========================================================================
+OVERALL SUITE RESULT: 58/58 tests passed across all 6 tasks (100% Pass Rate)
+========================================================================
