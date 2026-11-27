@@ -1,6 +1,6 @@
-# Task 2 – Identify the Basic Operation [2 Marks]
+﻿# Task 2 â€“ Identify the Basic Operation [2 Marks]
 
-> Part of **CSA06 Assignment 1 (CO1)** – V. Vasudevan (192425324). Full report: [`Report/Documentation/CO1_Assignment_Report.md`](../Report/Documentation/CO1_Assignment_Report.md) · [project README](../README.md)
+> Part of **CSA06 Assignment 1 (CO1)** â€“ K DHEEPAK (192411108). Full report: [`Report/Documentation/CO1_Assignment_Report.md`](../Report/Documentation/CO1_Assignment_Report.md) Â· [project README](../README.md)
 
 > For each of the proposed algorithms, identify the basic operation that predominantly determines its execution time. Discuss:
 > - what the basic operation is;
@@ -11,15 +11,15 @@
 
 **Ans:**
 
-## 1. Approach A – the key comparison A[i].reg_no = key
+## 1. Approach A â€“ the key comparison A[i].reg_no = key
 
 **What and where.** Line 2 of `SequentialSearch`, inside the only loop (`comparisons += 1` in `sequential_search`). Everything else in one loop iteration (advancing `i`, fetching `A[i]`) is done exactly once per comparison.
 
-**Why it is appropriate.** The loop body is the innermost, most frequently executed statement, and the loop runs once per comparison, so the running time is T(n) ≈ c·C(n) + c₀ with c the cost of one iteration. Counting comparisons is machine-independent and captures the behaviour that matters: *how many records the search must look at before it can stop*.
+**Why it is appropriate.** The loop body is the innermost, most frequently executed statement, and the loop runs once per comparison, so the running time is T(n) â‰ˆ cÂ·C(n) + câ‚€ with c the cost of one iteration. Counting comparisons is machine-independent and captures the behaviour that matters: *how many records the search must look at before it can stop*.
 
-**How the count changes with n.** It depends on where the student is: i + 1 comparisons for the record at position i, n for an absent number. Both the average and the worst case grow **linearly**: ten times more students means ten times more comparisons (measured 496 → 4,967 → 51,226 → 480,558 for successful searches, Task 9).
+**How the count changes with n.** It depends on where the student is: i + 1 comparisons for the record at position i, n for an absent number. Both the average and the worst case grow **linearly**: ten times more students means ten times more comparisons (measured 496 â†’ 4,967 â†’ 51,226 â†’ 480,558 for successful searches, Task 9).
 
-## 2. Approach B – the three-way comparison key : A[mid].reg_no
+## 2. Approach B â€“ the three-way comparison key : A[mid].reg_no
 
 **What and where.** Line 3 of `BinSearch` (one comparison of the key with the middle record; equal / smaller / larger decides the next step). In `binary_search_recursive` it is the single `counter.comparisons += 1` executed in every call that has a non-empty range. I count a three-way comparison as one operation (as Levitin does); a two-way implementation would perform at most two `<`/`==` tests per step, which changes only the constant.
 
@@ -27,9 +27,9 @@
 
 **Preprocessing.** For merge sort the basic operation is the key comparison `B[i].reg_no <= B[j].reg_no` inside `Merge` (line 4); every comparison places exactly one record, and record moves are proportional to it.
 
-**How the count changes with n.** Every comparison halves the remaining range, so the count grows with the **number of halvings**, at most ⌊log₂ n⌋ + 1: multiplying n by 10 adds only log₂ 10 ≈ 3.3 comparisons (measured 8.98 → 12.31 → 15.64 → 18.87). The merge-sort count grows as n log₂ n.
+**How the count changes with n.** Every comparison halves the remaining range, so the count grows with the **number of halvings**, at most âŒŠlogâ‚‚ nâŒ‹ + 1: multiplying n by 10 adds only logâ‚‚ 10 â‰ˆ 3.3 comparisons (measured 8.98 â†’ 12.31 â†’ 15.64 â†’ 18.87). The merge-sort count grows as n logâ‚‚ n.
 
-## 3. Approach C – the key comparison along one chain (plus one hash computation)
+## 3. Approach C â€“ the key comparison along one chain (plus one hash computation)
 
 **What and where.** Line 3 of `HashSearch` (`p.reg_no = key`, `counter.comparisons += 1` in `StudentHashTable.search`). Every search also performs exactly **one** hash computation `key mod m` (line 1), counted separately as `hash_computations`.
 
@@ -37,7 +37,7 @@
 
 **Preprocessing.** Building the table costs one hash computation per record plus the duplicate-check comparisons along its chain; both are counted.
 
-**How the count changes with n.** Because m grows with n (m ≥ n/0.75), the expected chain length α = n/m stays ≤ 0.75 for every n, so the count stays **constant** (measured 1.34, 1.39, 1.33, 1.32 comparisons per successful search). Only an adversarial key set that puts many keys into one chain would make it grow (Task 4).
+**How the count changes with n.** Because m grows with n (m â‰¥ n/0.75), the expected chain length Î± = n/m stays â‰¤ 0.75 for every n, so the count stays **constant** (measured 1.34, 1.39, 1.33, 1.32 comparisons per successful search). Only an adversarial key set that puts many keys into one chain would make it grow (Task 4).
 
 ## 4. Summary
 
@@ -45,10 +45,11 @@ Table 4: The basic operation of each algorithm and how its count grows
 
 | Algorithm | Basic operation | Where | Count as n grows |
 |---|---|---|---|
-| A: sequential search | `A[i].reg_no = key` | loop body | linear: ≈ n/2 (hit), n (miss) |
-| B: merge sort (preprocessing) | `B[i].reg_no <= B[j].reg_no` | `Merge` loop | n log₂ n − Θ(n) |
-| B: recursive binary search | three-way `key : A[mid].reg_no` | once per recursive call | logarithmic: ≤ ⌊log₂ n⌋ + 1 |
-| C: hash build (preprocessing) | `k mod m` + chain comparison | once per inserted record | linear: ≈ n(1 + α/2) |
-| C: hash search | chain comparison `p.reg_no = key` (+1 hash) | chain loop | constant: ≈ 1 + α/2 (hit), α (miss) |
+| A: sequential search | `A[i].reg_no = key` | loop body | linear: â‰ˆ n/2 (hit), n (miss) |
+| B: merge sort (preprocessing) | `B[i].reg_no <= B[j].reg_no` | `Merge` loop | n logâ‚‚ n âˆ’ Î˜(n) |
+| B: recursive binary search | three-way `key : A[mid].reg_no` | once per recursive call | logarithmic: â‰¤ âŒŠlogâ‚‚ nâŒ‹ + 1 |
+| C: hash build (preprocessing) | `k mod m` + chain comparison | once per inserted record | linear: â‰ˆ n(1 + Î±/2) |
+| C: hash search | chain comparison `p.reg_no = key` (+1 hash) | chain loop | constant: â‰ˆ 1 + Î±/2 (hit), Î± (miss) |
 
 I deliberately do not use wall-clock time as the measure of efficiency: it depends on the processor, the Python interpreter and the other jobs running at the same moment, while the operation counts depend only on the algorithm and the input.
+

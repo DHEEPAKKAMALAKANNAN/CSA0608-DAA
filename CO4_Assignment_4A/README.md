@@ -1,15 +1,15 @@
-# CSA06 – Assignment 4A (CO4), Part I: Algorithmic Design through Pseudocode
+﻿# CSA06 â€“ Assignment 4A (CO4), Part I: Algorithmic Design through Pseudocode
 
-**Student:** V. Vasudevan · **Reg. No.:** 192425324 · **Course:** CSA06 – Design and Analysis of Algorithms  
-**Institution:** SIMATS Engineering · **Date:** 19 November 2026  
-**Course Outcome:** CO4 – Solve optimization problems using Dynamic Programming and Greedy strategies  
-**Nature:** Individual · **Duration:** One Week · **Total Marks:** 50 Marks  
+**Student:** K DHEEPAK Â· **Reg. No.:** 192411108 Â· **Course:** CSA06 â€“ Design and Analysis of Algorithms  
+**Institution:** SIMATS Engineering Â· **Date:** 19 November 2026  
+**Course Outcome:** CO4 â€“ Solve optimization problems using Dynamic Programming and Greedy strategies  
+**Nature:** Individual Â· **Duration:** One Week Â· **Total Marks:** 50 Marks  
 
 ---
 
 ## Executive Summary & Official Syllabus Coverage
 
-This repository contains the complete, rigorous solutions for **Assignment 4A (CO4 – Part I: Algorithmic Design through Pseudocode)**, adhering strictly to the *SIMATS Engineering Handbook for Algorithmic Pseudocode* and the departmental submission instructions.
+This repository contains the complete, rigorous solutions for **Assignment 4A (CO4 â€“ Part I: Algorithmic Design through Pseudocode)**, adhering strictly to the *SIMATS Engineering Handbook for Algorithmic Pseudocode* and the departmental submission instructions.
 
 Every task exhibits the required engineering design progression:
 $$\text{Interpret the Problem} \longrightarrow \text{Identify Decision/State} \longrightarrow \text{Design the Logic} \longrightarrow \text{Write Pseudocode} \longrightarrow \text{Desk-Check Trace} \longrightarrow \text{Challenge/Attack} \longrightarrow \text{Refine}$$
@@ -18,7 +18,7 @@ $$\text{Interpret the Problem} \longrightarrow \text{Identify Decision/State} \l
 |:---:|:---|:---:|:---:|:---:|:---:|:---:|
 | **Task 1** | **Algorithm Design Review:** Diagnose and Repair Poor Pseudocode | Greedy (density ratio $\frac{v_i}{w_i}$) | 8 defects; repaired `LoadVehicle`; C=50 loads P1, P2, 2/3 of P3 $\to$ **240.0** | Exhaustive $n!$ orders (300 instances) | 6 | [Task 1 Docs](Source_Code/Task_1/README.md) |
 | **Task 2** | **Business Requirement to Greedy Pseudocode:** Job Sequencing with Deadlines | Greedy (descending profit, latest free slot) | Base: [C, A, D] = **180**; Challenge ($p_B \to 90$ displaces C) = **210** | Power set $2^n$ brute force (400 instances) | 8 | [Task 2 Docs](Source_Code/Task_2/README.md) |
-| **Task 3** | **Recurrence to Executable Logic:** Dynamic Programming – 0/1 Knapsack | Dynamic Programming ($\text{DP}[i][w]$) | $\text{DP}[4][7] = \mathbf{45}$; Reconstructed subset = **{Q, R}** | Power set $2^n$ brute force (400 instances) | 9 | [Task 3 Docs](Source_Code/Task_3/README.md) |
+| **Task 3** | **Recurrence to Executable Logic:** Dynamic Programming â€“ 0/1 Knapsack | Dynamic Programming ($\text{DP}[i][w]$) | $\text{DP}[4][7] = \mathbf{45}$; Reconstructed subset = **{Q, R}** | Power set $2^n$ brute force (400 instances) | 9 | [Task 3 Docs](Source_Code/Task_3/README.md) |
 | **Task 4** | **Pseudocode Forensics:** Find, Explain and Repair Algorithmic Defect | String DP ($\text{DP}[i]$) | Defect: missing $\text{DP}[j]$; Failing case `catsdog` caught at $\text{DP}[7]$ | Memoized recursive segmenter (2,000 texts) | 7 | [Task 4 Docs](Source_Code/Task_4/README.md) |
 | **Task 5** | **Same Graph, Different Reasoning:** Dijkstra, Bellman-Ford, Floyd | Greedy vs. Edge DP vs. Vertex DP | Distances from A: B=4, C=6, D=7, E=10; Negative edge analysis; Full $D^{(5)}$ | Simple-path brute force (400 graphs) | 7 | [Task 5 Docs](Source_Code/Task_5/README.md) |
 | **Task 6** | **Compulsory Design Challenge:** Energy-Aware Cloud Job Scheduling | DP over jobs sorted by finish time | Base: {J2, J5, J7, J8} = **200**; Adversarial 6-job stress test = **150** | Power set $2^n$ brute force (500 instances) | 13 | [Task 6 Docs](Source_Code/Task_6/README.md) |
@@ -30,59 +30,59 @@ $$\text{Interpret the Problem} \longrightarrow \text{Identify Decision/State} \l
 
 ```
 CO4_Assignment_4A/
-│
-├── Source_Code/
-│   ├── Task_1/
-│   │   ├── load_vehicle.py              # Fractional Knapsack solver & trace generator
-│   │   ├── packages.csv                 # Official package input dataset
-│   │   ├── test_load_vehicle.py         # 9/9 automated test suite
-│   │   └── README.md                    # Detailed Task 1 documentation & traces
-│   │
-│   ├── Task_2/
-│   │   ├── job_sequencing.py            # Unit-time job sequencing with deadlines
-│   │   ├── jobs.csv                     # Official job input dataset
-│   │   ├── test_job_sequencing.py       # 9/9 automated test suite
-│   │   └── README.md                    # Detailed Task 2 documentation & traces
-│   │
-│   ├── Task_3/
-│   │   ├── knapsack_dp.py               # 0/1 Knapsack DP table builder & reconstruction
-│   │   ├── items.csv                    # Cargo items input dataset
-│   │   ├── test_knapsack_dp.py          # 8/8 automated test suite
-│   │   └── README.md                    # Detailed Task 3 documentation & traces
-│   │
-│   ├── Task_4/
-│   │   ├── word_break.py                # Faulty vs. repaired WordBreak comparison
-│   │   ├── word_break_cases.csv         # Vocabulary and test strings
-│   │   ├── test_word_break.py           # 10/10 automated test suite
-│   │   └── README.md                    # Detailed Task 4 documentation & traces
-│   │
-│   ├── Task_5/
-│   │   ├── single_source.py             # Dijkstra & Bellman-Ford implementations
-│   │   ├── floyd_all_pairs.py           # Floyd-Warshall all-pairs matrix DP
-│   │   ├── graph_common.py              # Shared graph structures
-│   │   ├── graph.csv                    # Directed weighted graph edge list
-│   │   ├── test_shortest_paths.py       # 11/11 automated test suite
-│   │   └── README.md                    # Detailed Task 5 documentation & traces
-│   │
-│   └── Task_6/
-│       ├── energy_scheduling.py         # Day-4 Design Challenge DP implementation
-│       ├── compare_strategies.py        # Evaluation of 4 greedy heuristics vs DP
-│       ├── jobs.csv                     # Official 8-job dataset
-│       ├── adversarial_jobs.csv         # Student-designed 6-job adversarial dataset
-│       ├── test_energy_scheduling.py    # 11/11 automated test suite
-│       └── README.md                    # Detailed Task 6 documentation & traces
-│
-├── Report/
-│   ├── CO4_Assignment_4A_Report.pdf     # Primary official deliverable (84 pages)
-│   ├── CO4_Assignment_4A_Report.docx    # Word master document with cover and signatures
-│   ├── CO4_Assignment_4A_Report.md      # Full Markdown source with all derivations
-│   ├── Diagrams/                        # 16 visual flowcharts and state diagrams
-│   └── Screenshots/                     # Terminal execution and code screenshots
-│
-├── Test_Cases/
-│   └── run_all_tests_log.txt            # Consolidated 58/58 test pass verification log
-│
-└── README.md                            # Main assignment documentation
+â”‚
+â”œâ”€â”€ Source_Code/
+â”‚   â”œâ”€â”€ Task_1/
+â”‚   â”‚   â”œâ”€â”€ load_vehicle.py              # Fractional Knapsack solver & trace generator
+â”‚   â”‚   â”œâ”€â”€ packages.csv                 # Official package input dataset
+â”‚   â”‚   â”œâ”€â”€ test_load_vehicle.py         # 9/9 automated test suite
+â”‚   â”‚   â””â”€â”€ README.md                    # Detailed Task 1 documentation & traces
+â”‚   â”‚
+â”‚   â”œâ”€â”€ Task_2/
+â”‚   â”‚   â”œâ”€â”€ job_sequencing.py            # Unit-time job sequencing with deadlines
+â”‚   â”‚   â”œâ”€â”€ jobs.csv                     # Official job input dataset
+â”‚   â”‚   â”œâ”€â”€ test_job_sequencing.py       # 9/9 automated test suite
+â”‚   â”‚   â””â”€â”€ README.md                    # Detailed Task 2 documentation & traces
+â”‚   â”‚
+â”‚   â”œâ”€â”€ Task_3/
+â”‚   â”‚   â”œâ”€â”€ knapsack_dp.py               # 0/1 Knapsack DP table builder & reconstruction
+â”‚   â”‚   â”œâ”€â”€ items.csv                    # Cargo items input dataset
+â”‚   â”‚   â”œâ”€â”€ test_knapsack_dp.py          # 8/8 automated test suite
+â”‚   â”‚   â””â”€â”€ README.md                    # Detailed Task 3 documentation & traces
+â”‚   â”‚
+â”‚   â”œâ”€â”€ Task_4/
+â”‚   â”‚   â”œâ”€â”€ word_break.py                # Faulty vs. repaired WordBreak comparison
+â”‚   â”‚   â”œâ”€â”€ word_break_cases.csv         # Vocabulary and test strings
+â”‚   â”‚   â”œâ”€â”€ test_word_break.py           # 10/10 automated test suite
+â”‚   â”‚   â””â”€â”€ README.md                    # Detailed Task 4 documentation & traces
+â”‚   â”‚
+â”‚   â”œâ”€â”€ Task_5/
+â”‚   â”‚   â”œâ”€â”€ single_source.py             # Dijkstra & Bellman-Ford implementations
+â”‚   â”‚   â”œâ”€â”€ floyd_all_pairs.py           # Floyd-Warshall all-pairs matrix DP
+â”‚   â”‚   â”œâ”€â”€ graph_common.py              # Shared graph structures
+â”‚   â”‚   â”œâ”€â”€ graph.csv                    # Directed weighted graph edge list
+â”‚   â”‚   â”œâ”€â”€ test_shortest_paths.py       # 11/11 automated test suite
+â”‚   â”‚   â””â”€â”€ README.md                    # Detailed Task 5 documentation & traces
+â”‚   â”‚
+â”‚   â””â”€â”€ Task_6/
+â”‚       â”œâ”€â”€ energy_scheduling.py         # Day-4 Design Challenge DP implementation
+â”‚       â”œâ”€â”€ compare_strategies.py        # Evaluation of 4 greedy heuristics vs DP
+â”‚       â”œâ”€â”€ jobs.csv                     # Official 8-job dataset
+â”‚       â”œâ”€â”€ adversarial_jobs.csv         # Student-designed 6-job adversarial dataset
+â”‚       â”œâ”€â”€ test_energy_scheduling.py    # 11/11 automated test suite
+â”‚       â””â”€â”€ README.md                    # Detailed Task 6 documentation & traces
+â”‚
+â”œâ”€â”€ Report/
+â”‚   â”œâ”€â”€ CO4_Assignment_4A_Report.pdf     # Primary official deliverable (84 pages)
+â”‚   â”œâ”€â”€ CO4_Assignment_4A_Report.docx    # Word master document with cover and signatures
+â”‚   â”œâ”€â”€ CO4_Assignment_4A_Report.md      # Full Markdown source with all derivations
+â”‚   â”œâ”€â”€ Diagrams/                        # 16 visual flowcharts and state diagrams
+â”‚   â””â”€â”€ Screenshots/                     # Terminal execution and code screenshots
+â”‚
+â”œâ”€â”€ Test_Cases/
+â”‚   â””â”€â”€ run_all_tests_log.txt            # Consolidated 58/58 test pass verification log
+â”‚
+â””â”€â”€ README.md                            # Main assignment documentation
 ```
 
 ---
@@ -164,3 +164,4 @@ OVERALL SUITE RESULT: 58/58 tests passed (100% Pass Rate)
 ========================================================================
 ```
 Full execution logs are archived in [`Test_Cases/run_all_tests_log.txt`](Test_Cases/run_all_tests_log.txt).
+

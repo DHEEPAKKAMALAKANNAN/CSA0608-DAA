@@ -1,7 +1,7 @@
-# CSA06 – Assignment 3 (CO3): Divide and Conquer – Design, Analysis and Experimental Validation
+﻿# CSA06 â€“ Assignment 3 (CO3): Divide and Conquer â€“ Design, Analysis and Experimental Validation
 
-**Course:** CSA06 – Design and Analysis of Algorithms · SIMATS Engineering · **Mode:** Pair Work – 2 students per group ·
-**Student A:** V. Vasudevan (192425324) · **Student B:** [Student B Name] ([Reg. No.]) · **Date:** 19 November 2026 ·
+**Course:** CSA06 â€“ Design and Analysis of Algorithms Â· SIMATS Engineering Â· **Mode:** Pair Work â€“ 2 students per group Â·
+**Student A:** K DHEEPAK (192411108) Â· **Student B:** [Student B Name] ([Reg. No.]) Â· **Date:** 19 November 2026 Â·
 **Total marks:** 50
 
 ## Overview
@@ -16,20 +16,20 @@ algorithm has a flowchart, decomposition or recursion-tree diagrams, code screen
 and graphs.
 
 **Q7 problem.** The paper leaves the Day-4 problem to be announced on Day 4. To complete the challenge, the pair chose
-a problem that is new relative to Q1–Q6: the **most profitable contiguous run of delivery hours (Maximum Subarray
+a problem that is new relative to Q1â€“Q6: the **most profitable contiguous run of delivery hours (Maximum Subarray
 Sum)**. If a different Day-4 problem is given, the same six-stage process applies.
 
 ## Questions and individual responsibilities (as prescribed by the paper)
 
-| Q (marks) | Topic | Student A – primary | Student B – primary | Joint |
+| Q (marks) | Topic | Student A â€“ primary | Student B â€“ primary | Joint |
 |---|---|---|---|---|
 | Q1 (6) | Decomposition and Elimination in Ordered Data: Max/Min + Binary Search | Max/Min design & mathematical analysis; binary-search experimental investigation | Max/Min experimental validation; binary-search elimination logic | strategy, base case, returns, implementation, tests |
-| Q2 (7) | The Quality of Decomposition in Sorting | Quick Sort investigation: designed balanced/unbalanced inputs, partition sizes, recursion depth | Comparative D&C analysis of Merge Sort vs Quick Sort, O(n²) under imbalance | implementation, pivot strategy (last element), experiments, Joint Design Question |
-| Q3 (7) | Breaking the Quadratic Barrier: Karatsuba | algorithmic derivation, recurrence, Θ(n^1.585) | crossover investigation: repeated timing, counts, crossover, overhead | implementation, Joint Conclusion |
-| Q4 (7) | The Reality of Strassen's Matrix Multiplication (roles reversed) | experimental & engineering analysis: counts, repeated times, crossover, overhead, memory | algebraic design & correctness: 8 → 7 products, padding | implementation, verification, Joint Engineering Decision |
+| Q2 (7) | The Quality of Decomposition in Sorting | Quick Sort investigation: designed balanced/unbalanced inputs, partition sizes, recursion depth | Comparative D&C analysis of Merge Sort vs Quick Sort, O(nÂ²) under imbalance | implementation, pivot strategy (last element), experiments, Joint Design Question |
+| Q3 (7) | Breaking the Quadratic Barrier: Karatsuba | algorithmic derivation, recurrence, Î˜(n^1.585) | crossover investigation: repeated timing, counts, crossover, overhead | implementation, Joint Conclusion |
+| Q4 (7) | The Reality of Strassen's Matrix Multiplication (roles reversed) | experimental & engineering analysis: counts, repeated times, crossover, overhead, memory | algebraic design & correctness: 8 â†’ 7 products, padding | implementation, verification, Joint Engineering Decision |
 | Q5 (6) | Upgrading Closest Pair Using D&C | decomposition design, strip/boundary | comparative evidence: distances, growth, practical crossover | design, implementation, Cross-Understanding |
 | Q6 (7) | Advanced D&C Mini-Investigations | Median of Medians (+ verification on MitM) | Meet-in-the-Middle subset sum (+ verification on pivot quality) | tests, graphs |
-| Q7 (10) | Day-4 Design Challenge (Stages 1–6) | Stage 1 proposal A; Stage 4 mathematical validation; Stage 5 evidence defence | Stage 1 proposal B; Stage 4 experimental validation; Stage 5 recurrence defence | Stages 2, 3 and 6 |
+| Q7 (10) | Day-4 Design Challenge (Stages 1â€“6) | Stage 1 proposal A; Stage 4 mathematical validation; Stage 5 evidence defence | Stage 1 proposal B; Stage 4 experimental validation; Stage 5 recurrence defence | Stages 2, 3 and 6 |
 
 The contribution record (`Final_Report/Student_Contribution_Record.docx`) must be confirmed by both students.
 
@@ -64,24 +64,24 @@ machine.
 
 ```
 CO3_Assignment/
-├── Q1_MaxMin_Binary_Search/            Pseudocode/ (md + flowcharts)  Implementation_Code/ (+ results/)  Output_Screenshots/
-├── Q2_MergeSort_QuickSort/             Pseudocode/  Implementation_Code/ (+ results/)  Output_Screenshots/
-├── Q3_Karatsuba_Multiplication/        Pseudocode/  Implementation_Code/ (+ results/)  Output_Screenshots/
-├── Q4_Strassen_Matrix_Multiplication/  Pseudocode/  Implementation_Code/ (+ results/)  Output_Screenshots/
-├── Q5_Divide_Conquer_Closest_Pair/     Pseudocode/  Implementation_Code/ (+ results/)  Output_Screenshots/
-├── Q6_Advanced_Divide_Conquer/
-│   ├── Median_of_Medians/              README.md (Student A investigation) + results/ (CSV, graphs)
-│   ├── Meet_in_the_Middle/             README.md (Student B investigation) + results/ (CSV, graphs)
-│   └── Pseudocode/  Implementation_Code/  Output_Screenshots/
-├── Q7_Day4_Design_Challenge/
-│   ├── Student_A_Initial_Design/       README.md + proposal_a_midpoint_split.py + flowchart (Stage 1, kept unchanged)
-│   ├── Student_B_Initial_Design/       README.md + proposal_b_four_tuple.py + flowchart (Stage 1, kept unchanged)
-│   ├── Joint_Final_Design/             README.md (Stage 2 comparison record, Stage 3 joint design)
-│   └── Pseudocode/  Implementation_Code/ (+ results/)  Output_Screenshots/
-├── Final_Report/
-│   ├── CO3_Assignment_Report.docx / .pdf        (report in the department's sample format)
-│   └── Student_Contribution_Record.docx           (Question | Student A | Student B | Joint Work)
-└── README.md
+â”œâ”€â”€ Q1_MaxMin_Binary_Search/            Pseudocode/ (md + flowcharts)  Implementation_Code/ (+ results/)  Output_Screenshots/
+â”œâ”€â”€ Q2_MergeSort_QuickSort/             Pseudocode/  Implementation_Code/ (+ results/)  Output_Screenshots/
+â”œâ”€â”€ Q3_Karatsuba_Multiplication/        Pseudocode/  Implementation_Code/ (+ results/)  Output_Screenshots/
+â”œâ”€â”€ Q4_Strassen_Matrix_Multiplication/  Pseudocode/  Implementation_Code/ (+ results/)  Output_Screenshots/
+â”œâ”€â”€ Q5_Divide_Conquer_Closest_Pair/     Pseudocode/  Implementation_Code/ (+ results/)  Output_Screenshots/
+â”œâ”€â”€ Q6_Advanced_Divide_Conquer/
+â”‚   â”œâ”€â”€ Median_of_Medians/              README.md (Student A investigation) + results/ (CSV, graphs)
+â”‚   â”œâ”€â”€ Meet_in_the_Middle/             README.md (Student B investigation) + results/ (CSV, graphs)
+â”‚   â””â”€â”€ Pseudocode/  Implementation_Code/  Output_Screenshots/
+â”œâ”€â”€ Q7_Day4_Design_Challenge/
+â”‚   â”œâ”€â”€ Student_A_Initial_Design/       README.md + proposal_a_midpoint_split.py + flowchart (Stage 1, kept unchanged)
+â”‚   â”œâ”€â”€ Student_B_Initial_Design/       README.md + proposal_b_four_tuple.py + flowchart (Stage 1, kept unchanged)
+â”‚   â”œâ”€â”€ Joint_Final_Design/             README.md (Stage 2 comparison record, Stage 3 joint design)
+â”‚   â””â”€â”€ Pseudocode/  Implementation_Code/ (+ results/)  Output_Screenshots/
+â”œâ”€â”€ Final_Report/
+â”‚   â”œâ”€â”€ CO3_Assignment_Report.docx / .pdf        (report in the department's sample format)
+â”‚   â””â”€â”€ Student_Contribution_Record.docx           (Question | Student A | Student B | Joint Work)
+â””â”€â”€ README.md
 ```
 
 Each question folder contains three sub-folders:
@@ -91,3 +91,4 @@ Each question folder contains three sub-folders:
   flowchart scripts. CSV files and graphs go to `results/`.
 - `Output_Screenshots/` holds screenshots of the main algorithm code, screenshots of every real execution, and the
   captured `.txt` output.
+

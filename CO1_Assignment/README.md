@@ -1,7 +1,7 @@
-# CO1 Assignment – Design, Analyse and Validate an Efficient Search Strategy for a Large-Scale Student Record System
+﻿# CO1 Assignment â€“ Design, Analyse and Validate an Efficient Search Strategy for a Large-Scale Student Record System
 
-**Course:** CSA06 – Design and Analysis of Algorithms · **Assessment:** Assignment 1 – CO1 (50 marks, individual, 1 week)
-**Student:** V. Vasudevan · **Reg. No.:** 192425324 · SIMATS Engineering · 19 November 2026
+**Course:** CSA06 â€“ Design and Analysis of Algorithms Â· **Assessment:** Assignment 1 â€“ CO1 (50 marks, individual, 1 week)
+**Student:** K DHEEPAK Â· **Reg. No.:** 192411108 Â· SIMATS Engineering Â· 19 November 2026
 
 **Course outcome CO1:** determine algorithm efficiency using asymptotic notations and mathematical techniques
 including the Master Theorem and the substitution method.
@@ -25,16 +25,16 @@ contains a `README.md` with that task's complete answer.
 
 | Approach | Strategy | Preprocessing | Search cost | Measured at n = 1,000,000 |
 |---|---|---|---|---|
-| A – Sequential search (iterative) | Brute force | none | Θ(n): (n + 1)/2 hit, n miss | 480,558 comparisons, 22.5 ms per hit |
-| B – Binary search (recursive) | Divide and conquer | own merge sort, Θ(n log n) | Θ(log n): ≤ ⌊log₂ n⌋ + 1 | 18.87 comparisons, 6.24 µs (after a 5.85 s sort) |
-| C – Hash table, separate chaining | Space–time trade-off | build, Θ(n) expected | Θ(1) expected: 1 + α/2 hit, α miss | 1.32 comparisons, 0.88 µs (after a 0.74 s build) |
+| A â€“ Sequential search (iterative) | Brute force | none | Î˜(n): (n + 1)/2 hit, n miss | 480,558 comparisons, 22.5 ms per hit |
+| B â€“ Binary search (recursive) | Divide and conquer | own merge sort, Î˜(n log n) | Î˜(log n): â‰¤ âŒŠlogâ‚‚ nâŒ‹ + 1 | 18.87 comparisons, 6.24 Âµs (after a 5.85 s sort) |
+| C â€“ Hash table, separate chaining | Spaceâ€“time trade-off | build, Î˜(n) expected | Î˜(1) expected: 1 + Î±/2 hit, Î± miss | 1.32 comparisons, 0.88 Âµs (after a 0.74 s build) |
 
-- **Recurrence (Tasks 6–7):** C(n) = C(⌊n/2⌋) + 1, C(0) = 0 ⇒ C(n) = ⌊log₂ n⌋ + 1 = Θ(log n); merge sort
-  C(n) = 2C(n/2) + n − 1 ⇒ n log₂ n − n + 1 = Θ(n log n). Both checked exactly against counted comparisons.
-- **Recommendation (Task 11):** the hash table – fastest at every size, cheapest preprocessing, pays off after about
+- **Recurrence (Tasks 6â€“7):** C(n) = C(âŒŠn/2âŒ‹) + 1, C(0) = 0 â‡’ C(n) = âŒŠlogâ‚‚ nâŒ‹ + 1 = Î˜(log n); merge sort
+  C(n) = 2C(n/2) + n âˆ’ 1 â‡’ n logâ‚‚ n âˆ’ n + 1 = Î˜(n log n). Both checked exactly against counted comparisons.
+- **Recommendation (Task 11):** the hash table â€“ fastest at every size, cheapest preprocessing, pays off after about
   20 searches.
-- **Design challenge (Task 12): MODIFY** – keep hashing, reserve capacity (m = 2,666,683 for 2,000,000 records) and
-  insert each daily batch incrementally (Θ(b)): 1.21 CPU-seconds per simulated day against 10.85 s for the best
+- **Design challenge (Task 12): MODIFY** â€“ keep hashing, reserve capacity (m = 2,666,683 for 2,000,000 records) and
+  insert each daily batch incrementally (Î˜(b)): 1.21 CPU-seconds per simulated day against 10.85 s for the best
   binary-search variant and 30,335 s for sequential search.
 
 ## How to run
@@ -59,27 +59,27 @@ and `Task_7_Recurrence_Solution/draw_recursion_trees.py`. The experiment program
 
 ```
 CO1_Assignment/
-├── Task_1_Algorithm_Design/          README (3 approaches, pseudocode), flowchart PNGs + draw_flowcharts.py
-├── Task_2_Basic_Operation/           README
-├── Task_3_Mathematical_Complexity/   README (derivations, preprocessing + search, break-even)
-├── Task_4_Case_Analysis/             README, binary-search decision tree PNG + script
-├── Task_5_Asymptotic_Analysis/       README (O, Ω, Θ with constants, growth 10³ → 10⁶)
-├── Task_6_Recurrence_Formulation/    README (recurrence read from the code)
-├── Task_7_Recurrence_Solution/       README (substitution, Master Theorem, induction), recursion-tree PNG + script
-├── Task_8_Implementation_Testing/    README (test procedure, 13 cases + properties), captured outputs
-│   └── Source_Code/                  student_records.py, search_algorithms.py, test_search_algorithms.py,
-│                                     run_experiments.py, design_challenge_simulation.py
-├── Task_9_Experimental_Performance/  README (tables + graphs), 10 CSV files
-├── Task_10_Theory_vs_Experiment/     README
-├── Task_11_Final_Recommendation/     README
-├── Task_12_Design_Challenge/         README (A–D), 4 CSV files
-├── Report/
-│   ├── Source_Code_Screenshots/      rendered source code of all 8 programs
-│   ├── Output_Screenshots/           real execution output of the 5 programs
-│   ├── Analysis/                     complexity_derivations.md, theory_vs_experiment.md, design_challenge_analysis.md
-│   ├── Tables_and_Graphs/            8 graphs (fig1–fig8) + all 14 CSV tables
-│   └── Documentation/                CO1_Assignment_Report.docx / .pdf (all 12 tasks + appendices)
-└── README.md
+â”œâ”€â”€ Task_1_Algorithm_Design/          README (3 approaches, pseudocode), flowchart PNGs + draw_flowcharts.py
+â”œâ”€â”€ Task_2_Basic_Operation/           README
+â”œâ”€â”€ Task_3_Mathematical_Complexity/   README (derivations, preprocessing + search, break-even)
+â”œâ”€â”€ Task_4_Case_Analysis/             README, binary-search decision tree PNG + script
+â”œâ”€â”€ Task_5_Asymptotic_Analysis/       README (O, Î©, Î˜ with constants, growth 10Â³ â†’ 10â¶)
+â”œâ”€â”€ Task_6_Recurrence_Formulation/    README (recurrence read from the code)
+â”œâ”€â”€ Task_7_Recurrence_Solution/       README (substitution, Master Theorem, induction), recursion-tree PNG + script
+â”œâ”€â”€ Task_8_Implementation_Testing/    README (test procedure, 13 cases + properties), captured outputs
+â”‚   â””â”€â”€ Source_Code/                  student_records.py, search_algorithms.py, test_search_algorithms.py,
+â”‚                                     run_experiments.py, design_challenge_simulation.py
+â”œâ”€â”€ Task_9_Experimental_Performance/  README (tables + graphs), 10 CSV files
+â”œâ”€â”€ Task_10_Theory_vs_Experiment/     README
+â”œâ”€â”€ Task_11_Final_Recommendation/     README
+â”œâ”€â”€ Task_12_Design_Challenge/         README (Aâ€“D), 4 CSV files
+â”œâ”€â”€ Report/
+â”‚   â”œâ”€â”€ Source_Code_Screenshots/      rendered source code of all 8 programs
+â”‚   â”œâ”€â”€ Output_Screenshots/           real execution output of the 5 programs
+â”‚   â”œâ”€â”€ Analysis/                     complexity_derivations.md, theory_vs_experiment.md, design_challenge_analysis.md
+â”‚   â”œâ”€â”€ Tables_and_Graphs/            8 graphs (fig1â€“fig8) + all 14 CSV tables
+â”‚   â””â”€â”€ Documentation/                CO1_Assignment_Report.docx / .pdf (all 12 tasks + appendices)
+â””â”€â”€ README.md
 ```
 
 ## Test environment
@@ -87,3 +87,4 @@ CO1_Assignment/
 13th Gen Intel Core i5-13420H, 16 GB RAM, Windows 11, Python 3.13.11 (CPython 64-bit). Operation counts are the
 primary evidence; times are the minimum of repeated runs with the garbage collector off, measured while other jobs
 were running on the same machine.
+
